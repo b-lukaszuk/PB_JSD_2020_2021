@@ -15,7 +15,7 @@ let lata = [1974, 1900, 1985, 2000];
  */
 function czyPrzestepny(rok) {
     // za: https://en.wikipedia.org/wiki/Leap_year#Algorithm 
-    if(rok % 4 !== 0) {
+    if (rok % 4 !== 0) {
         return false;
     } else if (rok % 25 !== 0) {
         return true;
@@ -26,7 +26,9 @@ function czyPrzestepny(rok) {
     }
 }
 
-console.log(lata.map(czyPrzestepny));
+// jakis bug w VS Code, console.log() nie drukuje prawidlowo Array-sow w Debug Console
+// tzn. 1x drukuje ok, ale potem juz nie
+console.log(lata.map(czyPrzestepny).toString());
 
 
 // 2. Calculate factorial of 7.
@@ -35,26 +37,26 @@ console.log(lata.map(czyPrzestepny));
  * @param {Number} liczba (Int, >= 1)
  * @return {Number} silnia (Int, >= 1)
  */
-function silniaFor(liczba=10) {
+function silniaFor(liczba = 10) {
     let silnia = 1;
-    for (let i = 1; i < liczba+1; i++) {
-        silnia *= i; 
+    for (let i = 1; i < liczba + 1; i++) {
+        silnia *= i;
     }
     return silnia;
 }
 
 
 /**
- * Liczy silnie (factorial) dla danej liczby rekursywnie
- * (nie dawac duzej liczby wejsciowej)
+ * Liczy silnie (factorial) dla danej liczby rekurs. (taka jest def matem.)
+ * (rekursja - nie dawac duzej liczby wejsciowej)
  * @param {Number} liczba (Int, >= 1), 
  * @return {Number} silnia (Int, >= 1)
  */
-function silniaRek(liczba=10) {
-    if(liczba === 1) {
+function silniaRek(liczba = 10) {
+    if (liczba === 1) {
         return 1;
     } else {
-        return liczba * silniaRek(liczba-1);
+        return liczba * silniaRek(liczba - 1);
     }
 }
 
@@ -79,7 +81,7 @@ function czyNparz(liczba) {
 * @return {Number} suma (Int)
 */
 function sumujNparz(liczby) {
-    let sumaNparz = 0;    
+    let sumaNparz = 0;
     for (let i = 0; i < liczby.length; i++) {
         if (czyNparz(liczby[i])) {
             sumaNparz += liczby[i];
@@ -116,9 +118,28 @@ function zwrocMinAndMax(liczby) {
     return [min, max];
 }
 
-console.log("min: ", zwrocMinAndMax(cyfry2).join(", max: "));
+// jakis bug w VS Code, console.log() nie drukuje prawidlowo Array-sow w Debug Console
+console.log(zwrocMinAndMax(cyfry2).toString());
 
 // 5. Choose longest string from the array. [‘Karol’, ‘Adam’,’Rogowski’,’Politechnika’,’Super’,’Weekend’]. 
+// tylko 1, czy kilka w przypadku remisow?! (wezme kilka)
+let tabStringow = ["Karol", "Adam", "Rogowski", "Politechnika", "Super", "Weekend"];
+
+/** 
+* Zwraca tablice z najdluzszym stringiem/ami lub [] jesli input to []
+* @param {Array<String>} tabStringow - tablica stringow
+* @return {Array<String>} tabNajdlStringow - tablica najdluzszych stringow (String-i) lub []
+*/
+function zwrocNajdlStringi(tabStringow) {
+    let tabDlStringow = tabStringow.map((s) => s.length);
+    let dlMax = Math.max(...tabDlStringow); // ...Array to wypakowanie
+    // jesli pusta tablica to brak stringow do zwrotu
+    // czyli zwraca pusta tablice
+    return tabStringow.filter((s) => s.length === dlMax);
+}
+
+// jakis bug w VS Code, console.log() nie drukuje prawidlowo Array-sow w Debug Console
+console.log(zwrocNajdlStringi(tabStringow).toString());
 
 // 6. Choose all the indexes on the highest value from the given array. [1,6,23,8,4,98,3,7,3,98,4,98].
 
