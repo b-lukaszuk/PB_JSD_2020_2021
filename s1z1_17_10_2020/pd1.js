@@ -131,7 +131,9 @@ let tabStringow = ["Karol", "Adam", "Rogowski", "Politechnika", "Super", "Weeken
 * @return {Array<String>} tabNajdlStringow - tablica najdluzszych stringow (String-i) lub []
 */
 function zwrocNajdlStringi(tabStringow) {
+    // przy pustej tablicy tabDlStringow to []
     let tabDlStringow = tabStringow.map((s) => s.length);
+    // przy pustej tablicy dlMax to -Infinity
     let dlMax = Math.max(...tabDlStringow); // ...Array to wypakowanie
     // jesli pusta tablica to brak stringow do zwrotu
     // czyli zwraca pusta tablice
@@ -142,6 +144,9 @@ function zwrocNajdlStringi(tabStringow) {
 console.log(zwrocNajdlStringi(tabStringow).toString());
 
 // 6. Choose all the indexes on the highest value from the given array. [1,6,23,8,4,98,3,7,3,98,4,98].
+let cyfry3 = [1, 6, 23, 8, 4, 98, 3, 7, 3, 98, 4, 98];
+
+
 
 // 7. Calculate average value from the given array for even numbers [1,6,23,8,4,98,3,7,3,98,4,98]
 
