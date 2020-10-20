@@ -105,7 +105,7 @@ console.log(sumujNparz(cyfry));
 */
 function zwrocMinAndMax(liczby) {
     // ustawiam min i maxa na ost wart z tablicy (zmniejsza tablice inplace)
-    min = max = liczby.pop();
+    let min = max = liczby.pop();
     // szukam min i max w 1 przejsciu for-a
     for (let i = 0; i < liczby.length; i++) {
         if (liczby[i] < min) {
