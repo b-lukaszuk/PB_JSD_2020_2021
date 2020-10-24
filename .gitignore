@@ -2,3 +2,5 @@
 s1z1_17_10_2020/*org*
 # no index.js files (ten napisalismy z prowadzacym na cwiczeniach)
 s1z1_17_10_2020/index.js
+# ignoruj pliki pdf (wyklady) we wszystkich katalogach
+*/*.pdf
