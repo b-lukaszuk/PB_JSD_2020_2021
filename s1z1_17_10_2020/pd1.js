@@ -198,10 +198,8 @@ console.log(liczSrParzystych(cyfry));
 */
 function liczSrNaParzInd(liczby) {
     let tabLiczbZparzInd = [];
-    for (let i = 2; i < liczby.length; i++) {
-        if (i % 2 === 0) {
-            tabLiczbZparzInd.push(liczby[i]);
-        }
+    for (let i = 2; i < liczby.length; i += 2) {
+        tabLiczbZparzInd.push(liczby[i]);
     }
     let suma = tabLiczbZparzInd.reduce((a, b) => a + b, 0);
     return suma / tabLiczbZparzInd.length;
