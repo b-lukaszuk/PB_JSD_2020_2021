@@ -3,6 +3,7 @@
 // Przedmiot: Programowanie w jezyku JavaScript
 // Podyplomowka: JavaScript Developer 2020/2021
 // funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
+// funkcje nie sa optymalizowane pod katem szybkosci
 /////////////////
 
 // ARRAY: [1,6,23,8,4,8,3,7]
@@ -172,6 +173,11 @@ console.log("\nzredukowana tablica " + [1, 2, 3, 4, 5] + " (met3) to: " +
 // 7) Create a function the return one random element from given
 // array. // use random function
 
+/**
+ * zwraca losowy elt tablicy
+ * @param {Array} tablica - jakas tablica
+ * @return {} wylosowana wartosc
+ */
 function getRandomElt(tablica) {
     // Math.random() - od 0 do 1
     // * length aby gorny zakres, floor aby zakres byl od 0 do length-1
@@ -180,11 +186,28 @@ function getRandomElt(tablica) {
 }
 
 console.log("\nz tablicy " + tab + " wylosowalem: " +
-            getRandomElt(tab));
+	    getRandomElt(tab));
 
 // 8) Create a function that takes two parameters: array and number
 // off attempts. Based on number of attempts choose a random number
 // from table that many times and return lowest one.
+
+/**
+ * losuje losowa wartosc z tablicy n*, zwraca najmniejsza wylos wartosc
+ * @param {Array<Number>} tablica - tablica liczb
+ * @param {Number} proby - tyle razy losuje losowy elt z tablicy
+ * @return {Number} najmniejsza z wylosowanych wartosci
+ */
+function getLowestRandom(tablica=[1,2,3], proby=5) {
+    let tabWylosowanych = [];
+    for (let i = 0; i < proby; i++) {
+	tabWylosowanych.push(getRandomElt(tablica));
+    }
+    return Math.min(...tabWylosowanych);
+}
+
+console.log("\nz tablicy " + tab + " losuje 5x 1 elt ze zwracaniem.\n" +
+	    "Najmniejszy wylosowany elt to: " + getLowestRandom(tab, 5));
 
 // 9) Create a function that takes given array. Then takes a random
 // element, removes it from the array and pushes it to result
