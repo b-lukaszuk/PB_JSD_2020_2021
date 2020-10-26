@@ -4,3 +4,5 @@ s1z1_17_10_2020/*org*
 s1z1_17_10_2020/index.js
 # ignoruj pliki pdf (wyklady) we wszystkich katalogach
 */*.pdf
+# ignoruj pliki pomocnicze/zapasowe Emacsa
+*/*~ 
