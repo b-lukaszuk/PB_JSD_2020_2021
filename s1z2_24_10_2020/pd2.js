@@ -174,6 +174,16 @@ console.log("\nzredukowana tablica " + [1, 2, 3, 4, 5] + " (met3) to: " +
 // array. // use random function
 
 /**
+ * fn pomocn - zwraca liczbe (Int) z zakresu 0 do n (incl-excl)
+ * @param {Number} n - liczba (Int), gorna granica zakresu (exclusive)
+ * @return {Number} losowa liczba (Int) z zadanego zakresu
+ */
+function getIntToN(n) {
+    return Math.floor(Math.random() * n);
+}
+
+
+/**
  * zwraca losowy elt tablicy
  * @param {Array} tablica - jakas tablica
  * @return {} wylosowana wartosc
@@ -181,7 +191,7 @@ console.log("\nzredukowana tablica " + [1, 2, 3, 4, 5] + " (met3) to: " +
 function getRandomElt(tablica) {
     // Math.random() - od 0 do 1
     // * length aby gorny zakres, floor aby zakres byl od 0 do length-1
-    let indeks = Math.floor(Math.random() * tablica.length);
+    let indeks = getIntToN(tablica.length);
     return tablica[indeks];
 }
 
@@ -213,14 +223,104 @@ console.log("\nz tablicy " + tab + " losuje 5x 1 elt ze zwracaniem.\n" +
 // element, removes it from the array and pushes it to result
 // arrays. This takes place as long as there are elements in source
 // array.
+let tab2 = [1, 6, 23, 8, 4, 8, 3, 7];
+
+function shuffleArray(tablica) {
+    let tabWyn = [];
+    while(tablica.length !== 0) {
+	tabWyn.push(tablica.splice(getIntToN(tablica.length), 1)[0]);
+    }
+    return tabWyn;
+}
+
+console.log("\nPomieszana tablica wejsciowa: "
+	    + tab2 + " => " + shuffleArray(tab2));
 
 // 10) Create a function that on given array will perform operation of
 // adding or subtracting elements. Operation is to be chosen at
 // random. And return a result.[a,b,c,d] =>(((a+-b)+-c)+-d)
 
+/**
+ * dodaje lub odejmuje od siebie poszczegolne elementy z tablicy liczb
+ * @param {Array<Number>} tablica - tablica liczb
+ * @return {Number} wynik przeprowadzonych operacji
+ */
+function AddOrSubTabElts(tablica) {
+    let wynik = tablica[0];
+    for (let i = 1; i < tablica.length; i++) {
+	// getIntToN zwraca 0, 1, 2, lub 3, czyli 50%/50% dla -/+
+	if (getIntToN(4) > 1) {
+	    wynik -= tablica[i];
+	} else {
+	    wynik += tablica[i];
+	}
+    }
+    return wynik;
+}
+
+console.log("\nlosowe dod/odejm elt-ow tablicy " + tab +
+	    " zwraca: " + AddOrSubTabElts(tab));
+
 // 11) Create a function that will return the current day name in Polish.
+
+// 0 to Niedziela, tak jak w new Date().getDay();
+const dni = ["Niedziela", "Poniedzialek", "Wtorek", "Sroda",
+	     "Czwartek", "Piatek", "Sobota"];
+
+/**
+ * zwraca aktualny dzien tygodnia w j. polskim
+ * @return {String} aktualny dzien tygodnia
+ */
+function getDzienTyg() {
+    let dzienCyfra = new Date().getDay();
+    return dni[dzienCyfra];
+}
+
+console.log("\nDzis jest " + getDzienTyg());
 
 // 12) Create a function that tells us how many days till Friday
 
+/**
+ * zwraca ilosc dni od dzis (dz tyg) do danego dn tyg, liczy do przodu,
+ * czyli od Sb (dzis) do Pt (cel) jest 6 dni (Nd, Pn, Wt, Sr, Czw, Pt)
+ * @param {Number} dzis - Int 0-6 (dzien tygodnia, 0 - niedziela, 6 - sobota)
+ * @return {Number} Int 0-6, ile dni zostalo (0 - dzis jest dzien docelowy)
+ */
+function getLbDniDo(dzis=new Date().getDay(), dzienDocelowy=5) {
+    // 0 to Niedziela, 5 to Piatek
+    if (dzis < dzienDocelowy) {
+	return dzienDocelowy - dzis;
+    } else {
+	// 7 dni caly cykl - l. dni o ktore juz przekroczylismy
+	return 7 - (dzis - dzienDocelowy);
+    }
+}
+
+console.log("\nDo piatku zostalo: " + getLbDniDo() + " [dzien|dni]");
+
 // 13) Create a function that take two numbers and return the object
 // with 4 fields. Result on 4 basic arithmetic operations.
+
+const fnTab = [(a, b) => a+b,
+               (a, b) => a-b,
+               (a, b) => a*b,
+               (a, b) => a/b];
+
+
+/**
+ * wykonuje zestaw funkcji na 2 liczbach, zwraca tab wynikow
+ * @param {Number} x - pierwszy argument fn dwu-argumentowej
+ * @param {Number} y - drugi argument fn dwu-argumentowej
+ * @param {Array<Function>} funkcje - tablica funkcji
+ * @return {Array<Number>} tablica wynikow funkcji
+ */
+function wykFunNaLb(x, y, funkcje=fnTab) {
+    let tabRes = [];
+    for (let i = 0; i < funkcje.length; i++) {
+        tabRes.push(fnTab[i](x, y));
+    }
+    return tabRes;
+}
+
+console.log("4 podst op. matem. dla liczb: " + 1 + " i " + 2 +
+            " daja nastepujace wyniki: " + wykFunNaLb(1, 2));
