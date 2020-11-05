@@ -43,7 +43,7 @@ function retFirstLast(tablica) {
 }
 
 console.log("\nSuma pierwszego i ostatniego elementu tablicy " + tab +
-            " to: " + retFirstLast(tab));
+	    " to: " + retFirstLast(tab));
 
 // 3) Create a function that takes a number and return factorial of that number.
 
@@ -236,7 +236,7 @@ let tab2 = [1, 6, 23, 8, 4, 8, 3, 7];
 function shuffleArray(tablica) {
     let tabWyn = [];
     while(tablica.length !== 0) {
-        // array.splice() zwraca nowy array (nawet 1 elt) stad [0]
+	// array.splice() zwraca nowy array (nawet 1 elt) stad [0]
 	tabWyn.push(tablica.splice(getIntToN(tablica.length), 1)[0]);
     }
     // pytanie czy nie przypisac tego do teraz pustego arraya wejsc
@@ -278,7 +278,7 @@ console.log("\nlosowe dod/odejm elt-ow tablicy " + tab +
  */
 function getDzienTyg() {
     const dni = {0: "Niedziela", 1: "Poniedzialek", 2: "Wtorek", 3: "Sroda",
-	     4: "Czwartek", 5: "Piatek", 6: "Sobota"};
+		 4: "Czwartek", 5: "Piatek", 6: "Sobota"};
     let dzienCyfra = new Date().getDay(); // 0 to Niedziela
     return dni[dzienCyfra];
 }
@@ -310,9 +310,9 @@ console.log("\nDo piatku zostalo: " + getLbDniDo() + " [dzien|dni]");
 
 // w JS-ie to obiekt, ale w Pythonie bylby to slownik
 const funDict = {"+": (a, b) => a+b,
-               "-": (a, b) => a-b,
-               "*": (a, b) => a*b,
-               "/": (a, b) => a/b};
+		 "-": (a, b) => a-b,
+		 "*": (a, b) => a*b,
+		 "/": (a, b) => a/b};
 
 
 /**
@@ -326,11 +326,11 @@ function wykFunNaLb(x, y, funkcje=funDict) {
     let wynDict = new Object();
     // Object.keys(wynDict) to array kluczy (stingow)
     for (klucz of Object.keys(funDict)) {
-        wynDict[klucz] = funDict[klucz](x, y);
+	wynDict[klucz] = funDict[klucz](x, y);
     }
     return wynDict;
 }
 
 console.log("\n4 podst op. matem. dla liczb: " + 1 + " i " + 2 +
-            " daja nastepujace wyniki: " + JSON.stringify(wykFunNaLb(1, 2)));
+	    " daja nastepujace wyniki: " + JSON.stringify(wykFunNaLb(1, 2)));
 
