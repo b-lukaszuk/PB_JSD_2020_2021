@@ -224,18 +224,22 @@ console.log("\nz tablicy " + tab + " losuje 5x 1 elt ze zwracaniem.\n" +
 // element, removes it from the array and pushes it to result
 // arrays. This takes place as long as there are elements in source
 // array.
+// te "pushes to result arrays" to chyba literowka powinno byc "array"
 let tab2 = [1, 6, 23, 8, 4, 8, 3, 7];
 
 /**
- * miesza (tasuje) array
+ * zwraca pomieszany/potasowany array wejsciowy
+ * zgodnie z poleceniem czysci array wejsciowy (bedzie [])
  * @param {Array} tablica - tablica jakichs elementow
  * @return {Array} pomieszana/potasowana tablica wejsciowa
  */
 function shuffleArray(tablica) {
     let tabWyn = [];
     while(tablica.length !== 0) {
+        // array.splice() zwraca nowy array (nawet 1 elt) stad [0]
 	tabWyn.push(tablica.splice(getIntToN(tablica.length), 1)[0]);
     }
+    // pytanie czy nie przypisac tego do teraz pustego arraya wejsc
     return tabWyn;
 }
 
@@ -312,7 +316,7 @@ const funDict = {"+": (a, b) => a+b,
 
 
 /**
- * wykonuje zestaw funkcji na 2 liczbach, zwraca tab wynikow
+ * wykonuje zestaw funkcji na 2 liczbach, zwraca obiekt z wynikami
  * @param {Number} x - pierwszy argument fn dwu-argumentowej
  * @param {Number} y - drugi argument fn dwu-argumentowej
  * @param {Object} funkcje - obiekt funkcji postaci {"fnLab": lambda}
