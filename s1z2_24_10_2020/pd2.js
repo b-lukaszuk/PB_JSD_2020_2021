@@ -36,14 +36,14 @@ console.log("suma liczb w tablicy " + tab + " wynosi: " + sumTab(tab));
 /**
  * zwraca pierwszy i ostatni element tablicy
  * @param {Array} tablica - tablica jakichs elementow
- * @return {Array} tabWynik z 1 i ostatnim elt tablicy wejsciowej
+ * @return {Number} suma 1 i ostatniego elt tab wejsc
  */
 function retFirstLast(tablica) {
-    return [tablica[0], tablica[tablica.length-1]];
+    return tablica[0] + tablica[tablica.length-1];
 }
 
-console.log("\npierwszy i ostatni element tablicy " + tab + " to: " +
-	    retFirstLast(tab));
+console.log("\nSuma pierwszego i ostatniego elementu tablicy " + tab +
+            " to: " + retFirstLast(tab));
 
 // 3) Create a function that takes a number and return factorial of that number.
 
