@@ -179,6 +179,8 @@ console.log("\nzredukowana tablica " + [1, 2, 3, 4, 5] + " (met3) to: " +
  * @return {Number} losowa liczba (Int) z zadanego zakresu
  */
 function getIntToN(n) {
+    // Math.random() - od 0 do 1
+    // * length aby gorny zakres, floor aby zakres byl od 0 do length-1
     return Math.floor(Math.random() * n);
 }
 
@@ -189,8 +191,6 @@ function getIntToN(n) {
  * @return {} wylosowana wartosc
  */
 function getRandomElt(tablica) {
-    // Math.random() - od 0 do 1
-    // * length aby gorny zakres, floor aby zakres byl od 0 do length-1
     let indeks = getIntToN(tablica.length);
     return tablica[indeks];
 }
@@ -204,6 +204,7 @@ console.log("\nz tablicy " + tab + " wylosowalem: " +
 
 /**
  * losuje losowa wartosc z tablicy n*, zwraca najmniejsza wylos wartosc
+ * losuje ze zwracaniem, wiec n > tablica.length jest OK
  * @param {Array<Number>} tablica - tablica liczb
  * @param {Number} proby - tyle razy losuje losowy elt z tablicy
  * @return {Number} najmniejsza z wylosowanych wartosci
@@ -225,6 +226,11 @@ console.log("\nz tablicy " + tab + " losuje 5x 1 elt ze zwracaniem.\n" +
 // array.
 let tab2 = [1, 6, 23, 8, 4, 8, 3, 7];
 
+/**
+ * miesza (tasuje) array
+ * @param {Array} tablica - tablica jakichs elementow
+ * @return {Array} pomieszana/potasowana tablica wejsciowa
+ */
 function shuffleArray(tablica) {
     let tabWyn = [];
     while(tablica.length !== 0) {
@@ -298,26 +304,29 @@ console.log("\nDo piatku zostalo: " + getLbDniDo() + " [dzien|dni]");
 // 13) Create a function that take two numbers and return the object
 // with 4 fields. Result on 4 basic arithmetic operations.
 
-const fnTab = [(a, b) => a+b,
-               (a, b) => a-b,
-               (a, b) => a*b,
-               (a, b) => a/b];
+// w JS-ie to obiekt, ale w Pythonie bylby to slownik
+const funDict = {"+": (a, b) => a+b,
+               "-": (a, b) => a-b,
+               "*": (a, b) => a*b,
+               "/": (a, b) => a/b};
 
 
 /**
  * wykonuje zestaw funkcji na 2 liczbach, zwraca tab wynikow
  * @param {Number} x - pierwszy argument fn dwu-argumentowej
  * @param {Number} y - drugi argument fn dwu-argumentowej
- * @param {Array<Function>} funkcje - tablica funkcji
- * @return {Array<Number>} tablica wynikow funkcji
+ * @param {Object} funkcje - obiekt funkcji postaci {"fnLab": lambda}
+ * @return {Object} obiekt postaci {"fnLab": wynik_fn<Number>}
  */
-function wykFunNaLb(x, y, funkcje=fnTab) {
-    let tabRes = [];
-    for (let i = 0; i < funkcje.length; i++) {
-        tabRes.push(fnTab[i](x, y));
+function wykFunNaLb(x, y, funkcje=funDict) {
+    let wynDict = new Object();
+    // Object.keys(wynDict) to array kluczy (stingow)
+    for (klucz of Object.keys(funDict)) {
+        wynDict[klucz] = funDict[klucz](x, y);
     }
-    return tabRes;
+    return wynDict;
 }
 
 console.log("4 podst op. matem. dla liczb: " + 1 + " i " + 2 +
-            " daja nastepujace wyniki: " + wykFunNaLb(1, 2));
+            " daja nastepujace wyniki: " + JSON.stringify(wykFunNaLb(1, 2)));
+
