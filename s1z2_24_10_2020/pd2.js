@@ -262,17 +262,14 @@ console.log("\nlosowe dod/odejm elt-ow tablicy " + tab +
 	    " zwraca: " + AddOrSubTabElts(tab));
 
 // 11) Create a function that will return the current day name in Polish.
-
-// 0 to Niedziela, tak jak w new Date().getDay();
-const dni = ["Niedziela", "Poniedzialek", "Wtorek", "Sroda",
-	     "Czwartek", "Piatek", "Sobota"];
-
 /**
  * zwraca aktualny dzien tygodnia w j. polskim
  * @return {String} aktualny dzien tygodnia
  */
 function getDzienTyg() {
-    let dzienCyfra = new Date().getDay();
+    const dni = {0: "Niedziela", 1: "Poniedzialek", 2: "Wtorek", 3: "Sroda",
+	     4: "Czwartek", 5: "Piatek", 6: "Sobota"};
+    let dzienCyfra = new Date().getDay(); // 0 to Niedziela
     return dni[dzienCyfra];
 }
 
@@ -288,7 +285,7 @@ console.log("\nDzis jest " + getDzienTyg());
  */
 function getLbDniDo(dzis=new Date().getDay(), dzienDocelowy=5) {
     // 0 to Niedziela, 5 to Piatek
-    if (dzis < dzienDocelowy) {
+    if (dzis <= dzienDocelowy) {
 	return dzienDocelowy - dzis;
     } else {
 	// 7 dni caly cykl - l. dni o ktore juz przekroczylismy
