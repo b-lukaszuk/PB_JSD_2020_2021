@@ -331,6 +331,6 @@ function wykFunNaLb(x, y, funkcje=funDict) {
     return wynDict;
 }
 
-console.log("4 podst op. matem. dla liczb: " + 1 + " i " + 2 +
+console.log("\n4 podst op. matem. dla liczb: " + 1 + " i " + 2 +
             " daja nastepujace wyniki: " + JSON.stringify(wykFunNaLb(1, 2)));
 
