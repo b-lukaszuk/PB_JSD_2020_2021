@@ -49,12 +49,12 @@ let myObject = (function ifkaZwracaObiekt() {
     };
 })();
 
-myObject.showValue();
-myObject.setValue(2);
-myObject.setValue();
-myObject.reverseValue();
-myObject.setValue("abc");
-myObject.reverseValue();
+// myObject.showValue();
+// myObject.setValue(2);
+// myObject.setValue();
+// myObject.reverseValue();
+// myObject.setValue("abc");
+// myObject.reverseValue();
 
 
 // 2) Create four function definitions. One for every basic math
@@ -66,6 +66,38 @@ myObject.reverseValue();
 // function setOperation() that sets the field from previous sentence
 // and a calculate() function that makes calculation and returns its
 // value.
+
+let dod = (a, b) => a+b;
+let odejm = (a, b) => a-b;
+let mnoz = (a, b) => a*b;
+let dziel = (a, b) => a/b;
+
+function wybierzOperacje(x, y) {
+    return { // calculation object
+        x: x,
+        y: y,
+        funDoWyk: dod, // domyslna wartosc
+        setOperation(operacja) {
+            this.funDoWyk = operacja;
+        },
+        calculate() {
+            return this.funDoWyk(x, y);
+        },
+    };
+}
+
+let operNa1i4 = wybierzOperacje(1, 4);
+operNa1i4.setOperation(odejm);
+console.log(operNa1i4.calculate());
+operNa1i4.setOperation(mnoz);
+console.log(operNa1i4.calculate());
+
+
+let operNa3i9 = wybierzOperacje(3, 9);
+operNa3i9.setOperation(dod);
+console.log(operNa3i9.calculate());
+operNa3i9.setOperation(dziel);
+console.log(operNa3i9.calculate());
 
 
 // 3) Create an array (by hand) of objects and call sum() function in
