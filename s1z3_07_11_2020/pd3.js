@@ -6,6 +6,55 @@
 // be type string or number. reverseValue(): If number do (*(-1)), if
 // string reverse it. Closure pattern.
 
+// Ok, tak jak zrozumialem polecenie:
+// "logs the value" - czyli console.log()?
+// "(*(-1))" czyli numer*(-1)
+// "reverse string", czyli 'abc' => 'cba'
+// "not provided or is empty"? - pozwole tylko na stringi i numery,
+// to przy okazji nie bedzie tabel i innych niepotrzebnych rzeczy
+
+
+let myObject = (function ifkaZwracaObiekt() {
+    return {
+	wartosc: 1,
+	showValue() {
+	    console.log("aktualna wartosc przechowywana w obiekcie to " +
+			this.wartosc);
+	}, // getter zalecany: get showValue(){return this.wartosc}
+	setValue(wartStartowa) {
+	    if(typeof wartStartowa === "number" || // tylko nr i str
+	       typeof wartStartowa === "string") { // bez pusty, array, itd.
+		this.wartosc = wartStartowa;
+		console.log("ustawiono nowa wartosc obiektu");
+	    } else {
+		console.log("nieprawidlowy argument, przyjmuje " +
+			    "tylko numery i stringi");
+	    }
+	    this.showValue();
+	}, // alternatywa (zalecany setter): set setValue(wartStartowa),
+	// wywolanie obiekt.setValue = "abc";
+	reverseValue() {
+	    if(typeof this.wartosc === "number") {
+		this.wartosc = -1 * this.wartosc;
+	    } else if (typeof this.wartosc === "string") {
+		let strOdwr = []; // na razie tablica
+		for (let i = this.wartosc.length-1; i >= 0; i--) {
+		    strOdwr.push(this.wartosc[i]);
+		}
+		strOdwr = strOdwr.join(""); // teraz robimy z tego string
+		this.wartosc = strOdwr;
+	    } 
+	    this.showValue(); // na koniec pokazujemy zmieniona wartosc
+	},
+    };
+})();
+
+myObject.showValue();
+myObject.setValue(2);
+myObject.setValue();
+myObject.reverseValue();
+myObject.setValue("abc");
+myObject.reverseValue();
 
 
 // 2) Create four function definitions. One for every basic math
