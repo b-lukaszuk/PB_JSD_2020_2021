@@ -184,6 +184,7 @@ let BaseObject = {x: 0, y: 0, sum() {return this.x + this.y;}};
 //     }
 // ]
 
+// tu byla podpucha bo funkcje strzalkowe nie maja this-a
 let tabOb = [
     {
         x: 1,
@@ -301,7 +302,7 @@ function tabRange(tab, start, stop) {
     return tabWyn;
 }
 
-
+// dziala, ale nieeleganckie -> do poprawy
 /**
  * zwraca indeks 2 w 8 elt tabeli z rep(1, 7) i rep(2, 1)
  * @param {Array<Number>} tab - tablica 8 elt (zawsze), 7 to 1, 1 to 2
