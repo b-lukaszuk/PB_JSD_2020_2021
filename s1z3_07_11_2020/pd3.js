@@ -1,3 +1,6 @@
+///////////////////////////////////////////////////////////////////////////////
+//                                 zadanie 1                                 //
+///////////////////////////////////////////////////////////////////////////////
 // 1) Create an iffe that returns an object with fields: function
 // setValue(), function showValue() and
 // function reverseValue(). Calling functions either logs the value or
@@ -56,7 +59,9 @@ let myObject = (function ifkaZwracaObiekt() {
 // myObject.setValue("abc");
 // myObject.reverseValue();
 
-
+///////////////////////////////////////////////////////////////////////////////
+//                                 zadanie 2                                 //
+///////////////////////////////////////////////////////////////////////////////
 // 2) Create four function definitions. One for every basic math
 // operations and taking two input parameters. Create one more
 // function. This function is to return calculation object. This
@@ -86,20 +91,22 @@ function wybierzOperacje(x, y) {
     };
 }
 
-let operNa1i4 = wybierzOperacje(1, 4);
-operNa1i4.setOperation(odejm);
-console.log(operNa1i4.calculate());
-operNa1i4.setOperation(mnoz);
-console.log(operNa1i4.calculate());
+// let operNa1i4 = wybierzOperacje(1, 4);
+// operNa1i4.setOperation(odejm);
+// console.log(operNa1i4.calculate());
+// operNa1i4.setOperation(mnoz);
+// console.log(operNa1i4.calculate());
 
 
-let operNa3i9 = wybierzOperacje(3, 9);
-operNa3i9.setOperation(dod);
-console.log(operNa3i9.calculate());
-operNa3i9.setOperation(dziel);
-console.log(operNa3i9.calculate());
+// let operNa3i9 = wybierzOperacje(3, 9);
+// operNa3i9.setOperation(dod);
+// console.log(operNa3i9.calculate());
+// operNa3i9.setOperation(dziel);
+// console.log(operNa3i9.calculate());
 
-
+///////////////////////////////////////////////////////////////////////////////
+//                                 zadanie 3                                 //
+///////////////////////////////////////////////////////////////////////////////
 // 3) Create an array (by hand) of objects and call sum() function in
 // context of each one of them. Sum function is to come from this
 // object BaseObject = {x,y, sum: function (){
@@ -107,6 +114,35 @@ console.log(operNa3i9.calculate());
 
 // Example array: [{x:2,y:3},{x:-1,x:6,{x:0,x:8},…..]
 
+let myArr = [
+    {
+        x: 2,
+        y: 3,
+    },
+    {
+        x: -1,
+        y: 6,
+    },
+    {
+        x: 0,
+        y: 8,
+    },
+    {
+        x: 4,
+        y: 101,
+    },
+];
+
+// tu zamiast returna dam console.log(), zainicjalizuje tez x i y
+let BaseObject = {x: 0, y: 0, sum(){console.log(this.x + this.y);}};
+
+for (let i = 0; i < myArr.length; i++) {
+    BaseObject.sum.call(myArr[i]);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+//                                 zadanie 4                                  //
+///////////////////////////////////////////////////////////////////////////////
 // 4) Given an array of objects, for each object call operation()
 // function in context of next object. If object is last, got back to
 // start of the array for operation function. In loop;
@@ -115,7 +151,7 @@ console.log(operNa3i9.calculate());
 //     {
 //         x: 1,
 //         y: 'object one value',
-//         operation: () => 'object one prefix' + this.x + this.y
+    //         operation: () => 'object one prefix' + this.x + this.y
 //     },
 //     {
 //         x: 2,
@@ -130,7 +166,10 @@ console.log(operNa3i9.calculate());
 //     }
 // ]
 
-
+///////////////////////////////////////////////////////////////////////////////
+//                                 zadanie 5
+//                   zaliczeniowe na inny termin do pokazania?!
+///////////////////////////////////////////////////////////////////////////////
 // 5) Scale riddle. With 8 balls :) EXAM [1,1,1,1,2,1,1,1]. One of the
 // items will be change to two. Indexes are t be chosen at random. Use
 // compressions only two times.
