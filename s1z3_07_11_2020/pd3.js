@@ -87,6 +87,12 @@ let odejm = (a, b) => a-b;
 let mnoz = (a, b) => a*b;
 let dziel = (a, b) => a/b;
 
+/**
+ * funkcja zwracajaca obiekt przyjmujacy funkcje dzialajaca na x i y
+ * @param {Number} x - liczba1 do op mat 2 elt
+ * @param {Number} y - liczba1 do op mat 2 elt
+ * @return {Object} obiekt pos met setOperation(fn2arg), calculate()
+ */
 function wybierzOperacje(x, y) {
     return { // calculation object
         x: x,
@@ -96,7 +102,7 @@ function wybierzOperacje(x, y) {
             this.funDoWyk = operacja;
         },
         calculate() {
-            return this.funDoWyk(x, y);
+            return this.funDoWyk(this.x, this.y);
         },
     };
 }
@@ -268,20 +274,15 @@ function getIntToN(n) {
 }
 
 /**
- * fn. pomocn - wstawia 2 do los ind tabeli wejsciowej (inplace or not)
+ * fn. pomocn - wstawia 2 do los ind tabeli wejsciowej robi to inplace
  * @param {Array<Number>} tab - tablica liczb
- * @param {Bool} inplace - czy modyf. tab wejsciowa, czy zwrocic kopie  
  * @return {typ_zwracanej_wart} krotki opis zwracanej wartosci
  */
-function put2doLosInd(tab, inplace=false) {
-    if(!inplace) { // kopia tabeli wejsciowej, nie zmieniamy inplace
-        tab = tab.slice(); 
-    }
-    return tab[getIntToN(tab.length)] = 2; // wstawia 2 do los ind
+function put2doLosInd(tab) {
+    tab[getIntToN(tab.length)] = 2; // wstawia 2 do los ind
 }
 
-
-put2doLosInd(tabWaga, inplace=true);
+put2doLosInd(tabWaga);
 console.log("twoja waga wyglada nastepujaco: " + tabWaga);
 
 
