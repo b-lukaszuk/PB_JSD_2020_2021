@@ -1,3 +1,13 @@
+/////////////////
+// Praca domowa z dnia 07-11-2020
+// Przedmiot: Programowanie w jezyku JavaScript
+// Podyplomowka: JavaScript Developer 2020/2021
+// funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
+// funkcje nie sa optymalizowane pod katem szybkosci
+// w sumie to pisane na kolanie
+/////////////////
+
+
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 1                                 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -133,12 +143,14 @@ let myArr = [
     },
 ];
 
-// tu zamiast returna dam console.log(), zainicjalizuje tez x i y
-let BaseObject = {x: 0, y: 0, sum(){console.log(this.x + this.y);}};
+// tu zainicjalizuje x i y (just in case)
+let BaseObject = {x: 0, y: 0, sum() {return this.x + this.y;}};
 
-for (let i = 0; i < myArr.length; i++) {
-    BaseObject.sum.call(myArr[i]);
-}
+// for (let i = 0; i < myArr.length; i++) {
+//     console.log(
+// 	BaseObject.sum.call(myArr[i])
+//     );
+// }
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 4                                  //
@@ -151,7 +163,7 @@ for (let i = 0; i < myArr.length; i++) {
 //     {
 //         x: 1,
 //         y: 'object one value',
-    //         operation: () => 'object one prefix' + this.x + this.y
+    //     operation: () => 'object one prefix' + this.x + this.y
 //     },
 //     {
 //         x: 2,
@@ -165,6 +177,37 @@ for (let i = 0; i < myArr.length; i++) {
 //         operation: () => 'object three prefix' + this.x + this.y
 //     }
 // ]
+
+let tabOb = [
+    {
+        x: 1,
+        y: ', object one value',
+        operation() {return 'object one prefix ' + this.x + this.y;},
+    },
+    {
+        x: 2,
+        y: ', object two value',
+        operation() {return 'object two prefix ' + this.x + this.y;},
+    },
+
+    {
+        x: 3,
+        y: ', object three value',
+        operation() {return 'object three prefix ' + this.x + this.y;},
+    }
+];
+
+for (let i = 0; i < tabOb.length; i++) {
+    if (i !== (tabOb.length - 1)) {
+    	console.log(
+    	    tabOb[i].operation.call(tabOb[i+1])
+    	);
+    } else {
+    	console.log(
+    	    tabOb[i].operation.call(tabOb[0])
+        );
+    }
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 5
