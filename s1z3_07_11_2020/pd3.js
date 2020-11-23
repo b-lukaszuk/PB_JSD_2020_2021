@@ -224,15 +224,12 @@ let tabOb = [
 // items will be change to two. Indexes are t be chosen at random. Use
 // compressions only two times.
 
-// "indexes are to be chosen at random"?
+// "indexes are t be chosen at random"?
 // przyjmuje ze zmieniam losowa wartosc w tabeli na z 1 na 2
 // "Use compressions only two times" - chodzi o "comparisons" (porownania)?
 // jak mam rozumiec porownanie, tak jak w wazeniu, < lub > lub =
 // inaczej jesli same if-y/elsy, boole (a > b) to jest chyba niemozliwe
 // utworze wiec funkcje zwazKule - ktora imituje wazenie waga
-
-
-
 
 /**
  * fn. pom. - sumuje elt-y tabeli
@@ -270,7 +267,7 @@ let tabWaga = [1, 1, 1, 1, 1, 1, 1, 1];
  */
 function getIntToN(n) {
     // Math.random() - od 0 do 1
-    // * length aby gorny zakres, floor aby zakres byl od 0 do length-1
+    // * n aby gorny zakres, floor aby zakres byl od 0 do n-1
     return Math.floor(Math.random() * n);
 }
 
@@ -286,9 +283,9 @@ function put2doLosInd(tab) {
 put2doLosInd(tabWaga);
 console.log("twoja waga wyglada nastepujaco: " + tabWaga);
 
-
 /**
- * fn. pomocn - zwraca tab o ind od start (incl) do stop (excl), start < stop
+ * fn. pomoc - zwraca tab o ind start (incl) do stop (excl), start < stop
+ * nie modyfikuje tabeli wejsciowej
  * @param {Array} tab - tabela (nie moze byc pusta)
  * @param {Number} start - indeks poczatkowy (inclusive)
  * @param {Number} end - indeks koncowy (exclusive)
