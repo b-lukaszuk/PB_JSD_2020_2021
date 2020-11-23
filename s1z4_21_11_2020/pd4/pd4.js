@@ -13,6 +13,13 @@
 // 1) Extend String type with the reverse() function. The function is
 // to reverse the value of the string on which it was called.
 
+String.prototype.reverse = function() {
+    return this.valueOf() // tekst w stringu
+	.split("").reverse() // do tabeli i odwr. tabeli
+	.join(""); // polaczenie tabeli w string
+};
+
+console.log("alan".reverse());
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 2                                 //
