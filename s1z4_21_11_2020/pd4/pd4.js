@@ -15,11 +15,11 @@
 
 String.prototype.reverse = function() {
     return this.valueOf() // tekst w stringu
-	.split("").reverse() // do tabeli i odwr. tabeli
+	.split("").reverse() // do tabeli i odwr. elt-ow tabeli
 	.join(""); // polaczenie tabeli w string
 };
 
-console.log("alan".reverse());
+console.log("alan po odwroceniu daje: " + "alan".reverse()); //
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 2                                 //
@@ -27,11 +27,26 @@ console.log("alan".reverse());
 // 2) Extend Number type with the reverse() function. The function is
 // to reverse the value of the Number on which it was called.
 
+// co to znaczy reverse number, czy tak jak w zad 1 z pd3
+// "reverseValue(): If number do (*(-1))", czyli chyba liczba*(-1),
+// czy moze tak jak w zad wyzej czyli 123, bedzie 321, zrobmy to 2 dla odmiany
+
+// zakladamy, ze odwracamy tylko czesc calkowita numeru
+Number.prototype.reverse = function () {
+    return parseInt(this.valueOf()
+		    .toFixed(0) // toFixed -> String (w sr Int),
+		    .reverse()); // i String.reverse() z poprzedniego zadania :)
+};
+
+// na primitive-ach to nie dziala, czyli 123.reverse() bedzie blad, ale
+console.log("123 po odwroceniu daje: " + new Number(123).reverse());
+let jakasLiczba = 234;
+console.log(jakasLiczba + " po odwroceniu daje: " + jakasLiczba.reverse());
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                 zadanie 3                                 //
 ///////////////////////////////////////////////////////////////////////////////
-// 3) Based on included JSON file. 
+// 3) Based on included JSON file.
 //  a. Create a function that will return Json from the file. a
 //  b. Create a structures to hold data from the file. b
 //  c. Map data from function a to structure from b.
