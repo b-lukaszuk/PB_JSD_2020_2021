@@ -4,7 +4,7 @@
 // Podyplomowka: JavaScript Developer 2020/2021
 // funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
 // funkcje nie sa optymalizowane pod katem szybkosci
-// ver 0.1
+// ver 0.3
 /////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -103,10 +103,150 @@ function myMap(fun, transakcje) {
     return tabWyn;
 }
 
-console.log(myMap((obj) => numToPLN(obj.cost), transObj));
+// console.log(myMap((obj) => numToPLN(obj.cost), transObj));
+// console.log(transObj.map((obj) => numToPLN(obj.cost)));
 // hmm, wbud map tez wydaje sie dzialac, chociaz powinno byc wywolane na arrayu
-console.log(transObj.map((obj) => numToPLN(obj.cost)));
 
+
+//  d. Create object that will give us data about:
+//     i. How much money was spend in 2014
+//     ii. What company was earning how much
+//     iii. What type on transaction was having what spending’s.
+//     iv. Values of the spending in each month
+//     v. Values of the spending in each day of the week
+
+/**
+ * fn. pomoc zwraca rok (Int) ze stringu postaci "dd-mm-yyyy"
+ * @param {String} ddmmyyy - data w postaci "dd-mm-yyyy"
+ * @return {Number} - rok (Int) ze stringu
+ */
+function getRok(ddmmyyyy) {
+    return parseInt(ddmmyyyy.replace(/.+-(\d{4}$)/, "$1"));
+}
+
+/**
+ * fn. pomoc zwraca liczbe zakroglana odp. liczbe miejsc po przec
+ * @param {Number|String} liczba - liczba do zaokraglenia
+ * @param {Number} ilePoPrzec - do ilu miejsc po przecinku zaokraglic
+ * @return {Number} zaokraglona liczba (Float)
+ */
+function zaokr(liczba, ilePoPrzec=2) {
+    return parseFloat(parseFloat(liczba).toFixed(ilePoPrzec));
+}
+
+
+
+//     i. How much money was spend in 2014
+let totCost2014 = transObj.filter(
+    (obj) => getRok(obj.detailsOfPayment.date) === 2014) // spr rok
+    .map((obj) => zaokr(obj.cost)) // Str -> Float, altern parseFloat()
+    .reduce((a, b) => a + b, 0); // suma
+
+// console.log("suma wydatkow w 2014 roku: " + totCost2014);
+
+
+//     ii. What company was earning how much
+let earnByComp = {}; // obiekt (JS), slownik w Python-ie
+
+transObj.forEach((obj) => {
+    let curComp = obj.detailsOfPayment.company;
+    if(curComp in earnByComp) { // jesli jest juz w slown (Python), dodaj do
+        earnByComp[curComp] += parseFloat(obj.cost);
+    } else { // jesli nie to wstaw po raz 1
+        earnByComp[curComp] = parseFloat(obj.cost);
+    }
+});
+
+// console.log(earnByComp);
+
+
+//     iii. What type on transaction was having what spending’s.
+let costByTrans = {}; // slownik (Python)
+
+transObj.forEach((obj) => {
+    let curTrans = obj.detailsOfPayment.Type;
+    if(curTrans in costByTrans) { // jesli jest juz w slown (Python), dodaj do
+        costByTrans[curTrans] += parseFloat(obj.cost);
+    } else { // jesli nie to wstaw po raz 1
+        costByTrans[curTrans] = parseFloat(obj.cost);
+    }
+});
+
+// console.log(costByTrans);
+
+//     iv. Values of the spending in each month
+
+/**
+ * fn. pomoc zwraca miesiac (Int) ze stringu postaci "dd-mm-yyyy"
+ * @param {String} ddmmyyy - data w postaci "dd-mm-yyyy"
+ * @return {Number} - miesiac (Int) ze stringu, nie sprawdza czy 1-12
+ */
+function getMies(ddmmyyyy) {
+    return parseInt(ddmmyyyy.replace(/.+(\d{2})-\d{4}$/, "$1"));
+}
+
+
+let spendByMonth = {}; // slownik {Python}
+
+transObj.forEach((obj) => {
+    let curMonth = getMies(obj.detailsOfPayment.date);
+    if(curMonth in spendByMonth) { // jesli jest juz w slown (Python), dodaj do
+        spendByMonth[curMonth] += parseFloat(obj.cost);
+    } else { // jesli nie to wstaw po raz 1
+        spendByMonth[curMonth] = parseFloat(obj.cost);
+    }
+});
+
+// console.log(spendByMonth);
+
+//     v. Values of the spending in each day of the week
+
+/**
+ * fn. pomoc zwraca dzien (Int) ze stringu postaci "dd-mm-yyyy"
+ * @param {String} ddmmyyy - data w postaci "dd-mm-yyyy"
+ * @return {Number} - miesiac (Int) ze stringu, nie sprawdza czy 1-31
+ */
+function getDzien(ddmmyyyy) {
+    return parseInt(ddmmyyyy.replace(/^(\d{2})-.*/, "$1"));
+}
+
+/**
+ * fn. pomoc zwraca dzienTygodnia (Int) ze stringu postaci "dd-mm-yyyy"
+ * @param {String} ddmmyyy - data w postaci "dd-mm-yyyy"
+ * @return {Number} - dzien tygodnia (Int) ze stringu, 0 - Sun, 6 - Sat
+ */
+function getDzTyg(ddmmyyyy) {
+    let data = new Date(getRok(ddmmyyyy),
+                        getMies(ddmmyyyy)-1, // tu ma byc 0-11, 0 - Jan
+                        getDzien(ddmmyyyy));
+    return data.getDay();
+}
+
+let spendByWeekDay = {};
+
+transObj.forEach((obj) => {
+    let curDay = getDzTyg(obj.detailsOfPayment.date);
+    if(curDay in spendByWeekDay) { // jesli jest juz w slown (Python), dodaj do
+        spendByWeekDay[curDay] += parseFloat(obj.cost);
+    } else { // jesli nie to wstaw po raz 1
+        spendByWeekDay[curDay] = parseFloat(obj.cost);
+    }
+});
+
+// console.log(spendByWeekDay);
+
+
+let summaryStat = {};
+
+// wypelnienie koncowego obiektu
+Object.assign(summaryStat,
+	      {totCost2014},
+	      {earnByComp},
+	      {costByTrans},
+	      {spendByMonth},
+	      {spendByWeekDay});
+
+console.log(summaryStat);
 
 ///////////////////////////////////////////////////////////////////////////////
 //	                     zadanie 4 (egazminacyjne)
