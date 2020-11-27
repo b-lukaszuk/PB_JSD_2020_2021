@@ -123,9 +123,10 @@ let hand1 = new Hand(taliaKart.getRandCards(5));
 console.log(hand1.toString());
 console.log(taliaKart.length);
 
-function isRoyalFlush(tab5Kart) {
-    let rangi = tab5Kart.getKarty().map((karta) => karta.ranga);
-    let kolory = tab5Kart.getKarty().map((karta) => karta.kolor);
+// 10, J, D, K, A w tym samym kolorze
+function isRoyalFlush(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let kolory = hand.getKarty().map((karta) => karta.kolor);
     let wymRangi = [10, 11, 12, 13, 14];
     // arr.includes(value) => true|false jesli array zawiera/nie value
     let war1 = wymRangi.every((wymRanga) => rangi.includes(wymRanga));
@@ -133,24 +134,36 @@ function isRoyalFlush(tab5Kart) {
         (kolor) => kolor === kolory[0]);
     return war1 && war2;
 };
-//console.log(hand1);
-console.log(isRoyalFlush(hand1));
-console.log(isRoyalFlush(new Hand([
-    {ranga: 9, kolor: 2},
-    {ranga: 11, kolor: 2},
-    {ranga: 12, kolor: 2},
-    {ranga: 14, kolor: 2},
-    {ranga: 14, kolor: 2},
-])));
-console.log(isRoyalFlush(new Hand([
-    {ranga: 10, kolor: 3},
-    {ranga: 11, kolor: 3},
-    {ranga: 12, kolor: 3},
-    {ranga: 13, kolor: 3},
-    {ranga: 14, kolor: 3},
-])));
 
-function StraightFlush() {};
+// 5 kart po kolei rangami, np. [7, 8, 9, 10, J], w tym samym kolorze
+function isStraightFlush(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let kolory = hand.getKarty().map((karta) => karta.kolor);
+    // tablica od 0 do 4 (inclusive)
+    let wymRangi = Array.from( // zwraca array z obiektu, np. "ab" => ["a", "b"]
+        Array(5) // zwraca array 10 elt-owy (undefined w srodku)
+            .keys() // zwraca array iterator z indkes. kolejnych elt-ow tablicy
+    );
+    // dodaje min z rang do kazdego elt, aby miec wymagane karty po kolei
+    wymRangi = wymRangi.map((ranga) => ranga + Math.min(...rangi));
+    // arr.includes(value) => true|false jesli array zawiera/nie value
+    let war1 = wymRangi.every((wymRanga) => rangi.includes(wymRanga));
+    let war2 = kolory.every( // takie same kolory
+        (kolor) => kolor === kolory[0]);
+    return war1 && war2;
+}
+
+console.log(isStraightFlush(hand1));
+console.log(isStraightFlush(new Hand(
+    [
+	{ranga: 2, kolor: 2},
+	{ranga: 4, kolor: 2},
+	{ranga: 3, kolor: 2},
+	{ranga: 5, kolor: 2},
+	{ranga: 6, kolor: 2}]
+)));
+
+
 function FourOfKind() {};
 function StraightFlush() {};
 function FullHouse() {};
