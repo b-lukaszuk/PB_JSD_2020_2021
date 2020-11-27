@@ -85,6 +85,7 @@ class Talia {
             Math.floor(Math.random() * this.talia.length), 1
         )[0]; // zwraca 1 karte, a nie tabl z 1 karta
     }
+    // zwraca tab kart
     getRandCards(ile) {
         let kartyDoZwrotu = [];
         for (let i = 0; i < ile; i++) {
@@ -107,6 +108,9 @@ class Hand {
         }
         return strKarty.replace(/ +$/, ""); // usuwa spacje z konca stringu
     }
+    getKarty() { // zwraca tablice kart
+        return this.hand;
+    }
 }
 
 console.log(taliaKart.length);
@@ -115,6 +119,45 @@ console.log(taliaKart.length);
 
 
 console.log(taliaKart.length);
-// console.log(taliaKart.getRandCards(5));
-console.log(new Hand(taliaKart.getRandCards(5)).toString());
+let hand1 = new Hand(taliaKart.getRandCards(5));
+console.log(hand1.toString());
 console.log(taliaKart.length);
+
+function isRoyalFlush(tab5Kart) {
+    let rangi = tab5Kart.getKarty().map((karta) => karta.ranga);
+    let kolory = tab5Kart.getKarty().map((karta) => karta.kolor);
+    let wymRangi = [10, 11, 12, 13, 14];
+    // arr.includes(value) => true|false jesli array zawiera/nie value
+    let war1 = wymRangi.every((wymRanga) => rangi.includes(wymRanga));
+    let war2 = kolory.every( // takie same kolory
+        (kolor) => kolor === kolory[0]);
+    return war1 && war2;
+};
+//console.log(hand1);
+console.log(isRoyalFlush(hand1));
+console.log(isRoyalFlush(new Hand([
+    {ranga: 9, kolor: 2},
+    {ranga: 11, kolor: 2},
+    {ranga: 12, kolor: 2},
+    {ranga: 14, kolor: 2},
+    {ranga: 14, kolor: 2},
+])));
+console.log(isRoyalFlush(new Hand([
+    {ranga: 10, kolor: 3},
+    {ranga: 11, kolor: 3},
+    {ranga: 12, kolor: 3},
+    {ranga: 13, kolor: 3},
+    {ranga: 14, kolor: 3},
+])));
+
+function StraightFlush() {};
+function FourOfKind() {};
+function StraightFlush() {};
+function FullHouse() {};
+function Flush() {};
+function Straight() {};
+function ThreeOfKind() {};
+function TwoPair() {};
+function OnePair() {};
+function HighCard() {};
+    
