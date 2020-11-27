@@ -153,18 +153,34 @@ function isStraightFlush(hand) {
     return war1 && war2;
 }
 
-console.log(isStraightFlush(hand1));
-console.log(isStraightFlush(new Hand(
+// 4x karta tej samej rangi
+function isFourOfKind(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let kolory = hand.getKarty().map((karta) => karta.kolor);
+    let licznosciRang = {};
+    rangi.forEach((ranga) => {
+	let curRanga = ranga;
+	if(curRanga in licznosciRang) { // jesli jest juz w slown (Python) to +1
+	    licznosciRang[curRanga] += 1;
+	} else { // jesli nie to wstaw po raz 1
+	    licznosciRang[curRanga] = 1;
+	}
+    });
+    let war1 = Object.values(licznosciRang) // zwraca tablice values ze slown
+        .includes(4); // true|false dla obecnosci elt-u w tablicy
+    return war1;
+};
+
+console.log(isFourOfKind(hand1));
+console.log(isFourOfKind(new Hand(
     [
 	{ranga: 2, kolor: 2},
 	{ranga: 4, kolor: 2},
 	{ranga: 3, kolor: 2},
-	{ranga: 5, kolor: 2},
-	{ranga: 6, kolor: 2}]
+	{ranga: 4, kolor: 2},
+	{ranga: 4, kolor: 2}]
 )));
 
-
-function FourOfKind() {};
 function StraightFlush() {};
 function FullHouse() {};
 function Flush() {};
