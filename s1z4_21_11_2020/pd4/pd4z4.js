@@ -176,23 +176,38 @@ function getCzestWyst(tab) {
 // 4x karta tej samej rangi
 function isFourOfKind(hand) {
     let rangi = hand.getKarty().map((karta) => karta.ranga);
-    let kolory = hand.getKarty().map((karta) => karta.kolor);
     let war1 = getCzestWyst(rangi).includes(4);
     return war1;
 };
 
-console.log(isFourOfKind(hand1));
-console.log(isFourOfKind(new Hand(
+// 3x dana_ranga && 2x inna_ranga
+function isFullHouse(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let wymCzestWyst = [2, 3];
+    let czestWystRang = getCzestWyst(rangi);
+    let war1 = czyAinB(wymCzestWyst, czestWystRang);
+    return war1;
+};
+
+// 5x ten sam kolor
+function isFlush(hand) {
+    let kolory = hand.getKarty().map((karta) => karta.kolor);
+    let wymCzestWyst = [5];
+    let czestWystKol = getCzestWyst(kolory);
+    let war1 = czyAinB(wymCzestWyst, czestWystKol);
+    return war1;
+};
+
+console.log(isFlush(hand1));
+console.log(isFlush(new Hand(
     [
 	{ranga: 2, kolor: 2},
 	{ranga: 2, kolor: 2},
 	{ranga: 3, kolor: 2},
-	{ranga: 2, kolor: 2},
+	{ranga: 3, kolor: 2},
 	{ranga: 2, kolor: 2}]
 )));
 
-function FullHouse() {};
-function Flush() {};
 function Straight() {};
 function ThreeOfKind() {};
 function TwoPair() {};
