@@ -153,21 +153,27 @@ function isStraightFlush(hand) {
     return war1 && war2;
 }
 
+// fn. pomocn - zwraca tabele z czest wyst liczb w srodku
+// np. [1, 2, 3, 4] => [1, 1, 1, 1], ale
+// [1, 2, 3, 1] => [1, 1, 2]
+function getCzestWyst(tab) {
+    let liczebnEltow ={};
+    tab.forEach((elt) => {
+	let curElt = elt;
+	if(curElt in liczebnEltow) { // jesli jest juz w slown (Python) to +1
+	    liczebnEltow[curElt] += 1;
+	} else { // jesli nie to wstaw po raz 1
+	    liczebnEltow[curElt] = 1;
+	}
+    });
+    return Object.values(liczebnEltow); // zwraca tablice values ze slown
+}
+
 // 4x karta tej samej rangi
 function isFourOfKind(hand) {
     let rangi = hand.getKarty().map((karta) => karta.ranga);
     let kolory = hand.getKarty().map((karta) => karta.kolor);
-    let licznosciRang = {};
-    rangi.forEach((ranga) => {
-	let curRanga = ranga;
-	if(curRanga in licznosciRang) { // jesli jest juz w slown (Python) to +1
-	    licznosciRang[curRanga] += 1;
-	} else { // jesli nie to wstaw po raz 1
-	    licznosciRang[curRanga] = 1;
-	}
-    });
-    let war1 = Object.values(licznosciRang) // zwraca tablice values ze slown
-        .includes(4); // true|false dla obecnosci elt-u w tablicy
+    let war1 = getCzestWyst(rangi).includes(4);
     return war1;
 };
 
@@ -175,10 +181,10 @@ console.log(isFourOfKind(hand1));
 console.log(isFourOfKind(new Hand(
     [
 	{ranga: 2, kolor: 2},
-	{ranga: 4, kolor: 2},
+	{ranga: 2, kolor: 2},
 	{ranga: 3, kolor: 2},
-	{ranga: 4, kolor: 2},
-	{ranga: 4, kolor: 2}]
+	{ranga: 2, kolor: 2},
+	{ranga: 2, kolor: 2}]
 )));
 
 function StraightFlush() {};
