@@ -123,13 +123,17 @@ let hand1 = new Hand(taliaKart.getRandCards(5));
 console.log(hand1.toString());
 console.log(taliaKart.length);
 
+// fn. pomocn, mowi, czy kazdy elt tabA, znajduje sie w tabB
+function czyAinB(tabA, tabB) {
+    return tabA.every((eltA) => tabB.includes(eltA));
+}
+
 // 10, J, D, K, A w tym samym kolorze
 function isRoyalFlush(hand) {
     let rangi = hand.getKarty().map((karta) => karta.ranga);
     let kolory = hand.getKarty().map((karta) => karta.kolor);
     let wymRangi = [10, 11, 12, 13, 14];
-    // arr.includes(value) => true|false jesli array zawiera/nie value
-    let war1 = wymRangi.every((wymRanga) => rangi.includes(wymRanga));
+    let war1 = czyAinB(wymRangi, rangi);
     let war2 = kolory.every( // takie same kolory
         (kolor) => kolor === kolory[0]);
     return war1 && war2;
@@ -147,7 +151,7 @@ function isStraightFlush(hand) {
     // dodaje min z rang do kazdego elt, aby miec wymagane karty po kolei
     wymRangi = wymRangi.map((ranga) => ranga + Math.min(...rangi));
     // arr.includes(value) => true|false jesli array zawiera/nie value
-    let war1 = wymRangi.every((wymRanga) => rangi.includes(wymRanga));
+    let war1 = czyAinB(wymRangi, rangi);
     let war2 = kolory.every( // takie same kolory
         (kolor) => kolor === kolory[0]);
     return war1 && war2;
@@ -187,7 +191,6 @@ console.log(isFourOfKind(new Hand(
 	{ranga: 2, kolor: 2}]
 )));
 
-function StraightFlush() {};
 function FullHouse() {};
 function Flush() {};
 function Straight() {};
