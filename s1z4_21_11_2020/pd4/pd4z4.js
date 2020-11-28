@@ -240,7 +240,6 @@ function isOnePair(hand) {
     return war1;
 };
 
-
 // zadne z powyzszych, po prostu najwyzsza karta decyduje
 // tu zwraca range najw karty
 function getHighCardRank(hand) {
@@ -248,12 +247,28 @@ function getHighCardRank(hand) {
     return Math.max(...rangi);
 };
     
-console.log(getHighCardRank(hand1));
-console.log(getHighCardRank(new Hand(
-    [
-	{ranga: 3, kolor: 2},
-	{ranga: 11, kolor: 2},
-	{ranga: 2, kolor: 2},
-	{ranga: 3, kolor: 2},
-	{ranga: 4, kolor: 1}]
-)));
+
+// nazwy polskie z https://pl.wikipedia.org/wiki/Poker
+let funsSpr = {
+    "poker krolewski": isRoyalFlush,
+    "poker": isStraightFlush,
+    "kareta": isFourOfKind,
+    "full": isFullHouse,
+    "kolor": isFlush,
+    "strit": isFlush,
+    "trojka": isFlush,
+    "dwie pary": isTwoPair,
+    "jedna para": isOnePair,
+    "najw karta": getHighCardRank
+};
+
+function ustalUklad(hand, funsSpr) {
+    for (const nazwaFnSpr in funsSpr) {
+        if(funsSpr[nazwaFnSpr](hand)) {
+            return nazwaFnSpr;
+        }
+    }
+    return "nie znaleziono pasujacego ukladu";
+}
+
+console.log(ustalUklad(hand1, funsSpr));
