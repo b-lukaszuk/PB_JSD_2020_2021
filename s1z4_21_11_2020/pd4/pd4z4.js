@@ -240,8 +240,16 @@ function isOnePair(hand) {
     return war1;
 };
 
-console.log(isOnePair(hand1));
-console.log(isOnePair(new Hand(
+
+// zadne z powyzszych, po prostu najwyzsza karta decyduje
+// tu zwraca range najw karty
+function getHighCardRank(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    return Math.max(...rangi);
+};
+    
+console.log(getHighCardRank(hand1));
+console.log(getHighCardRank(new Hand(
     [
 	{ranga: 3, kolor: 2},
 	{ranga: 11, kolor: 2},
@@ -249,6 +257,3 @@ console.log(isOnePair(new Hand(
 	{ranga: 3, kolor: 2},
 	{ranga: 4, kolor: 1}]
 )));
-
-function HighCard() {};
-    
