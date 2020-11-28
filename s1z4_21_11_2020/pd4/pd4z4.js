@@ -255,7 +255,7 @@ let funsSpr = {
     "kareta": isFourOfKind,
     "full": isFullHouse,
     "kolor": isFlush,
-    "strit": isFlush,
+    "strit": isStraight,
     "trojka": isFlush,
     "dwie pary": isTwoPair,
     "jedna para": isOnePair,
@@ -268,7 +268,17 @@ function ustalUklad(hand, funsSpr) {
             return nazwaFnSpr;
         }
     }
+    // to nie powinno sie nigdy wykonac
     return "nie znaleziono pasujacego ukladu";
 }
 
 console.log(ustalUklad(hand1, funsSpr));
+console.log(ustalUklad(new Hand(
+    [
+        {ranga: 7, kolor: 1},
+        {ranga: 6, kolor: 1},
+        {ranga: 5, kolor: 1},
+        {ranga: 8, kolor: 2},
+        {ranga: 4, kolor: 1},
+    ]
+), funsSpr));
