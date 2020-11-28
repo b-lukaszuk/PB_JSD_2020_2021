@@ -221,18 +221,25 @@ function isThreeOfKind(hand) {
     return war1;
 };
 
-console.log(isThreeOfKind(hand1));
-console.log(isThreeOfKind(new Hand(
+// 2x jedna ranga && 2x inna ranga
+function isTwoPair(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let war1 = getCzestWyst(rangi).
+        filter((czest) => czest === 2) // tylko liczebn = 2
+        .length === 2; // sprawdzam czy sa 2
+    return war1;
+};
+
+console.log(isTwoPair(hand1));
+console.log(isTwoPair(new Hand(
     [
 	{ranga: 3, kolor: 2},
 	{ranga: 4, kolor: 2},
-	{ranga: 3, kolor: 2},
+	{ranga: 2, kolor: 2},
 	{ranga: 3, kolor: 2},
 	{ranga: 4, kolor: 1}]
 )));
 
-
-function TwoPair() {};
 function OnePair() {};
 function HighCard() {};
     
