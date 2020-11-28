@@ -214,17 +214,24 @@ function isStraight(hand) {
     return war1;
 };
 
-console.log(isStraight(hand1));
-console.log(isStraight(new Hand(
+// 3x dana ranga
+function isThreeOfKind(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let war1 = getCzestWyst(rangi).includes(3);
+    return war1;
+};
+
+console.log(isThreeOfKind(hand1));
+console.log(isThreeOfKind(new Hand(
     [
-	{ranga: 2, kolor: 2},
+	{ranga: 3, kolor: 2},
 	{ranga: 4, kolor: 2},
 	{ranga: 3, kolor: 2},
-	{ranga: 5, kolor: 2},
-	{ranga: 6, kolor: 1}]
+	{ranga: 3, kolor: 2},
+	{ranga: 4, kolor: 1}]
 )));
 
-function ThreeOfKind() {};
+
 function TwoPair() {};
 function OnePair() {};
 function HighCard() {};
