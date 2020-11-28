@@ -123,6 +123,9 @@ let hand1 = new Hand(taliaKart.getRandCards(5));
 console.log(hand1.toString());
 console.log(taliaKart.length);
 
+// uklady kart za
+// https://www.cardschat.com/poker-hands/
+
 // fn. pomocn, mowi, czy kazdy elt tabA, znajduje sie w tabB
 function czyAinB(tabA, tabB) {
     return tabA.every((eltA) => tabB.includes(eltA));
@@ -150,7 +153,6 @@ function isStraightFlush(hand) {
     );
     // dodaje min z rang do kazdego elt, aby miec wymagane karty po kolei
     wymRangi = wymRangi.map((ranga) => ranga + Math.min(...rangi));
-    // arr.includes(value) => true|false jesli array zawiera/nie value
     let war1 = czyAinB(wymRangi, rangi);
     let war2 = kolory.every( // takie same kolory
         (kolor) => kolor === kolory[0]);
@@ -198,17 +200,30 @@ function isFlush(hand) {
     return war1;
 };
 
-console.log(isFlush(hand1));
-console.log(isFlush(new Hand(
+// 5x kary w kolejnosci rang, ale bez koloru
+function isStraight(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    // tablica od 0 do 4 (inclusive)
+    let wymRangi = Array.from( // zwraca array z obiektu, np. "ab" => ["a", "b"]
+        Array(5) // zwraca array 10 elt-owy (undefined w srodku)
+            .keys() // zwraca array iterator z indkes. kolejnych elt-ow tablicy
+    );
+    // dodaje min z rang do kazdego elt, aby miec wymagane karty po kolei
+    wymRangi = wymRangi.map((ranga) => ranga + Math.min(...rangi));
+    let war1 = czyAinB(wymRangi, rangi);
+    return war1;
+};
+
+console.log(isStraight(hand1));
+console.log(isStraight(new Hand(
     [
 	{ranga: 2, kolor: 2},
-	{ranga: 2, kolor: 2},
+	{ranga: 4, kolor: 2},
 	{ranga: 3, kolor: 2},
-	{ranga: 3, kolor: 2},
-	{ranga: 2, kolor: 2}]
+	{ranga: 5, kolor: 2},
+	{ranga: 6, kolor: 1}]
 )));
 
-function Straight() {};
 function ThreeOfKind() {};
 function TwoPair() {};
 function OnePair() {};
