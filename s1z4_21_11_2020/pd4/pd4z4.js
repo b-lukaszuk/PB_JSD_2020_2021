@@ -125,6 +125,9 @@ console.log(taliaKart.length);
 
 // uklady kart za
 // https://www.cardschat.com/poker-hands/
+// dodane funkcje beda sprawdzane od najw do najmn setu
+// dlatego i sOnePair() tez zwroci true dla dwoch par
+// bo isTwoPair() bedzie wykonane wczesniej i na tym koniec
 
 // fn. pomocn, mowi, czy kazdy elt tabA, znajduje sie w tabB
 function czyAinB(tabA, tabB) {
@@ -230,16 +233,22 @@ function isTwoPair(hand) {
     return war1;
 };
 
-console.log(isTwoPair(hand1));
-console.log(isTwoPair(new Hand(
+// 2x jakas ranga
+function isOnePair(hand) {
+    let rangi = hand.getKarty().map((karta) => karta.ranga);
+    let war1 = getCzestWyst(rangi).includes(2);
+    return war1;
+};
+
+console.log(isOnePair(hand1));
+console.log(isOnePair(new Hand(
     [
 	{ranga: 3, kolor: 2},
-	{ranga: 4, kolor: 2},
+	{ranga: 11, kolor: 2},
 	{ranga: 2, kolor: 2},
 	{ranga: 3, kolor: 2},
 	{ranga: 4, kolor: 1}]
 )));
 
-function OnePair() {};
 function HighCard() {};
     
