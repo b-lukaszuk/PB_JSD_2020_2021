@@ -64,8 +64,9 @@ function zaokr(liczba, ilePoPrzec=2) {
 //     i. How much money was spend in 2014
 let totCost2014 = transObj.filter(
     (obj) => getRok(obj.detailsOfPayment.date) === 2014) // spr rok
-    .map((obj) => zaokr(obj.cost)) // Str -> Float, altern parseFloat()
+    .map((obj) => parseFloat(obj.cost)) // Str -> Float
     .reduce((a, b) => a + b, 0); // suma
+totCost2014 = zaokr(totCost2014); // bo JS druk brzydkie numerki
 
 // console.log("suma wydatkow w 2014 roku: " + totCost2014);
 
@@ -76,11 +77,25 @@ let earnByComp = {}; // obiekt (JS), slownik w Python-ie
 transObj.forEach((obj) => {
     let curComp = obj.detailsOfPayment.company;
     if(curComp in earnByComp) { // jesli jest juz w slown (Python), dodaj do
-        earnByComp[curComp] += parseFloat(obj.cost);
+	earnByComp[curComp] += parseFloat(obj.cost);
     } else { // jesli nie to wstaw po raz 1
-        earnByComp[curComp] = parseFloat(obj.cost);
+	earnByComp[curComp] = parseFloat(obj.cost);
     }
 });
+
+/**
+ * fn. pomocn - zwraca obiekt z zaokraglonymi liczbami
+ * ZMIENIA OBIEKT IN-PLACE
+ * @param {Object} obiekt - obiekt bez zagniezdzen zawierajacy floaty
+ * @param {Function} fn - funkcja zaokraglajaca liczbe
+ */
+function zaokrAllNums(obiekt, fn) {
+    for(const propName in obiekt) {
+	obiekt[propName] = fn(obiekt[propName]);
+    }
+}
+
+zaokrAllNums(earnByComp, zaokr);
 
 // console.log(earnByComp);
 
@@ -91,12 +106,13 @@ let costByTrans = {}; // slownik (Python)
 transObj.forEach((obj) => {
     let curTrans = obj.detailsOfPayment.Type;
     if(curTrans in costByTrans) { // jesli jest juz w slown (Python), dodaj do
-        costByTrans[curTrans] += parseFloat(obj.cost);
+	costByTrans[curTrans] += parseFloat(obj.cost);
     } else { // jesli nie to wstaw po raz 1
-        costByTrans[curTrans] = parseFloat(obj.cost);
+	costByTrans[curTrans] = parseFloat(obj.cost);
     }
 });
 
+zaokrAllNums(costByTrans, zaokr);
 // console.log(costByTrans);
 
 //     iv. Values of the spending in each month
@@ -110,18 +126,18 @@ function getMies(ddmmyyyy) {
     return parseInt(ddmmyyyy.replace(/.+(\d{2})-\d{4}$/, "$1"));
 }
 
-
 let spendByMonth = {}; // slownik {Python}
 
 transObj.forEach((obj) => {
     let curMonth = getMies(obj.detailsOfPayment.date);
     if(curMonth in spendByMonth) { // jesli jest juz w slown (Python), dodaj do
-        spendByMonth[curMonth] += parseFloat(obj.cost);
+	spendByMonth[curMonth] += parseFloat(obj.cost);
     } else { // jesli nie to wstaw po raz 1
-        spendByMonth[curMonth] = parseFloat(obj.cost);
+	spendByMonth[curMonth] = parseFloat(obj.cost);
     }
 });
 
+zaokrAllNums(spendByMonth, zaokr);
 // console.log(spendByMonth);
 
 //     v. Values of the spending in each day of the week
@@ -142,8 +158,8 @@ function getDzien(ddmmyyyy) {
  */
 function getDzTyg(ddmmyyyy) {
     let data = new Date(getRok(ddmmyyyy),
-                        getMies(ddmmyyyy)-1, // tu ma byc 0-11, 0 - Jan
-                        getDzien(ddmmyyyy));
+			getMies(ddmmyyyy)-1, // tu ma byc 0-11, 0 - Jan
+			getDzien(ddmmyyyy));
     return data.getDay();
 }
 
@@ -152,12 +168,13 @@ let spendByWeekDay = {};
 transObj.forEach((obj) => {
     let curDay = getDzTyg(obj.detailsOfPayment.date);
     if(curDay in spendByWeekDay) { // jesli jest juz w slown (Python), dodaj do
-        spendByWeekDay[curDay] += parseFloat(obj.cost);
+	spendByWeekDay[curDay] += parseFloat(obj.cost);
     } else { // jesli nie to wstaw po raz 1
-        spendByWeekDay[curDay] = parseFloat(obj.cost);
+	spendByWeekDay[curDay] = parseFloat(obj.cost);
     }
 });
 
+zaokrAllNums(spendByWeekDay, zaokr);
 // console.log(spendByWeekDay);
 
 
@@ -172,3 +189,5 @@ Object.assign(summaryStat,
 	      {spendByWeekDay});
 
 console.log(summaryStat);
+
+
