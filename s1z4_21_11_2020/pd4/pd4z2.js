@@ -33,6 +33,7 @@ Number.prototype.reverse = function () {
 };
 
 // na primitive-ach to nie dziala, czyli 123.reverse() bedzie blad, ale
+console.log("315 po odwroceniu daje: " + (315).reverse());
 console.log("123 po odwroceniu daje: " + new Number(123).reverse());
 let jakasLiczba = 234;
 console.log(jakasLiczba + " po odwroceniu daje: " + jakasLiczba.reverse());
