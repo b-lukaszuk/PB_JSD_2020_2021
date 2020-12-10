@@ -1,11 +1,12 @@
 // 2)(EXAM) Solve sudoku
 
-// background, 1 video z YT
+// background do rozwiazania:
+// 1 video z YT z:
 // https://www.youtube.com/watch?v=ckdwhm7GM94&list=PLAhxvOuSHpkYsUufBeuHjQUNcb3iHt9nl
-// wlasnoreczne (na piechote) rozwiazanie 1 latwego sudoku z
+// wlasnoreczne (na piechote) rozwiazanie 1 latwego sudoku z:
 // https://sudoku.com/easy/
 // i zobaczmy czy to wystarczy
-// (do rozwiazania jest proste sudoku wiec powinno)
+// (do rozwiazania jest proste sudoku, wiec powinno)
 
 // sudoku to duzy kwadrat 9x9 (malych kwadratow)
 // bedzie reprezentowana jako tablica 81 elt [0:80], bo 9x9
