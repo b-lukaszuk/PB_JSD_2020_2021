@@ -134,23 +134,25 @@ function range(start, stop, co = 1) {
  */
 class Pole1x1 {
   /**
-   * @param {Number} num - Int wpisany w najmniejszym kwadracie
-   * @param {Number} w - Int (0-9) - indeks wiersza w kwadracie 9x9
-   * @param {Number} k - Int (0-9) - indeks kolumny w kwadracie 9x9
+   * @param {Number} val - Int wpisany w najmniejszym kwadracie
+   * @param {Number} w - Int (0-8) - indeks wiersza w kwadracie 9x9
+   * @param {Number} k - Int (0-8) - indeks kolumny w kwadracie 9x9
+   * @param {Number} kw3x3 - Int (0-8) - id kwadratu 3x3 do ktorego nalezy pole
    */
-  constructor(num, w, k) {
-    this.num = num;
+  constructor(val, w, k, kw3x3) {
+    this.val = val;
     this.w = w;
     this.k = k;
+    this.kw3x3 = kw3x3;
     // kandydaci do wpisania w to pole
-    if (num !== 0) {
+    if (val !== 0) {
       this.kand = []; // jesli jest juz wpisana liczba to brak kandydatow
     } else {
       this.kand = range(1, 10); // jesli puste pole (0) to 0 (incl) - 9 (incl)
     }
   }
-  getNum() {
-    return this.num;
+  getVal() {
+    return this.val;
   }
 
   getKand() {
@@ -158,6 +160,12 @@ class Pole1x1 {
   }
   setKand(kand) {
     this.kand = kand;
+  }
+  getKol() {
+    return this.k;
+  }
+  getWier() {
+    return this.w;
   }
 }
 
@@ -174,61 +182,58 @@ function usNumZtab(tab, num) {
   }
 }
 
-/**
- * kwadrat 3x3 w sudoku, skladajacy sie z 9 pol
- */
-class Kwadr3x3 {
-  /**
-   * @param {<Object>} pola1x1 - wiele obiektow (do 9), klasy pole
-   */
-  constructor(...pola1x1) {
-    if (pola1x1.length != 9) {
-      console.log("blad! obiektow pole1x1 musi byc dokladnie 9");
-    } else {
-      this.tabPol = pola1x1;
-    }
-  }
-  /**
-   * updateuje kandydatow we wszystkich ob. Pole1x1
-   * usuwa z kandydatow w obiekcie Pole1x1 liczby ktore sa juz w kwadracie3x3
-   * @param {Array<Number>} tab - tablica Int-ow
-   * @param {Number} num - szukana liczba do usuniecia z tabeli
-   */
-  updateKandyd() {
-    let zajLiczby = this.tabPol
-      .map((pole) => pole.getNum())
-      .filter((num) => num > 0);
-
-    for (let i = 0; i < zajLiczby; i++) {
-      for (let j = 0; j < this.tabPol.length; i++) {
-        this.tabPol[i].setKand(usNumZtab(this.tabPol[i].getKand(), i));
-      }
-    }
-  }
-}
-
 class Kwadrat9x9 {
   constructor(tab9x9) {
     this.tabPol9x9 = [];
+    // iteracja po wierszach tab9x9 (input)
     for (let w = 0; w < 9; w++) {
+      // iteracja po kolumnach tab9x9 (input)
       for (let k = 0; k < 9; k++) {
-        this.tabPol9x9.push(new Pole1x1(tab9x9[9 * w + k], (w = w), (k = k)));
+        let id = 9 * w + k; // id formatu 9x9
+        console.log(id);
+        let idKw3x3 = this.getKw3x3(w, k);
+        this.tabPol9x9.push(new Pole1x1(tab9x9[id], w, k, idKw3x3));
       }
     }
   }
+
+  // num - liczba od 0 do 8
+  // zwraca "a", "b" lub "c" dla zakresu co 3 liczac od 0
+  abc(num) {
+    if (num > 5) {
+      return "c";
+    } else if (num > 2) {
+      return "b";
+    } else {
+      return "a";
+    }
+  }
+
+  // dla wiersza i kolumny zwraca id kwadratu 3x3
+  // od "aa" do "cc"
+  getKw3x3(w, k) {
+    return this.abc(w) + this.abc(k);
+  }
+
+  getValKol(k) {
+    return this.tabPol9x9.filter((pole) => pole.getKol() === k);
+  }
+  // update kandydatow na podst zawartosci kolumny
+  updKandKol() {}
+
   // drukuje sudoku (kwadrat9x9) do konsoli
   print() {
     // linia otwierajaca (pierwsza z gory)
     console.log("-------------------------");
 
+    // iteracja po wierszach
     for (let w = 0; w < 9; w++) {
-      // iteracja wiersze
       let wierszDoDruku = "| "; // bok najbardziej od lewej
 
+      // iteracja po kolumnach
       for (let k = 0; k < 9; k++) {
-        // iteracja kolumny
         let id = 9 * w + k; // id z tabPol9x9
-        wierszDoDruku += this.tabPol9x9[id].getNum() + " ";
+        wierszDoDruku += this.tabPol9x9[id].getVal() + " ";
         // co 3 kolumny prawy bok kwadratu 3x3
         // +1 bo inaczej indeks od 0 zaburza artymetyke z modulo
         if ((k + 1) % 3 === 0) {
@@ -245,6 +250,7 @@ class Kwadrat9x9 {
   }
 }
 
-kwadrat9x9 = new Kwadrat9x9(tabela9x9);
+let kwadrat9x9 = new Kwadrat9x9(tabela9x9);
 // console.log(kwadrat9x9.tabPol9x9);
 kwadrat9x9.print();
+// console.log(kwadrat9x9.getValKol(2));
