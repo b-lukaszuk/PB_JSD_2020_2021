@@ -154,6 +154,9 @@ class Pole1x1 {
   getVal() {
     return this.val;
   }
+  setVal(val) {
+    this.val = val;
+  }
 
   getKand() {
     return this.kand;
@@ -167,31 +170,55 @@ class Pole1x1 {
   getWier() {
     return this.w;
   }
+  getKw3x3() {
+    return this.kw3x3;
+  }
 }
 
 /**
  * usuwa dany numer z tablicy (pierwszy napotkany, jesli tam jest)
- * zmienia tablice inplace
+ * nie zmienia otrzymanej tablicy
  * @param {Array<Number>} tab - tablica Int-ow
  * @param {Number} num - szukana liczba do usuniecia z tabeli
+ * @return {Array<Number>} array z us numerem (lub pusty array)
  */
 function usNumZtab(tab, num) {
-  let eltPos = tab.indexOf(num);
+  let tab1 = [...tab];
+  let eltPos = tab1.indexOf(num);
   if (eltPos >= 0) {
-    tab.splice(eltPos, 1);
+    tab1.splice(eltPos, 1); // usuwa inplace
   }
+  return tab1;
+}
+
+/**
+ * usuwa numery (nums) z tablicy (tab)
+ * nie zmienia otrzymanej tablicy
+ * @param {Array<Number>} tab - tablica Int-ow
+ * @param {Array<Number>} nums - tab liczb (Int-y) do usun z tab
+ * @return {Array<Number>} array z us numerami (lub pusty array)
+ */
+function usNumsZtab(tab, nums) {
+  let tab1 = [...tab];
+  for (let i = 0; i < nums.length; i++) {
+    tab1 = usNumZtab(tab1, nums[i]);
+  }
+  return tab1;
 }
 
 class Kwadrat9x9 {
   constructor(tab9x9) {
     this.tabPol9x9 = [];
+    this.kw3x3Ids = [];
     // iteracja po wierszach tab9x9 (input)
     for (let w = 0; w < 9; w++) {
       // iteracja po kolumnach tab9x9 (input)
       for (let k = 0; k < 9; k++) {
         let id = 9 * w + k; // id formatu 9x9
-        console.log(id);
         let idKw3x3 = this.getKw3x3(w, k);
+        if (this.kw3x3Ids.indexOf(idKw3x3) === -1) {
+          this.kw3x3Ids.push(idKw3x3);
+        }
         this.tabPol9x9.push(new Pole1x1(tab9x9[id], w, k, idKw3x3));
       }
     }
@@ -218,8 +245,67 @@ class Kwadrat9x9 {
   getValKol(k) {
     return this.tabPol9x9.filter((pole) => pole.getKol() === k);
   }
+
+  getValWier(w) {
+    return this.tabPol9x9.filter((pole) => pole.getWier() === w);
+  }
+
+  getValKw3x3(id) {
+    return this.tabPol9x9.filter((pole) => pole.getKw3x3() === id);
+  }
+
   // update kandydatow na podst zawartosci kolumny
-  updKandKol() {}
+  updKandKol(k) {
+    let zajete = this.getValKol(k)
+      .map((pole) => pole.getVal())
+      .filter((num) => num !== 0);
+    this.getValKol(k).forEach((p) => {
+      p.setKand(usNumsZtab(p.getKand(), zajete));
+    });
+  }
+
+  // update kandydatow na podst zawartosci wiersza
+  updKandWier(w) {
+    let zajete = this.getValWier(w)
+      .map((pole) => pole.getVal())
+      .filter((num) => num !== 0);
+    this.getValWier(w).forEach((p) => {
+      p.setKand(usNumsZtab(p.getKand(), zajete));
+    });
+  }
+
+  // update kandydatow na podst zawartosci Kwadratu3x3
+  updKandKw3x3(id) {
+    let zajete = this.getValKw3x3(id)
+      .map((pole) => pole.getVal())
+      .filter((num) => num !== 0);
+    this.getValKw3x3(id).forEach((p) => {
+      p.setKand(usNumsZtab(p.getKand(), zajete));
+    });
+  }
+
+  updAllKands() {
+    for (let i = 0; i < 9; i++) {
+      this.updKandWier(i);
+      this.updKandKol(i);
+      this.updKandKw3x3(this.kw3x3Ids[i]);
+    }
+  }
+
+  updAllVals() {
+    this.tabPol9x9.forEach((p) => {
+      if (p.getKand().length === 1) {
+        p.setVal(p.getKand()[0]);
+      }
+    });
+  }
+
+  solveSudoku(n_iter = 200) {
+    for (let i = 0; i < n_iter; i++) {
+      this.updAllKands();
+      this.updAllVals();
+    }
+  }
 
   // drukuje sudoku (kwadrat9x9) do konsoli
   print() {
@@ -251,6 +337,11 @@ class Kwadrat9x9 {
 }
 
 let kwadrat9x9 = new Kwadrat9x9(tabela9x9);
-// console.log(kwadrat9x9.tabPol9x9);
 kwadrat9x9.print();
-// console.log(kwadrat9x9.getValKol(2));
+console.log("\n");
+kwadrat9x9.solveSudoku();
+kwadrat9x9.print();
+
+// console.log(kwadrat9x9.kw3x3Ids);
+
+// console.log(kwadrat9x9.tabPol9x9);
