@@ -301,11 +301,25 @@ class Kwadrat9x9 {
     });
   }
 
-  solveSudoku(n_iter = 200) {
+  solveSudoku(n_iter = 100) {
     for (let i = 0; i < n_iter; i++) {
       this.updAllKands();
       this.updAllVals();
+      if (this.isSolved()) {
+        console.log("rozwiazano po " + i + " inter");
+        break;
+      }
     }
+  }
+
+  isSolved() {
+    // w kwadracie3x3 may cyfry 1-9 (incl-incl)
+    // z R-a: sum(1:9) => 45
+    // mamy 9 kwadratow3x3, wiec sum(1:9)*9 => 405
+    let sumaPol = this.tabPol9x9
+      .map((p) => p.getVal())
+      .reduce((acc, cur) => acc + cur);
+    return sumaPol === 405;
   }
 
   // drukuje sudoku (kwadrat9x9) do konsoli
