@@ -30,6 +30,24 @@
 //     5, 0, 8,       0, 0, 2,       1, 0, 3,
 // ];
 
+// inne level: easy, ale juz na medium progam nie rozwiazuje
+// [
+//     // [0:3, 0:9]
+// 3, 0, 6,      0, 1, 0,      7, 0, 0,
+// 0, 7, 0,      5, 0, 8,      0, 0, 0,
+// 9, 0, 0,      0, 6, 0,      0, 0, 0,
+//
+//     // [3:6, 0:9]
+// 0, 9, 0,      6, 0, 0,      5, 0, 3,
+// 0, 0, 0,      9, 0, 5,      0, 0, 0,
+// 1, 0, 5,      0, 0, 4,      0, 6, 0,
+//
+//     // [6:9 0:9]
+// 0, 0, 0,      0, 4, 0,      0, 0, 1,
+// 0, 0, 0,      2, 0, 3,      0, 8, 0,
+// 0, 0, 9,      0, 8, 0,      2, 0, 5,
+// ];
+
 let tabela9x9 = [
   7,
   0,
@@ -85,6 +103,7 @@ let tabela9x9 = [
   0,
   3,
   2,
+
   0,
   0,
   6,
@@ -113,6 +132,11 @@ let tabela9x9 = [
   0,
   3,
 ];
+
+// let tabela9x9 = [7, 0, 4, 8, 0, 0, 3, 0, 1, 8, 2, 0, 5, 0, 0, 0, 4,
+// 0, 0, 0, 9, 4, 3, 0, 5, 0, 0, 3, 1, 0, 0, 0, 0, 8, 0, 7, 0, 8, 0,
+// 0, 0, 0, 0, 1, 0, 9, 0, 7, 0, 0, 0, 0, 3, 2, 0, 0, 6, 0, 1, 5, 4,
+// 0, 0, 0, 7, 0, 0, 0, 9, 0, 6, 5, 5, 0, 8, 0, 0, 2, 1, 0, 3,];
 
 /**
  * odpowiednik Python-owego range()
@@ -306,7 +330,7 @@ class Kwadrat9x9 {
       this.updAllKands();
       this.updAllVals();
       if (this.isSolved()) {
-        console.log("rozwiazano po " + i + " inter");
+        console.log("rozwiazano po " + i + " iter");
         break;
       }
     }
@@ -356,7 +380,3 @@ kwadrat9x9.print();
 console.log("\n");
 kwadrat9x9.solveSudoku();
 kwadrat9x9.print();
-
-// console.log(kwadrat9x9.kw3x3Ids);
-
-// console.log(kwadrat9x9.tabPol9x9);
