@@ -30,11 +30,12 @@
 
 import {Kula} from "./kula"
 
-// mala modyfikacja ilosc kul do wazenia bede wczytywal z bash-a, np.:
+// mala modyfikacja, ilosc kul do wazenia bede wczytywal z bash-a, np.:
 // > node z1.js 8
 const yargs = require("yargs")
 const args = yargs.argv; // argsy przeslane przy wywolaniu
 let ileEltow: number; // ile kul mamy miec
+// jesli nie podano args-ow to 8, jesli za duzo argsow to tylko 1 podany
 if (typeof args._[0] === "undefined") {
     ileEltow = 8;
 } else {
@@ -93,10 +94,10 @@ tabLiczb = put2doLosInd(tabLiczb);
  * @return {Array<Kula>} - tab obiektow klasy Kula
  */
 function tabLbDoTabKul(tab: Array<number>): Array<Kula> {
-    return tab.map((cur, ind) => new Kula(ind, cur));
+    return tab.map((cur: number, ind: number) => new Kula(ind, cur));
 }
 
-let kule = tabLbDoTabKul(tabLiczb);
+let kule: Array<Kula> = tabLbDoTabKul(tabLiczb);
 
 console.log(kule);
 console.log("===");
@@ -104,7 +105,7 @@ console.log("===");
 /**
  * fn. pom. - sumuje masy kul w tablicy
  * @param {Array<Kula>} kule - tab obiektow klasy kula
- * @return {number} suma mas elementow tab obiektow klasy kula
+ * @return {number} suma mas kul (z obiektow klasy kula z tab kule)
  */
 function liczMaseKul(kule: Array<Kula>): number {
     return kule.
@@ -155,15 +156,16 @@ function mieszKule(kule: Array<Kula>): void {
  */
 function getNrandKul(kule: Array<Kula>, n: number): Array<Kula> {
     mieszKule(kule);
-    // zwraca n kul usunietych z this.kule, ktore zostaje zmniejszone
+    // zwraca n kul usunietych z kule, ktore zostaje zmniejszone
     return kule.splice(0, n);
 }
 
 
 /**
- * zwraca indeks 2 (ciezkiej kuli) w tablicy co najmniej 1 elementowej
+ * zwraca ciezka kule z tablicy co najmniej 1 elementowej
+ * wykorzystuje rekurencje
  * @param {Array<Kula>} kule - tablica >=1 elt klasy Kula; masa: 1x2, reszta 1
- * @return {number} indeks pod ktorym jest 2
+ * @return {Kula} obiekt kula o masie 2
  */
 function getCiezkKula(kule: Array<Kula>): Kula {
     let lKul: number = kule.length;
