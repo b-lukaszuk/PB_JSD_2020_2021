@@ -27,7 +27,7 @@ class Karta {
 
     /**
      * zwraca repr stringowa rangi karty
-     * @returns {string} - reprezentacja stringowa rangi karty 
+     * @returns {string} - reprezentacja stringowa rangi karty
      */
     private getRangAsString(): string {
 	let strRanga: string;
@@ -53,7 +53,7 @@ class Karta {
 
     /**
      * zwraca repr stringowa koloru karty
-     * @returns {string} - reprezentacja stringowa koloru karty 
+     * @returns {string} - reprezentacja stringowa koloru karty
      */
     private getKolorAsString(): string {
 	let strKolor: string;
@@ -73,10 +73,10 @@ class Karta {
 	}
 	return strKolor;
     }
-    
+
     /**
      * zwraca repr stringowa karty
-     * @returns {string} - reprezentacja stringowa karty 
+     * @returns {string} - reprezentacja stringowa karty
      */
     public toString() {
 	return this.getRangAsString() + this.getKolorAsString();

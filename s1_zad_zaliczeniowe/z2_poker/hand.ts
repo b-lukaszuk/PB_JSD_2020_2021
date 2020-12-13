@@ -7,7 +7,7 @@ class Hand {
     private hand: Array<Karta> = [];
 
     public constructor(tab5Kart: Array<Karta>) {
-	this.hand = tab5Kart; 
+	this.hand = tab5Kart;
     }
 
     /**
@@ -118,7 +118,7 @@ class Hand {
      * @returns {boolean} - true, jesli sa 2 pary
      */
     private isTwoPair(): boolean {
-	let rangi: Array<number> = this.getRangi(); 
+	let rangi: Array<number> = this.getRangi();
 	let podwWyst: Array<number> = this.getCzestWyst(rangi)
 	    .filter((czest) => czest === 2); // tylko liczebn == 2
 	return podwWyst.length === 2; // czy sa 2 dwojki
@@ -220,7 +220,7 @@ class Hand {
      */
     public ustalUklad(): string {
 	if(this.isRoyalFlush()) {
-	   return "poker krolewski"; 
+	   return "poker krolewski";
 	} else if (this.isStraightFlush()) {
 	    return "poker";
 	} else if (this.isFourOfKind()) {

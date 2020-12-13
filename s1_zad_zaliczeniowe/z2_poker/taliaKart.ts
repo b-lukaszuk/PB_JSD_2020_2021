@@ -32,7 +32,7 @@ class Talia {
 	this.lKart--;
 	// array.splice usuwa elt(y) o podanym ind
 	// zwraca 1-eltowa tab kart, wiec [0]
-	return this.talia.splice(losId, 1)[0]; 
+	return this.talia.splice(losId, 1)[0];
     }
 
     /**
