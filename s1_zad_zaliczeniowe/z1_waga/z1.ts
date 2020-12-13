@@ -15,7 +15,6 @@
 // items will be change to two. Indexes are t be chosen at random. Use
 // compressions only two times.
 
-
 ////////////////////////////////////////
 /// niejasnosci i przyjete zalozenia ///
 ////////////////////////////////////////
@@ -159,7 +158,6 @@ function getNrandKul(kule: Array<Kula>, n: number): Array<Kula> {
     // zwraca n kul usunietych z kule, ktore zostaje zmniejszone
     return kule.splice(0, n);
 }
-
 
 /**
  * zwraca ciezka kule z tablicy co najmniej 1 elementowej
