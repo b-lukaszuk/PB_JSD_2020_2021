@@ -1,9 +1,11 @@
 /////////////////
-// Zadanie zadane przy okazji praca domowej z dnia 07-11-2020
+// Zadanie zadane przy okazji praca domowej z dnia 07-11-2020 (jako zad 5)
 // Przedmiot: Programowanie w jezyku JavaScript
 // Podyplomowka: JavaScript Developer 2020/2021
 // funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
-// calosc lekko opytmalizowana, np. przez pisanie w typescript
+// przerobka rozwiazania z pd3 (zad 5)
+// calosc lekko opytmalizowana, np. przez pisanie w typescript,
+// poprawke poprz wersji
 /////////////////
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -13,8 +15,12 @@
 // items will be change to two. Indexes are t be chosen at random. Use
 // compressions only two times.
 
+
+////////////////////////////////////////
+/// niejasnosci i przyjete zalozenia ///
+////////////////////////////////////////
 // "indexes are t be chosen at random"?
-// przyjmuje ze zmieniam losowa wartosc w tabeli na z 1 na 2
+// przyjmuje ze zmieniam losowa wartosc w tabeli z 1 na 2
 // sugestia niektorych ludzi z roku:
 // kule sa losowo wybierane do wazenia (just in case zastosuje sie i do tego)
 // "Use compressions only two times" - chodzi o "comparisons" (porownania)?
@@ -24,16 +30,41 @@
 
 import {Kula} from "./kula"
 
+// mala modyfikacja ilosc kul do wazenia bede wczytywal z bash-a, np.:
+// > node z1.js 8
+const yargs = require("yargs")
+const args = yargs.argv; // argsy przeslane przy wywolaniu
+let ileEltow: number; // ile kul mamy miec
+if (typeof args._[0] === "undefined") {
+    ileEltow = 8;
+} else {
+    ileEltow = args._[0];
+}
+
+/**
+ * fn pomocn - zwraca tablice 1 o zadanej dlugosci
+ * @param {number} n - liczba (Int), dlugosc tablicy jedynek
+ * @return {Array<number>} tablica jedynek o zadanej dlugosci
+ */
+function getTabJedynek(n: number): Array<number> {
+    let tmp: Array<number> = [];
+    for (let i = 0; i < n; i++) {
+	tmp.push(1)
+    }
+    return tmp;
+}
+
 // reprezentacja kul
-let tabLiczb: Array<number> = [1, 1, 1, 1, 1, 1, 1, 1];
+let tabLiczb: Array<number> = getTabJedynek(ileEltow);
 
 // pozwole sobie nie drukowac juz tab liczb, tylko od razu tab kul (obiekty)
+// bo lepiej sie czyta z konsoli
 // console.log(tabLiczb);
 
 /**
  * fn pomocn - zwraca liczbe (Int) z zakresu 0 do n (incl-excl)
- * @param {Number} n - liczba (Int), gorna granica zakresu (exclusive)
- * @return {Number} losowa liczba (Int) z zadanego zakresu
+ * @param {number} n - liczba (Int), gorna granica zakresu (exclusive)
+ * @return {number} losowa liczba (Int) z zadanego zakresu
  */
 function getInt0ToN(n: number): number {
     // Math.random() - od 0 do 1
@@ -44,11 +75,11 @@ function getInt0ToN(n: number): number {
 /**
  * fn. pomocn - wstawia 2 do los ind tabeli wejsciowej
  * zwraca kopie tablicy
- * @param {Array<Number>} tab - tablica liczb (Inty, same 1)
- * @return {Array<Number>} tablica liczb (Inty, 1x2, reszta 1)
+ * @param {Array<number>} tab - tablica liczb (Inty, same 1)
+ * @return {Array<number>} tablica liczb (Inty, 1x2, reszta 1)
  */
 function put2doLosInd(tab: Array<number>): Array<number> {
-    let tab1: Array<number> = [...tab];
+    let tab1: Array<number> = [...tab]; // kopia tab
     // zastepuje jedna 1 na 2, zwraca zast elt
     tab1.splice(getInt0ToN(tab1.length), 1, 2);
     return tab1;
@@ -56,18 +87,13 @@ function put2doLosInd(tab: Array<number>): Array<number> {
 
 tabLiczb = put2doLosInd(tabLiczb);
 
-
 /**
  * fn. pom. - zamienia tablice Intow na tablice obiektow klasy Kula
  * @param {Array<number>} tab - tabela liczb 1x2, reszta jedynki
- * @return {Array<Kula>} - tab obiektow postaci klasy Kula
+ * @return {Array<Kula>} - tab obiektow klasy Kula
  */
 function tabLbDoTabKul(tab: Array<number>): Array<Kula> {
-    let tabKul: Array<Kula> = [];
-    for (let i = 0; i < tab.length; i++) {
-	tabKul.push(new Kula(i, tab[i]));
-    }
-    return tabKul;
+    return tab.map((cur, ind) => new Kula(ind, cur));
 }
 
 let kule = tabLbDoTabKul(tabLiczb);
@@ -75,22 +101,22 @@ let kule = tabLbDoTabKul(tabLiczb);
 console.log(kule);
 console.log("===");
 
-
 /**
- * fn. pom. - sumuje elt-y tab Kul
+ * fn. pom. - sumuje masy kul w tablicy
  * @param {Array<Kula>} kule - tab obiektow klasy kula
- * @return {Number} suma elementow tej tablicy
+ * @return {number} suma mas elementow tab obiektow klasy kula
  */
 function liczMaseKul(kule: Array<Kula>): number {
     return kule.
 	reduce((acc: number, cur: Kula) => acc + cur.getMass(), 0);
 }
 
-let lWazen = 0;
+// zmienna globalna, podbijana przy kazdym wazeniu
+let lWazen: number = 0;
 
 /**
- * imituje wazenie 2 zestawow kul (wagi)
- * podbija counter (globalny) liczby wazen
+ * imituje wazenie 2 zestawow kul
+ * podbija globalny counter liczby wazen (lWazen)
  * @param {Array<Kula>} kule1 - tab obiektow klasy Kula
  * @param {Array<Kula>} kule2 - tab obiektow klasy Kula
  * @return {number} - [-1, 0, 1] odpowiednio: [k1 ciezsza, k1==k2, k2 ciezsza]
@@ -110,7 +136,7 @@ function zwazKule(kule1: Array<Kula>, kule2: Array<Kula>): number {
 
 /**
  * fn pom, shuffle-uje/miesza array
- * wykonuje operacje inplace (zmienia array wejsciowy)
+ * wykonuje operacje INPLACE (zmienia array wejsciowy)
  */
 function mieszKule(kule: Array<Kula>): void {
     // sortuje kule losowo sort przyjm porFn(a, b),
@@ -122,8 +148,8 @@ function mieszKule(kule: Array<Kula>): void {
 
 /**
  * fn. pom. - zwraca losowo kilka Kul
- * modyfikuje tablice wejsciowa (bedzie mniejsza po uzyciu tej fn)
- * @param {Array<Kula>} kule - tab obiektow klasy kule
+ * modyfikuje tablice wejsciowa INPLACE (bedzie mniejsza po uzyciu tej fn)
+ * @param {Array<Kula>} kule - tab obiektow klasy kula
  * @param {number} n - liczba kul do zwrotu (usuniecia z kule)
  * @return {Array<Kula>} tablica kul (wybrana losowo z kule, kule beda mniejsze)
  */
@@ -135,29 +161,29 @@ function getNrandKul(kule: Array<Kula>, n: number): Array<Kula> {
 
 
 /**
- * zwraca indeks 2 w tablicy co najmniej 2 elementowej
- * @param {Array<Kula>} kule - tablica >=1 elt, 1x2, reszta 1
+ * zwraca indeks 2 (ciezkiej kuli) w tablicy co najmniej 1 elementowej
+ * @param {Array<Kula>} kule - tablica >=1 elt klasy Kula; masa: 1x2, reszta 1
  * @return {number} indeks pod ktorym jest 2
  */
-function getCiezkKula(kule: Array<Kula>): number {
+function getCiezkKula(kule: Array<Kula>): Kula {
     let lKul: number = kule.length;
     if (lKul === 1) {
-	return kule[0].getId();
+	return kule[0];
     } else {
-	
 	// zawsze dzieli kule na 3 kupki
 	let poIleKul: number = Math.ceil(lKul / 3);
 	// losowo, bo byc moze jest to wymagane w tresci zadania
-	let k1 = getNrandKul(kule, poIleKul);
-	let k2 = getNrandKul(kule, poIleKul);
+	let k1: Array<Kula> = getNrandKul(kule, poIleKul);
+	let k2: Array<Kula> = getNrandKul(kule, poIleKul);
 	// pozostale kule trafiaja do k3
-	let k3 = kule;
+	let k3: Array<Kula> = kule;
 
-	let wynWaz = zwazKule(k1, k2);
+	// -1 (k1 ciezsze niz k2); +1 (k1 lzejsze niz k2); 0 (k1 == k2)
+	let wynWazenia: number = zwazKule(k1, k2);
 
-	if (wynWaz === 0) {
+	if (wynWazenia === 0) {
 	    return getCiezkKula(k3);
-	} else if (wynWaz < 0) {
+	} else if (wynWazenia < 0) {
 	    return getCiezkKula(k1);
 	} else {
 	    return getCiezkKula(k2);
@@ -166,5 +192,5 @@ function getCiezkKula(kule: Array<Kula>): number {
 }
 
 let ciezkaKula = getCiezkKula(kule);
-console.log("Ciezka kula jest pod indeksem: " + ciezkaKula);
+console.log("Ciezka kula jest pod indeksem: " + ciezkaKula.getId());
 console.log("Ilosc wazen: " + lWazen);

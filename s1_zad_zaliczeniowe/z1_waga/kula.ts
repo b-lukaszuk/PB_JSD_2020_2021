@@ -5,8 +5,8 @@ class Kula {
     private id: number;
     private masa: number;
     /**
-     * @param {number} id - id kuli (Int)
-     * @param {number} masa - masa kuli (0 lub 1)
+     * @param {number} id - id kuli (Int, >= 0)
+     * @param {number} masa - masa kuli (Int, 1 lub 2)
      */
     public constructor(id: number, masa: number) {
 	this.id = id;
@@ -23,7 +23,7 @@ class Kula {
 
     /**
      * zwraca wage kuli
-     * @return {number} - val kuli (Int)
+     * @return {number} - masa kuli (Int, 1 lub 2)
      */
     public getMass(): number {
 	return this.masa;
