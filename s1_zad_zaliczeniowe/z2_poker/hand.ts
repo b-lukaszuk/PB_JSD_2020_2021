@@ -27,7 +27,7 @@ class Hand {
      * zwraca this.hand
      * @returns {Array<Karta>} - 5 kart (hand)
      */
-    public getKarty(): Array<Karta> {
+    private getKarty(): Array<Karta> {
 	return this.hand;
     }
 
@@ -95,7 +95,7 @@ class Hand {
      * @param {boolean} ranga - czy sprawdzac powt rang, czy kolorow
      * @returns {boolean} - true, jesli jest n kart danej rangi/koloru na reku
      */
-    public isNofKind(n: number, ranga: boolean = true): boolean {
+    private isNofKind(n: number, ranga: boolean = true): boolean {
 	let rangsOrKols: Array<number> = [];
 	if (ranga) {
 	    rangsOrKols = this.getRangi();
@@ -140,7 +140,7 @@ class Hand {
      * @param {number} coIle - (Int) przeskok
      * @returns {Array<number>} - tab Int-ow (rosnaco) od (incl)-do (excl) coIle
      */
-    public range(start: number, stop: number, coIle: number = 1): Array<number> {
+    private range(start: number, stop: number, coIle: number = 1): Array<number> {
 	let tmp: Array<number> = [];
 	for (let i = start; i < stop; i += coIle) {
 	    tmp.push(i);
@@ -154,7 +154,7 @@ class Hand {
      * @param {number} start - Int, najmniejsza karta od ktorej rangi zaczynamy
      * @returns {boolean} - true, jesli karty sa uporzadkowane rosnaco od min
      */
-    public isOrdered(start: number): boolean {
+    private isOrdered(start: number): boolean {
 	let rangi: Array<number> = this.getRangi();
 	let wymRangi: Array<number> = this.range(start, start+5);
 	return this.czyAllAinB(wymRangi, rangi);
@@ -209,7 +209,7 @@ class Hand {
      * 10, J, D, K, A - w tym samym kolorze
      * @returns {boolean} - true, jesli na reku jest Poker Krolewski
      */
-    public isRoyalFlush(): boolean {
+    private isRoyalFlush(): boolean {
 	return this.isNofKind(5, false) && this.isOrdered(10);
     };
 
@@ -220,7 +220,7 @@ class Hand {
      */
     public ustalUklad(): string {
 	if(this.isRoyalFlush()) {
-	   return "poker krolewski";
+	    return "poker krolewski";
 	} else if (this.isStraightFlush()) {
 	    return "poker";
 	} else if (this.isFourOfKind()) {
