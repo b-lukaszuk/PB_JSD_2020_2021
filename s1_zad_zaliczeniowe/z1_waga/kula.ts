@@ -6,7 +6,7 @@ class Kula {
     private masa: number;
     /**
      * @param {number} id - id kuli (Int, >= 0)
-     * @param {number} masa - masa kuli (Int, 1 lub 2)
+     * @param {number} masa - masa kuli (1|2)
      */
     public constructor(id: number, masa: number) {
 	this.id = id;

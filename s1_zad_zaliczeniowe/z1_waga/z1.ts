@@ -42,7 +42,7 @@ if (typeof args._[0] === "undefined") {
 }
 
 /**
- * fn pomocn - zwraca tablice 1 o zadanej dlugosci
+ * fn pomocn - zwraca tablice jedynek o zadanej dlugosci
  * @param {number} n - liczba (Int), dlugosc tablicy jedynek
  * @return {Array<number>} tablica jedynek o zadanej dlugosci
  */
@@ -62,7 +62,7 @@ let tabLiczb: Array<number> = getTabJedynek(ileEltow);
 // console.log(tabLiczb);
 
 /**
- * fn pomocn - zwraca liczbe (Int) z zakresu 0 do n (incl-excl)
+ * fn pomocn - zwraca liczbe losowa (Int) z zakresu 0 do n (incl-excl)
  * @param {number} n - liczba (Int), gorna granica zakresu (exclusive)
  * @return {number} losowa liczba (Int) z zadanego zakresu
  */
@@ -80,7 +80,7 @@ function getInt0ToN(n: number): number {
  */
 function put2doLosInd(tab: Array<number>): Array<number> {
     let tab1: Array<number> = [...tab]; // kopia tab
-    // zastepuje jedna 1 na 2, zwraca zast elt
+    // zastepuje jedna 1 na 2 inplace
     tab1.splice(getInt0ToN(tab1.length), 1, 2);
     return tab1;
 }
@@ -154,7 +154,7 @@ function mieszKule(kule: Array<Kula>): void {
  * @return {Array<Kula>} tablica kul (wybrana losowo z kule, kule beda mniejsze)
  */
 function getNrandKul(kule: Array<Kula>, n: number): Array<Kula> {
-    mieszKule(kule);
+    mieszKule(kule); // bo byc moze jest wymagane w tresci zadania
     // zwraca n kul usunietych z kule, ktore zostaje zmniejszone
     return kule.splice(0, n);
 }
@@ -173,12 +173,17 @@ function getCiezkKula(kule: Array<Kula>): Kula {
 	// zawsze dzieli kule na 3 kupki
 	let poIleKul: number = Math.ceil(lKul / 3);
 	// losowo, bo byc moze jest to wymagane w tresci zadania
+	// patrz definicja getNrandKul()
 	let k1: Array<Kula> = getNrandKul(kule, poIleKul);
 	let k2: Array<Kula> = getNrandKul(kule, poIleKul);
+	// just in case sprawdzamy
+	if (k1.length !== k2.length) {
+	     console.log("blad ilosci kul w k1 i k2 sa rozne");
+	}
 	// pozostale kule trafiaja do k3
 	let k3: Array<Kula> = kule;
 
-	// -1 (k1 ciezsze niz k2); +1 (k1 lzejsze niz k2); 0 (k1 == k2)
+	// -1 (k1 ciezsze niz k2); +1 (k2 ciezsze niz k1); 0 (k1 == k2)
 	let wynWazenia: number = zwazKule(k1, k2);
 
 	if (wynWazenia === 0) {
@@ -191,6 +196,6 @@ function getCiezkKula(kule: Array<Kula>): Kula {
     }
 }
 
-let ciezkaKula = getCiezkKula(kule);
+let ciezkaKula: Kula = getCiezkKula(kule);
 console.log("Ciezka kula jest pod indeksem: " + ciezkaKula.getId());
 console.log("Ilosc wazen: " + lWazen);
