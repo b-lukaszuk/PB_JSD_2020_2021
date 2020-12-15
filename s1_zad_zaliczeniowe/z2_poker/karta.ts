@@ -33,20 +33,20 @@ class Karta {
 	let strRanga: string;
 	// reprezentacja stringowa rangi
 	switch (this.ranga) {
-	case 11:
-	    strRanga = "J";
-	    break;
-	case 12:
-	    strRanga = "D";
-	    break;
-	case 13:
-	    strRanga = "K";
-	    break;
-	case 14:
-	    strRanga = "A";
-	    break;
-	default:
-	    strRanga = String(this.ranga);
+	    case 11:
+		strRanga = "J";
+		break;
+	    case 12:
+		strRanga = "D";
+		break;
+	    case 13:
+		strRanga = "K";
+		break;
+	    case 14:
+		strRanga = "A";
+		break;
+	    default:
+		strRanga = String(this.ranga);
 	}
 	return strRanga;
     }
@@ -59,17 +59,17 @@ class Karta {
 	let strKolor: string;
 	// reprezentacja stringowa koloru
 	switch (this.kolor) {
-	case 1:
-	    strKolor = "\u2665"; // czerwo
-	    break;
-	case 2:
-	    strKolor = "\u2666"; // dzwonek
-	    break;
-	case 3:
-	    strKolor = "\u2660"; // wino
-	    break;
-	default:
-	    strKolor = "\u2663"; // zoledz
+	    case 1:
+		strKolor = "\u2665"; // czerwo
+		break;
+	    case 2:
+		strKolor = "\u2666"; // dzwonek
+		break;
+	    case 3:
+		strKolor = "\u2660"; // wino
+		break;
+	    default:
+		strKolor = "\u2663"; // zoledz
 	}
 	return strKolor;
     }
@@ -78,7 +78,7 @@ class Karta {
      * zwraca repr stringowa karty
      * @returns {string} - reprezentacja stringowa karty
      */
-    public toString() {
+    public toString(): string {
 	return this.getRangAsString() + this.getKolorAsString();
     }
 }

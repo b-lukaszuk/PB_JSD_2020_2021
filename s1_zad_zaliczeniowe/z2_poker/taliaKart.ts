@@ -38,7 +38,7 @@ class Talia {
     /**
      * zwraca n losowych kart z talii
      * zmienia INPLACE this.talia
-     * @param {number} - n, Int (1-52), liczba kart do zwrotu
+     * @param {number} - n, Int (1-52, incl-incl), liczba kart do zwrotu
      * @returns {Array<Karta>} - tablica n kart
      */
     public getNrandCards(n: number): Array<Karta> {

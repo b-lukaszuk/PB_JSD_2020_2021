@@ -8,6 +8,8 @@ class Hand {
 
     public constructor(tab5Kart: Array<Karta>) {
 	this.hand = tab5Kart;
+	// od razu sortuje karty malejaco, lepiej wyglada :)
+	this.hand.sort((a, b) => b.getRanga() - a.getRanga());
     }
 
     /**
@@ -53,25 +55,24 @@ class Hand {
 
     /**
      * met. pomoc, mowi, czy kazdy elt tabA, znajduje sie w tabB
-     * @param {Array<Number>} tabA - tablica liczb (unikalne Int-y)
-     * @param {Array<Number>} tabB - tablica liczb (Int-y)
+     * @param {Array<number>} tabA - tablica liczb (unikalne Int-y)
+     * @param {Array<number>} tabB - tablica liczb (Int-y)
      * @returns {boolean} - true jesli kazdy elt z tabA jest w tabB
      */
-    private czyAllAinB(tabA: Array<Number>, tabB: Array<Number>): boolean {
+    private czyAllAinB(tabA: Array<number>, tabB: Array<number>): boolean {
 	return tabA.every((eltA) => tabB.includes(eltA));
     }
-
 
     /**
      * met. pomoc, zwraca czest wyst liczb z tab (input)
      * np. [1, 2, 3, 4] => [1, 1, 1, 1], ale [1, 2, 3, 1] => [1, 1, 2]
-     * @param {Array<Number>} tab - tablica liczb (Int-y)
-     * @returns {Array<Number>} - tab liczebnosci (Int-y)
+     * @param {Array<number>} tab - tablica liczb (Int-y)
+     * @returns {Array<number>} - tab liczebnosci (Int-y)
      */
     private getCzestWyst(tab: Array<number>): Array<number> {
-	let liczebnEltow: Object = {};
+	let liczebnEltow: Object = {}; // slown Python-owy
 	tab.forEach((elt) => {
-	    if(elt in liczebnEltow) { // jesli jest juz w slown (Python), to +1
+	    if(elt in liczebnEltow) { // jesli jest juz w slown, to +1
 		liczebnEltow[elt] += 1;
 	    } else { // jesli nie, to wstaw po raz pierwszy z liczebn = 1
 		liczebnEltow[elt] = 1;
@@ -84,8 +85,10 @@ class Hand {
      * zwraca najwieksza range z kart na reku
      * @returns {number} - najw karta (ranga)
      */
-    private getMaxCardRank(): number {
-	return Math.max(...this.getRangi());
+    private getHighestCard(): Karta {
+	// zakladajac, ze kolor nie ma znaczenia
+	// bo np. 2xK to wylapie to this.isOnePair()
+	return this.hand[0];
     }
 
     /**
@@ -136,11 +139,11 @@ class Hand {
      * met. pomoc, zwraca tablice z wartosciami od (incl) do (excl)
      * imitacja pythonowego range()
      * @param {number} start - (incl) - Int, min wart min tablicy
-     * @param {number} stop - (excl) - Int, max wart (stop-coIle) tablicy
+     * @param {number} stop - (excl) - Int, max wart (excl) tablicy
      * @param {number} coIle - (Int) przeskok
      * @returns {Array<number>} - tab Int-ow (rosnaco) od (incl)-do (excl) coIle
      */
-    private range(start: number, stop: number, coIle: number = 1): Array<number> {
+    private range(start: number, stop: number, coIle: number=1): Array<number> {
 	let tmp: Array<number> = [];
 	for (let i = start; i < stop; i += coIle) {
 	    tmp.push(i);
@@ -152,7 +155,7 @@ class Hand {
      * met. pomoc, sprawdza, czy karty sa uporzadkowane rosnaco
      * do pokera, duzego strita, strita
      * @param {number} start - Int, najmniejsza karta od ktorej rangi zaczynamy
-     * @returns {boolean} - true, jesli karty sa uporzadkowane rosnaco od min
+     * @returns {boolean} - true, jesli karty sa uporzadkowane rosnaco od start
      */
     private isOrdered(start: number): boolean {
 	let rangi: Array<number> = this.getRangi();
@@ -166,7 +169,8 @@ class Hand {
      * @returns {boolean} - true, jesli na reku jest strit
      */
     private isStraight(): boolean {
-	return this.isOrdered(Math.min(...this.getRangi()));
+	// this.hand.slice(-1)[0], ost elt tablicy, ktora jest posort
+	return this.isOrdered(this.hand.slice(-1)[0].getRanga());
     }
 
     /**
@@ -219,6 +223,7 @@ class Hand {
      * @returns {string} - nazwa najwyzszego ukladu
      */
     public ustalUklad(): string {
+	// sprawdza od najwyzszego i zatrzymuje sie po pierw hit-cie
 	if(this.isRoyalFlush()) {
 	    return "poker krolewski";
 	} else if (this.isStraightFlush()) {
@@ -237,10 +242,8 @@ class Hand {
 	    return "dwie pary";
 	} else if (this.isOnePair()) {
 	    return "jedna para";
-	} else if (new Boolean(this.getMaxCardRank())) {
-	    return "najwieksza karta";
-	} else {// to nie powinno sie nigdy wykonac
-	    return "nie znaleziono pasujacego ukladu";
+	} else {
+	    return "najwieksza karta: " + this.getHighestCard().toString();
 	}
     }
 }
