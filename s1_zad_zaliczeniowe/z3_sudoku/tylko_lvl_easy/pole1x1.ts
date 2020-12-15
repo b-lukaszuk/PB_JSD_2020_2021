@@ -1,18 +1,18 @@
 /**
- * klasa reprezentujaca pojedyncze pole sudoku (najmniejszy kwadrat, 1 x 81)
+ * klasa reprezentujaca pojedyncze pole sudoku (najmniejszy kwadrat, 1x1)
  */
 class Pole1x1 {
-    // pola prywatne, znaczenie docstringu konstruktora
+    // pola prywatne, znaczenie: patrz docstring konstruktora
     private val: number;
     private w: number;
     private k: number;
     private kw3x3: string;
-    // kandydaci, tab legalnych do wpisania wart.
+    // kandydaci, tj. tab legalnych do wpisania wart. (Int 0-8) incl-incl
     private kand: Array<number>; 
 
     /**
-     * konstruktor pola1x1
-     * @param {number} val - wartosc (Int) 1-9 wpisana w pole 1x1, 0 jesli puste
+     * konstruktor pola1x1, w nawiasach (incl-incl)
+     * @param {number} val - wartosc (Int 1-9) wpisana w pole 1x1, 0 jesli puste
      * @param {number} w - Int (0-8) - indeks wiersza w kwadracie 9x9
      * @param {number} k - Int (0-8) - indeks kolumny w kwadracie 9x9
      * @param {number} kw3x3 - Int (0-8) - id kwadr 3x3 do ktorego nalezy pole
@@ -38,7 +38,7 @@ class Pole1x1 {
      * @param {number} start - Int, od jakiej liczby zaczac (included)
      * @param {number} stop - Int, do jakiej liczby dojsc (excluded)
      * @param {number} co - Int, co ile oczek inkrementowac
-     * @return {Array<number>} tab Int-ow od (incl) - do (excl) co iles oczek
+     * @return {Array<number>} tab Int-ow start-stop (incl-excl) co iles oczek
      */
     private range(start: number, stop: number, co: number = 1): Array<number> {
 	let tab: Array<number> = [];
@@ -63,49 +63,57 @@ class Pole1x1 {
 	return this.kand;
     }
 
-    // setter kandydatow dla pola1x1
-    setKand(kand: Array<number>): void {
-	this.kand = kand;
-    }
-
-    // getter nr kolumny (z kw9x9) w ktorym jest pole1x1
-    public getKol(): number {
-	return this.k;
-    }
-
-    // getter nr wiersza (z kw9x9) w ktorym jest pole1x1
-    public getWier(): number {
-	return this.w;
-    }
-
-    // getter id kw3x3 w ktorym jest pole1x1
-    public getKw3x3(): string {
-	return this.kw3x3;
+    /**
+     * getter nr wier/kol (kw9x9) lub id kw3x3 w ktorym jest pole1x1
+     * @param {string} typ - "w"|"k"|"kw3x3"
+     * @returns {number|string} id dla wiersza/kol/kw3x3 w ktorym jest pole1x1
+     */
+    public getLokalizacja(typ: string): number|string {
+	if(typ === "w") {
+	    return this.w;
+	} else if (typ === "k") {
+	    return this.k;
+	} else {
+	    return this.kw3x3;
+	}
     }
 
     /**
-     * usuwa dany numer z tablicy (pierwszy napotkany, jesli tam jest)
+     * usuwa dany numer z tablicy (pierwszy napotkany)
      * modyfikuje tablice wejsciowa INPLACE
+     * jesli numeru nie znaleziono wtedy nie zmienia tab wejsc
+     * po modyfikacji moze zostac pusta tablica wejsc
      * @param {Array<number>} tab - tablica Int-ow
      * @param {number} num - szukana liczba do usuniecia z tab
-     * @return {Array<number>} array (wejsciowy | z usun nr | pusty)
      */
-    private usNumZtab(tab: Array<number>, num: number): Array<number> {
+    private usNumZtab(tab: Array<number>, num: number): void {
 	let eltPos = tab.indexOf(num);
 	if (eltPos >= 0) {
 	    tab.splice(eltPos, 1); // usuwa INPLACE
 	}
-	return tab;
     }
 
     /**
      * usuwa numery (nums) z kandydatow (this.kand)
-     * MODYFIKUJE this.kand
+     * modyfikuje this.kand INPLACE
      * @param {Array<number>} nums - tab liczb (Int-y) do usun z this.kand
      */
     public usNumsZKand(nums: Array<number>): void {
 	for (let i = 0; i < nums.length; i++) {
 	    this.usNumZtab(this.kand, nums[i]);
+	}
+    }
+
+    /**
+     * zwraca stringowa repr pola,
+     * tj. cyfra 1-9 (incl-incl) lub wyp jesli 0 (puste pole)
+     * @param {string} wyp - string do uzycia jako reprez. pust pola
+     */
+    public getRepr(wyp: string = " "): string {
+	if (this.val === 0) {
+	    return wyp;
+	} else {
+	    return (this.val).toString();
 	}
     }
 }

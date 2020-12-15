@@ -15,33 +15,32 @@
 // wlasnoreczne (na piechote) rozwiazanie 1 latwego sudoku z:
 // https://sudoku.com/easy/
 // i zobaczmy czy to wystarczy
-// (do rozwiazania jest proste sudoku, wiec powinno)
+// (do rozwiazania wymagane jest tylko proste sudoku, wiec powinno)
 
-// sudoku to duzy kwadrat 9x9 (malych kwadratow)
-// bedzie reprezentowana jako tablica 81 elt [0:80], bo 9x9
+// sudoku to duzy kwadrat 9x9 (zlozony z malych kwadratow)
+// bedzie reprezentowany jako tablica 81 elt [0:80] (incl-incl), bo 9x9=81
 
-import {Pole1x1} from "./pole1x1";
 import {Kwadrat9x9} from "./kwadrat9x9";
 
 // sudoku z zadania prowadzacego, lvl: beginer
-let tab9x9v1: Array<number> = [
-    // [0:3, 0:9]
+let tab81eltV1: Array<number> = [
+    // [0:3, 0:9] incl-excl
     7, 0, 4,       8, 0, 0,       3, 0, 1,
     8, 2, 0,       5, 0, 0,       0, 4, 0,
     0, 0, 9,       4, 3, 0,       5, 0, 0,
 
-    // [3:6, 0:9]
+    // [3:6, 0:9] incl-excl
     3, 1, 0,       0, 0, 0,       8, 0, 7,
     0, 8, 0,       0, 0, 0,       0, 1, 0,
     9, 0, 7,       0, 0, 0,       0, 3, 2,
 
-    // [6:9, 0:9]
+    // [6:9, 0:9] incl-excl
     0, 0, 6,       0, 1, 5,       4, 0, 0,
     0, 7, 0,       0, 0, 9,       0, 6, 5,
     5, 0, 8,       0, 0, 2,       1, 0, 3,
 ];
 
-let easySudoku = new Kwadrat9x9(tab9x9v1);
+let easySudoku: Kwadrat9x9 = new Kwadrat9x9(tab81eltV1);
 
 console.log("sudoku nr 1 przed rozwiazaniem");
 easySudoku.print();
@@ -50,27 +49,27 @@ console.log("\nsudoku nr 1 po rozwiazaniu");
 easySudoku.solveSudoku();
 easySudoku.print();
 
-
-// inne, do testu, level: (very) easy?, ale juz lvl wiecej progam nie rozwiazuje
+// inne sudoku z neta, do testu, level: (very) easy?
+// to jeszcze program daje rade, ale juz lvl wiecej progam nie rozwiazuje
 // (za prosty algorytm)
-let tab9x9v2: Array<number> = [
-    // [0:3, 0:9]
+let tab81eltV2: Array<number> = [
+    // [0:3, 0:9] incl-excl
     3, 0, 6,      0, 1, 0,      7, 0, 0,
     0, 7, 0,      5, 0, 8,      0, 0, 0,
     9, 0, 0,      0, 6, 0,      0, 0, 0,
 
-    // [3:6, 0:9]
+    // [3:6, 0:9] incl-excl
     0, 9, 0,      6, 0, 0,      5, 0, 3,
     0, 0, 0,      9, 0, 5,      0, 0, 0,
     1, 0, 5,      0, 0, 4,      0, 6, 0,
 
-    // [6:9 0:9]
+    // [6:9 0:9] incl-excl
     0, 0, 0,      0, 4, 0,      0, 0, 1,
     0, 0, 0,      2, 0, 3,      0, 8, 0,
     0, 0, 9,      0, 8, 0,      2, 0, 5,
 ];
 
-easySudoku = new Kwadrat9x9(tab9x9v2);
+easySudoku = new Kwadrat9x9(tab81eltV2);
 
 console.log("\n\nsudoku nr 2 przed rozwiazaniem");
 easySudoku.print();
