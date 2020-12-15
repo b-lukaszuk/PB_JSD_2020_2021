@@ -15,7 +15,7 @@ class Pole1x1 {
      * @param {number} val - wartosc (Int 1-9) wpisana w pole 1x1, 0 jesli puste
      * @param {number} w - Int (0-8) - indeks wiersza w kwadracie 9x9
      * @param {number} k - Int (0-8) - indeks kolumny w kwadracie 9x9
-     * @param {number} kw3x3 - Int (0-8) - id kwadr 3x3 do ktorego nalezy pole
+     * @param {string} kw3x3 - "aa-cc" - id kwadr 3x3 do ktorego nalezy pole
      */
     public constructor(val: number, w: number, k: number, kw3x3: string) {
 	this.val = val;

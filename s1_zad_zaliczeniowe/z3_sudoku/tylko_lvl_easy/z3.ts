@@ -20,9 +20,14 @@
 // sudoku to duzy kwadrat 9x9 (zlozony z malych kwadratow)
 // bedzie reprezentowany jako tablica 81 elt [0:80] (incl-incl), bo 9x9=81
 
+// uzycie:
+// bash:
+// > tsc z3.ts
+// > node z3.js
+
 import {Kwadrat9x9} from "./kwadrat9x9";
 
-// sudoku z zadania prowadzacego, lvl: beginer
+// sudoku z zadania prowadzacego, lvl: beginner
 let tab81eltV1: Array<number> = [
     // [0:3, 0:9] incl-excl
     7, 0, 4,       8, 0, 0,       3, 0, 1,

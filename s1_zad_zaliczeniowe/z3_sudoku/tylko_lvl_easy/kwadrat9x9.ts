@@ -4,7 +4,7 @@ import {Pole1x1} from "./pole1x1"
  * klasa reprezentujaca kwadrat9x9 skladajacy sie z 81 obiektow klasy pole1x1
  */
 class Kwadrat9x9 {
-    private tabPol1x1: Array<Pole1x1> = [];
+    private tabPol1x1: Array<Pole1x1> = []; // tablica 1d (81elt - pole1x1)
     private allKw3x3Ids: Array<string> = []; // wszystkie id kwadratow3x3
 
     /**
@@ -140,6 +140,10 @@ class Kwadrat9x9 {
 		console.log("rozwiazano po " + i + " iter");
 		break;
 	    }
+	}
+	if(!this.isSolved()) {
+	    console.log("nie znaleziono rozwiazania");   
+	    console.log("sprobuj z prostszym sudoku");   
 	}
     }
 
