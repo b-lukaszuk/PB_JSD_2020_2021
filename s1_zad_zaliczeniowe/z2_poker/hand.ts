@@ -22,7 +22,7 @@ class Hand {
 	for (let i = 0; i < this.hand.length; i++) {
 	    strKarty += this.hand[i].toString() + sep;
 	}
-	return strKarty.replace(/ +$/, sep); // usuwa separator z konca stringu
+	return strKarty;
     }
 
     /**

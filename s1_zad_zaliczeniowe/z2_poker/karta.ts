@@ -31,7 +31,6 @@ class Karta {
      */
     private getRangAsString(): string {
 	let strRanga: string;
-	// reprezentacja stringowa rangi
 	switch (this.ranga) {
 	    case 11:
 		strRanga = "J";
@@ -57,7 +56,6 @@ class Karta {
      */
     private getKolorAsString(): string {
 	let strKolor: string;
-	// reprezentacja stringowa koloru
 	switch (this.kolor) {
 	    case 1:
 		strKolor = "\u2665"; // czerwo

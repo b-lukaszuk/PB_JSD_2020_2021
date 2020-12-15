@@ -7,7 +7,6 @@ import {Karta} from "./karta"
  */
 class Talia {
     private talia: Array<Karta> = [];
-    private lKart: number = 0;
 
     /**
      * tworzy talie 52 kart
@@ -18,7 +17,6 @@ class Talia {
 		this.talia.push(new Karta(i, j));
 	    }
 	}
-	this.lKart = this.talia.length;
     }
 
     /**
@@ -28,8 +26,7 @@ class Talia {
      */
     private getRandCard(): Karta {
 	// liczba losowa od 0 (incl) do dl tablicy (excl)
-	let losId: number = Math.floor(Math.random() * this.lKart);
-	this.lKart--;
+	let losId: number = Math.floor(Math.random() * this.talia.length);
 	// array.splice usuwa elt(y) o podanym ind
 	// zwraca 1-eltowa tab kart, wiec [0]
 	return this.talia.splice(losId, 1)[0];
@@ -54,7 +51,7 @@ class Talia {
      * @returns {number} - liczba kart aktualnie w talii
      */
     public getLkart(): number {
-	return this.lKart;
+	return this.talia.length;
     }
 }
 
