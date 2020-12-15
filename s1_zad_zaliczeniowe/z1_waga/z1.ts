@@ -15,6 +15,11 @@
 // items will be change to two. Indexes are t be chosen at random. Use
 // compressions only two times.
 
+// uzycie:
+// bash:
+// > tsc z1.ts
+// > node z1.js
+
 ////////////////////////////////////////
 /// niejasnosci i przyjete zalozenia ///
 ////////////////////////////////////////

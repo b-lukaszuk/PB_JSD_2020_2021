@@ -142,8 +142,8 @@ class Kwadrat9x9 {
 	    }
 	}
 	if(!this.isSolved()) {
-	    console.log("nie znaleziono rozwiazania");   
-	    console.log("sprobuj z prostszym sudoku");   
+	    console.log("nie znaleziono rozwiazania");
+	    console.log("sprobuj z prostszym sudoku");
 	}
     }
 

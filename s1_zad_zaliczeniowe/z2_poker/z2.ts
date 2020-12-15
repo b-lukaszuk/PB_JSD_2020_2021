@@ -15,6 +15,11 @@
 // card deck. After that the solution is to tell us what is the
 // best poker set. EXAM
 
+// uzycie:
+// bash:
+// > tsc z2.ts
+// > node z2.js
+
 import {Karta} from "./karta"
 import {Talia} from "./taliaKart"
 import {Hand} from "./hand"

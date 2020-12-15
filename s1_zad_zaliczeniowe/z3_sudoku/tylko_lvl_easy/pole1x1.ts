@@ -8,7 +8,7 @@ class Pole1x1 {
     private k: number;
     private kw3x3: string;
     // kandydaci, tj. tab legalnych do wpisania wart. (Int 0-8) incl-incl
-    private kand: Array<number>; 
+    private kand: Array<number>;
 
     /**
      * konstruktor pola1x1, w nawiasach (incl-incl)
@@ -25,10 +25,10 @@ class Pole1x1 {
 	// kandydaci do wpisania w to pole
 	if (val !== 0) {
 	    // jesli jest juz wpisana liczba to brak kandydatow
-	    this.kand = []; 
+	    this.kand = [];
 	} else {
 	    // jesli puste pole (0) to 1-9 (incl-incl)
-	    this.kand = this.range(1, 10); 
+	    this.kand = this.range(1, 10);
 	}
     }
 
