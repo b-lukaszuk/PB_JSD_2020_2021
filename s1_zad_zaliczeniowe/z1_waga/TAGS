@@ -1,0 +1,20 @@
+
+kula.ts,175
+class Kula 4,37
+    private id: number;5,50
+    private masa: number;6,74
+    public constructor(11,210
+    public getId(20,380
+    public getMass(28,524
+export 32,582
+
+z1.ts,276
+function getTabJedynek(54,2067
+function getInt0ToN(74,2646
+function put2doLosInd(86,3038
+function tabLbDoTabKul(100,3484
+function liczMaseKul(114,3876
+function zwazKule(129,4366
+function mieszKule(146,4773
+function getNrandKul(161,5354
+function getCiezkKula(173,5797

@@ -32,7 +32,7 @@
 // inaczej jesli same if-y/elsy, boole (a > b) to jest chyba niemozliwe
 // utworze wiec funkcje/metode ktora bedzie imitowac wazenie waga
 
-import {Kula} from "./kula"
+import { Kula } from "./kula"
 
 // mala modyfikacja, ilosc kul do wazenia bede wczytywal z bash-a, np.:
 // > node z1.js 8
@@ -128,11 +128,11 @@ let lWazen: number = 0;
  */
 function zwazKule(kule1: Array<Kula>, kule2: Array<Kula>): number {
     lWazen++; // podbijam counter globalny
-    let sT1: number = liczMaseKul(kule1);
-    let sT2: number = liczMaseKul(kule2);
-    if (sT1 > sT2) {
+    let sum1: number = liczMaseKul(kule1);
+    let sum2: number = liczMaseKul(kule2);
+    if (sum1 > sum2) {
 	return -1;
-    } else if (sT1 === sT2) {
+    } else if (sum1 === sum2) {
 	return 0;
     } else {
 	return 1;
