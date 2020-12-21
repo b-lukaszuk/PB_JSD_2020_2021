@@ -1,0 +1,58 @@
+
+hand.ts,734
+class Hand 6,103
+    private hand: Array<Array7,116
+    public constructor(9,154
+    public toString(20,534
+    private getKarty(32,820
+    private getRangi(44,1138
+    private getKolory(52,1384
+    private czyAllAinB(62,1760
+    private getCzestWyst(72,2154
+    private getHighestCard(88,2672
+    private isNofKind(101,3168
+    private isOnePair(115,3574
+    private isTwoPair(123,3777
+    private isThreeOfKind(134,4177
+    private range(146,4632
+    private isOrdered(160,5109
+    private isStraight(171,5505
+    private isFlush(180,5811
+    private isFullHouse(188,6027
+    private isFourOfKind(198,6341
+    private isStraightFlush(207,6600
+    private isRoyalFlush(216,6879
+    public ustalUklad(225,7142
+
+karta.ts,275
+class Karta 7,213
+    private ranga: number 8,227
+    private kolor: number 9,258
+    public constructor(15,457
+    public getRanga(20,561
+    public getKolor(24,620
+    private getRangAsString(32,799
+    private getKolorAsString(57,1246
+    public toString(79,1680
+
+taliaKart.ts,183
+class Talia 8,211
+    private talia: Array<Array9,225
+    public constructor(14,308
+    private getRandCard(27,604
+    public getNrandCards(41,1097
+    public getLkart(53,1416
+
+z2.ts,218
+let taliaKart: Talia 27,942
+let hand1: Hand 29,979
+let hand2: Hand 37,1203
+hand2 52,1455
+hand2 67,1695
+hand2 82,1931
+hand2 97,2168
+hand2 112,2407
+hand2 127,2645
+hand2 142,2887
+hand2 158,3126
+hand2 174,3375

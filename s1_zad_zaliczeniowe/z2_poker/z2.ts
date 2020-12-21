@@ -20,9 +20,9 @@
 // > tsc z2.ts
 // > node z2.js
 
-import {Karta} from "./karta"
-import {Talia} from "./taliaKart"
-import {Hand} from "./hand"
+import { Karta } from "./karta"
+import { Talia } from "./taliaKart"
+import { Hand } from "./hand"
 
 let taliaKart: Talia = new Talia();
 
