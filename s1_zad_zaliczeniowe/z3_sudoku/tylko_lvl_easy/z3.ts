@@ -25,7 +25,7 @@
 // > tsc z3.ts
 // > node z3.js
 
-import {Kwadrat9x9} from "./kwadrat9x9";
+import { Kwadrat9x9 } from "./kwadrat9x9";
 
 // sudoku z zadania prowadzacego, lvl: beginner
 let tab81eltV1: Array<number> = [

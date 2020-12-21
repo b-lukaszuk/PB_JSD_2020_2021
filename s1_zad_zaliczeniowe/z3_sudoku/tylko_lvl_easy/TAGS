@@ -1,0 +1,36 @@
+
+kwadrat9x9.ts,417
+class Kwadrat9x9 6,123
+    private tabPol1x1: Array<Array7,142
+    private allKw3x3Ids: Array<Array8,218
+    public constructor(15,515
+    private getAbc(36,1284
+    private makeIdKw3x3(52,1726
+    private getPolBy(63,2187
+    private getZajBy(76,2705
+    private updKandBy(88,3185
+    private updAllVals(110,3885
+    private isSolved(122,4115
+    public solveSudoku(136,4524
+    public print(153,4921
+
+pole1x1.ts,448
+class Pole1x1 4,82
+    private val: number;6,160
+    private w: number;7,185
+    private k: number;8,208
+    private kw3x3: string;9,231
+    private kand: Array<Array11,332
+    public constructor(20,732
+    private range(43,1521
+    public getVal(52,1760
+    public setVal(57,1857
+    public getKand(62,1991
+    public getLokalizacja(71,2264
+    private usNumZtab(89,2796
+    public usNumsZKand(101,3145
+    public getRepr(112,3471
+
+z3.ts,56
+let easySudoku: Kwadrat9x9 48,1468
+easySudoku 77,2329

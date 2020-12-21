@@ -1,4 +1,4 @@
-import {Pole1x1} from "./pole1x1"
+import { Pole1x1 } from "./pole1x1"
 
 /**
  * klasa reprezentujaca kwadrat9x9 skladajacy sie z 81 obiektow klasy pole1x1
