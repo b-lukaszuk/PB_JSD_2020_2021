@@ -1,4 +1,4 @@
-import {Karta} from "./karta"
+import { Karta } from "./karta"
 
 /**
  * klasa reprezentujaca Talie kart do gry w pokera

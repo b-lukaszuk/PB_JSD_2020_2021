@@ -1,4 +1,4 @@
-import {Karta} from "./karta"
+import { Karta } from "./karta"
 
 /**
  * klasa reprezentujaca 5 kart (z ang. Hand) rozdane 1 graczowi
