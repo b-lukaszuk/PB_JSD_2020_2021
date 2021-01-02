@@ -1,8 +1,0 @@
-do zrobienia dla siebie w wolnym czasie
-moze poczytac i przerobic z czegos, np.
-
-https://medium.com/datadriveninvestor/solving-sudoku-in-seconds-or-less-with-python-1c21f10117d6
-https://stackoverflow.com/questions/1697334/algorithm-for-solving-sudoku
-
-solving every sudoku puzzle:
-https://norvig.com/sudoku.html
