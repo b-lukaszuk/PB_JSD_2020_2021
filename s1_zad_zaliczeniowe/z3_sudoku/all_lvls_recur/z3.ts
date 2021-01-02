@@ -41,11 +41,11 @@ let sudoku2: Array<Array<number>> = [
     [3, 0, 6,      0, 1, 0,      7, 0, 0],
     [0, 7, 0,      5, 0, 8,      0, 0, 0],
     [9, 0, 0,      0, 6, 0,      0, 0, 0],
-    
+
     [0, 9, 0,      6, 0, 0,      5, 0, 3],
     [0, 0, 0,      9, 0, 5,      0, 0, 0],
     [1, 0, 5,      0, 0, 4,      0, 6, 0],
-    
+
     [0, 0, 0,      0, 4, 0,      0, 0, 1],
     [0, 0, 0,      2, 0, 3,      0, 8, 0],
     [0, 0, 9,      0, 8, 0,      2, 0, 5]
@@ -134,7 +134,7 @@ function isPossible(sudoku: Array<Array<number>>,
     // spr czy cyfra (n) z nie wyst juz w gdzie indziej w swoim kwadracie 3x3
     // `Math.floor(w|k / 3)` => 0|1|2, np. (Python-like): 2//3=0, 4//3=1, 8//3=2
     // `Math.floor(w|k / 3)*3` => 0|3|6
-    // (indeksy 1 pola (wiersz/kolumna sudoku) rozpocz kw3x3 w kw9x9 
+    // (indeksy 1 pola (wiersz/kolumna sudoku) rozpocz kw3x3 w kw9x9
     // popatrzec na rys sudoku, aby lepiej zrozumiec
     let w0: number = Math.floor(w/3)*3;
     let k0: number = Math.floor(k/3)*3;
