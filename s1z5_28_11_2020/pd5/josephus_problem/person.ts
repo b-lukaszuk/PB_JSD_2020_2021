@@ -7,7 +7,7 @@ class Person {
 
     public getId(): number {
 	return this.id;
-    } 
+    }
 }
 
 export { Person }
