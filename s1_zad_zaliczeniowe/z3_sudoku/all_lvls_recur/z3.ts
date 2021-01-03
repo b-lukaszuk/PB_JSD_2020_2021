@@ -199,6 +199,7 @@ function solve(sudoku: Array<Array<number>>): void {
 			if (isSolved(sudoku)) {
 			    console.log("znaleziono rozwiazanie:");
 			    prntSudoku(sudoku);
+			    // bo rekursja musi sie kiedys skonczyc
 			    return // zwraca undefined
 			}
 			// rozwiaz reszte sudoku przy tej wstaw wartosci `i`
@@ -211,11 +212,13 @@ function solve(sudoku: Array<Array<number>>): void {
 		    }
 		}
 		// zadna z wartosci od 1 do 9 nie pasuje dla danego pustego pola
+		// bo rekursja musi sie kiedys skonczyc
 		return // zwraca undefined
 	    }
 	}
     }
     // po przejsciu przez wszystkie pola tab9x9
+    // bo rekursja musi sie kiedys skonczyc
     return // zwraca undefined
 }
 
