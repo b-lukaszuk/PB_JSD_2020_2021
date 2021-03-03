@@ -6,3 +6,10 @@ s1z1_17_10_2020/index.js
 */*.pdf
 # ignoruj pliki pomocnicze/zapasowe Emacsa
 */*~ 
+
+### dla s2z1_06_03_2021
+# ignoruj folder i pliki w folderze node_modules
+/s2z1_06_03_2021/z2/node_modules/
+# ignoruj pliki *.js
+/s2z1_06_03_2021/z1/*.js
+/s2z1_06_03_2021/z2/*.js
