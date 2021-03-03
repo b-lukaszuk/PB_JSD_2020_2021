@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-//                                   TASK 2 //
+//                                   Task 2                                  //
 ///////////////////////////////////////////////////////////////////////////////
 // Write a guessing game where the user has to curGuess a secret
 // number. After every curGuess the program tells the user whether their
