@@ -14,15 +14,27 @@ function mvFirstLetToEnd(word: string): string {
     return word.slice(1) + word[0];
 }
 
+// substitute of python's capitalize
+// https://www.w3schools.com/python/ref_string_capitalize.asp
+function capitalize(word: string): string {
+    // String.slice() jesli tylko start index, to end index = String.length
+    return word[0].toUpperCase() + word.slice(1).toLocaleLowerCase();
+}
+
 // zalozenie zdanie zlozone z samych liter
 function pigLatinize(text: string): string {
     let words: Array<string> = text.split(" ");
-    let latWords: Array<string> = words.map((word) => {
-        return mvFirstLetToEnd(word) + "ay"
-    })
+    let latWords: Array<string> = [];
+    for (let i = 0; i < words.length; i++) {
+        let word: string = mvFirstLetToEnd(words[i]) + "ay";
+        if (i === 0) {
+            latWords.push(capitalize(word));
+        } else {
+            latWords.push(word);
+        }
+    }
     return latWords.join(" ");
 }
 
 console.log(pigLatinize("ala ma kota"));
 console.log(pigLatinize("The quick brown fox"));
-
