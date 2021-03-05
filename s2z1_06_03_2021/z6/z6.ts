@@ -8,7 +8,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 // przesuwa 1 litere na koniec slowa (wytnij i wklej)
-// zalozenie slowo sklada sie z samych liter
+// zalozenie: slowo sklada sie z samych liter
 function mvFirstLetToEnd(word: string): string {
     // String.slice() jesli tylko start index, to end index = String.length
     return word.slice(1) + word[0];
@@ -21,9 +21,10 @@ function capitalize(word: string): string {
     return word[0].toUpperCase() + word.slice(1).toLocaleLowerCase();
 }
 
-// zalozenie zdanie zlozone z samych liter
-function pigLatinize(text: string): string {
-    let words: Array<string> = text.split(" ");
+// zalozenie: zdanie zlozone z samych liter
+// brak obslugi imion, nazw wlasnych
+function pigLatinize(sentence: string): string {
+    let words: Array<string> = sentence.split(" ");
     let latWords: Array<string> = [];
     for (let i = 0; i < words.length; i++) {
         let word: string = mvFirstLetToEnd(words[i]) + "ay";
@@ -36,5 +37,41 @@ function pigLatinize(text: string): string {
     return latWords.join(" ");
 }
 
-console.log(pigLatinize("ala ma kota"));
-console.log(pigLatinize("The quick brown fox"));
+let sentence1: string = "ala ma kota";
+let sentence2: string = "The quick brown fox";
+let latSentence1: string = pigLatinize(sentence1);
+let latSentence2: string = pigLatinize(sentence2);
+console.log("Pig latenizing:", sentence1, "=>", latSentence1);
+console.log("Pig latenizing:", sentence2, "=>", latSentence2);
+console.log("============");
+
+function mvLastLetToFront(word: string): string {
+    // String.slice() -1, tzn. ost od konca (jak w pythonie)
+    return word.slice(-1) + word.slice(0, -1);
+}
+
+function dePigLatWord(word: string): string {
+    return mvLastLetToFront(word.slice(0, -2));
+}
+
+// zalozenie: zdanie zlozone z samych liter
+// brak obslugi imion, nazw wlasnych
+function dePigLatinize(sentence: string): string {
+    let words: Array<string> = sentence.split(" ");
+    let deLatWords: Array<string> = [];
+    for (let i = 0; i < words.length; i++) {
+        let word: string = dePigLatWord(words[i]);
+        if (i === 0) {
+            deLatWords.push(capitalize(word));
+        } else {
+            deLatWords.push(word);
+        }
+    }
+    return deLatWords.join(" ");
+}
+
+let deLatSentence1: string = dePigLatinize(latSentence1);
+let deLatSentence2: string = dePigLatinize(latSentence2);
+
+console.log("Delatenizing:", latSentence1, "=>", deLatSentence1);
+console.log("Delatenizing:", latSentence2, "=>", deLatSentence2);
