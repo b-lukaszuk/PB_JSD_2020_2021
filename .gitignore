@@ -7,6 +7,12 @@ s1z1_17_10_2020/index.js
 # ignoruj pliki pomocnicze/zapasowe Emacsa
 */*~ 
 
+### dla zadan zaliczeniowych z sem1
+# idnoruj pliki w folderze node_modules w z1_waga
+s1_zad_zaliczeniowe/z1_waga/node_modules
+# idnoruj pliki js
+s1_zad_zaliczeniowe/z1_waga/*.js
+
 ### dla s2z1_06_03_2021
 # ignoruj folder i pliki w folderze node_modules
 /s2z1_06_03_2021/z2/node_modules/
