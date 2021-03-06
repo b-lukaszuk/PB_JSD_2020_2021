@@ -22,6 +22,13 @@ inaczej jesli same if-y/elsy, boole (a > b) to jest chyba niemozliwe
 utworze wiec funkcje/metode ktora bedzie imitowac wazenie waga
 
 
+# Informacje dodatkowe
+
+- Zadanie zadane przy okazji praca domowej z dnia 07-11-2020 (jako zad 5)
+- funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
+- przerobka rozwiazania z pd3 (zad 5)
+- calosc lekko opytmalizowana, np. przez pisanie w typescript,
+
 # Sposob tworzenia tego projektu
 
 ```bash

@@ -1,37 +1,3 @@
-/////////////////
-// Zadanie zadane przy okazji praca domowej z dnia 07-11-2020 (jako zad 5)
-// Przedmiot: Programowanie w jezyku JavaScript
-// Podyplomowka: JavaScript Developer 2020/2021
-// funkcje nie sprawdzaja zalozen, nie lapia bledow (try...catch), itd.
-// przerobka rozwiazania z pd3 (zad 5)
-// calosc lekko opytmalizowana, np. przez pisanie w typescript,
-// poprawke poprz wersji
-/////////////////
-
-///////////////////////////////////////////////////////////////////////////////
-//                                 zadanie 1
-///////////////////////////////////////////////////////////////////////////////
-// 5) Scale riddle. With 8 balls :) EXAM [1,1,1,1,2,1,1,1]. One of the
-// items will be change to two. Indexes are t be chosen at random. Use
-// compressions only two times.
-
-// uzycie:
-// bash:
-// > tsc z1.ts
-// > node z1.js
-
-////////////////////////////////////////
-/// niejasnosci i przyjete zalozenia ///
-////////////////////////////////////////
-// "indexes are t be chosen at random"?
-// przyjmuje ze zmieniam losowa wartosc w tabeli z 1 na 2
-// sugestia niektorych ludzi z roku:
-// kule sa losowo wybierane do wazenia (just in case zastosuje sie i do tego)
-// "Use compressions only two times" - chodzi o "comparisons" (porownania)?
-// jak mam rozumiec porownanie, tak jak w wazeniu, < lub > lub =
-// inaczej jesli same if-y/elsy, boole (a > b) to jest chyba niemozliwe
-// utworze wiec funkcje/metode ktora bedzie imitowac wazenie waga
-
 import { Kula } from "./kula"
 
 // mala modyfikacja, ilosc kul do wazenia bede wczytywal z bash-a, np.:
@@ -54,7 +20,7 @@ if (typeof args._[0] === "undefined") {
 function getTabJedynek(n: number): Array<number> {
     let tmp: Array<number> = [];
     for (let i = 0; i < n; i++) {
-	tmp.push(1)
+        tmp.push(1)
     }
     return tmp;
 }
@@ -113,7 +79,7 @@ console.log("===");
  */
 function liczMaseKul(kule: Array<Kula>): number {
     return kule.
-	reduce((acc: number, cur: Kula) => acc + cur.getMass(), 0);
+        reduce((acc: number, cur: Kula) => acc + cur.getMass(), 0);
 }
 
 // zmienna globalna, podbijana przy kazdym wazeniu
@@ -131,11 +97,11 @@ function zwazKule(kule1: Array<Kula>, kule2: Array<Kula>): number {
     let sum1: number = liczMaseKul(kule1);
     let sum2: number = liczMaseKul(kule2);
     if (sum1 > sum2) {
-	return -1;
+        return -1;
     } else if (sum1 === sum2) {
-	return 0;
+        return 0;
     } else {
-	return 1;
+        return 1;
     }
 }
 
@@ -173,31 +139,31 @@ function getNrandKul(kule: Array<Kula>, n: number): Array<Kula> {
 function getCiezkKula(kule: Array<Kula>): Kula {
     let lKul: number = kule.length;
     if (lKul === 1) {
-	return kule[0];
+        return kule[0];
     } else {
-	// zawsze dzieli kule na 3 kupki
-	let poIleKul: number = Math.ceil(lKul / 3);
-	// losowo, bo byc moze jest to wymagane w tresci zadania
-	// patrz definicja getNrandKul()
-	let k1: Array<Kula> = getNrandKul(kule, poIleKul);
-	let k2: Array<Kula> = getNrandKul(kule, poIleKul);
-	// just in case sprawdzamy
-	if (k1.length !== k2.length) {
-	     console.log("blad ilosci kul w k1 i k2 sa rozne");
-	}
-	// pozostale kule trafiaja do k3
-	let k3: Array<Kula> = kule;
+        // zawsze dzieli kule na 3 kupki
+        let poIleKul: number = Math.ceil(lKul / 3);
+        // losowo, bo byc moze jest to wymagane w tresci zadania
+        // patrz definicja getNrandKul()
+        let k1: Array<Kula> = getNrandKul(kule, poIleKul);
+        let k2: Array<Kula> = getNrandKul(kule, poIleKul);
+        // just in case sprawdzamy
+        if (k1.length !== k2.length) {
+            console.log("blad ilosci kul w k1 i k2 sa rozne");
+        }
+        // pozostale kule trafiaja do k3
+        let k3: Array<Kula> = kule;
 
-	// -1 (k1 ciezsze niz k2); +1 (k2 ciezsze niz k1); 0 (k1 == k2)
-	let wynWazenia: number = zwazKule(k1, k2);
+        // -1 (k1 ciezsze niz k2); +1 (k2 ciezsze niz k1); 0 (k1 == k2)
+        let wynWazenia: number = zwazKule(k1, k2);
 
-	if (wynWazenia === 0) {
-	    return getCiezkKula(k3);
-	} else if (wynWazenia < 0) {
-	    return getCiezkKula(k1);
-	} else {
-	    return getCiezkKula(k2);
-	}
+        if (wynWazenia === 0) {
+            return getCiezkKula(k3);
+        } else if (wynWazenia < 0) {
+            return getCiezkKula(k1);
+        } else {
+            return getCiezkKula(k2);
+        }
     }
 }
 
