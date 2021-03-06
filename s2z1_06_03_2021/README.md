@@ -17,3 +17,11 @@ Write a code that takes a number/string and returns a list of its digits. So for
 
 ## Task 6
 Write function that translates a text to Pig Latin and back. English is translated to Pig Latin by taking the first letter of every word, moving it to the end of the word and adding ‘ay’. “The quick brown fox” becomes “Hetay uickqay rownbay oxfay”.
+
+# Additional info/clues/recomendations from Karol (06-03-2021)
+
+- task 1, 2 i 4 najwazniejsze do optymalizacji/dobrego napisania
+- zacheta aby zrobic wszyskto (wszystkie zadania) klasowo
+- w task 2 maja byc 2 klasy:
+  + jedna zgaduje/pyta,
+  + druga wybiera tajemna liczbe i udziela odpowiedzi
