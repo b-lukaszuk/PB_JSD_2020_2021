@@ -10,7 +10,7 @@ s1z1_17_10_2020/index.js
 # ignoruj pliki js w joshephus problem
 s1z5_28_11_2020/pd5/josephus_problem/rekurencja/*.js
 s1z5_28_11_2020/pd5/josephus_problem/for_loop/*.js
-s1z5_28_11_2020/pd5/josephus_problem/while/*.js
+s1z5_28_11_2020/pd5/josephus_problem/while_loop/*.js
 
 ### dla zadan zaliczeniowych z sem1
 # idnoruj pliki w folderze node_modules w z1_waga
