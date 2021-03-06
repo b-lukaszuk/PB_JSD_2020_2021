@@ -20,10 +20,11 @@ s1_zad_zaliczeniowe/z1_waga/*.js
 
 ### dla s2z1_06_03_2021
 # ignoruj folder i pliki w folderze node_modules
-/s2z1_06_03_2021/z2/node_modules/
+s2z1_06_03_2021/z2/human_user_guesses/node_modules
 # ignoruj pliki *.js
 /s2z1_06_03_2021/z1/*.js
-/s2z1_06_03_2021/z2/*.js
+s2z1_06_03_2021/z2/human_user_guesses/*.js
+s2z1_06_03_2021/z2/two_classes_guesser_and_hinter/*.js
 /s2z1_06_03_2021/z3/*.js
 /s2z1_06_03_2021/z4/*.js
 /s2z1_06_03_2021/z5/*.js
