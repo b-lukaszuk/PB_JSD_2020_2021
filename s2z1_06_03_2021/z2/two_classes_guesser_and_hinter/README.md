@@ -20,12 +20,12 @@ Na cwiczeniach Karol doprecyzowal, ze maja byc 2 klasy:
 ## Uruchomienie programu
 
 ```bash
-tsc z2.ts  # transpilacja do JS-a
-node z2.js # uruchomienie progamu
+tsc main.ts  # transpilacja do JS-a
+node main.js # uruchomienie progamu
 ```
 opcjonalnie (do ES6)
 
 ```bash
-tsc z2.ts --target es6 # transpilacja do JS-a w wersji EcmaScript6
-node z2.js # uruchomienie progamu
+tsc main.ts --target es6 # transpilacja do JS-a w wersji EcmaScript6
+node main.ts # uruchomienie progamu
 ```
