@@ -1,3 +1,6 @@
+///////////////////////////////////////////////////////////////////////////////
+//                                  zmienne                                  //
+///////////////////////////////////////////////////////////////////////////////
 // tabela osob w jaskini (numerki)
 let people: Array<number> = [];
 
@@ -6,9 +9,10 @@ for (let i = 1; i < 8; i++) {
     people.push(i);
 }
 
-console.log("Poczatkowo w jaskini sa: ");
-console.log(people.toString() + "\n");
 
+///////////////////////////////////////////////////////////////////////////////
+//                                  funkcje                                  //
+///////////////////////////////////////////////////////////////////////////////
 /**
  * imituje zabicie jednej osoby z jaskini przez druga osobe
  * informacje o zdarzeniu wyswietla na ekranie
@@ -41,14 +45,19 @@ function killPerson(): void {
  */
 function getSurvivor(): void {
     if (people.length === 1) {
-	console.log("\n" + people[0] + " remains alive");
-	// return potrzebne aby kiedys zakonczyc rekurencje
-	return // domyslnie zwraca undefined
+        console.log("\n" + people[0] + " remains alive");
+        // return potrzebne aby kiedys zakonczyc rekurencje
+        return // domyslnie zwraca undefined
     } else {
-	killPerson();
-	getSurvivor();
+        killPerson();
+        getSurvivor();
     }
 }
 
+///////////////////////////////////////////////////////////////////////////////
+//                             wykonanie programu                            //
+///////////////////////////////////////////////////////////////////////////////
+console.log("Poczatkowo w jaskini sa: ");
+console.log(people.toString() + "\n");
 console.log("zaczynamy zabijanie do ostatniego zywego\n");
 getSurvivor();
