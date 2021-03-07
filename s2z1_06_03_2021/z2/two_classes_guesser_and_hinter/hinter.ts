@@ -1,20 +1,11 @@
+import { getRandNumFromRange } from "./utilities";
+
 class Hinter {
     private _secretNum: number;
 
     // rengeStart-rangeEnd (incl-excl)
     public constructor(rangeStart: number = 1, rangeEnd: number = 101) {
-        this._secretNum = this.getRandNumFromRange(rangeStart, rangeEnd);
-    }
-
-    /**
-     * met. pomocn - imitacja pythonowego range()
-     * zwraca losowa liczbe (Int) z podanego zakresu
-     * @param {number} start - liczba (Int), poczatek zakresu (inclusive)
-     * @param {number} start - liczba (Int), koniec zakresu (exclusive)
-     * @return {number} losowa liczba (Int) z wybranego zakresu
-     */
-    private getRandNumFromRange(start: number, stop: number): number {
-        return Math.floor(Math.random() * (stop - start) + start);
+        this._secretNum = getRandNumFromRange(rangeStart, rangeEnd);
     }
 
     /**
@@ -26,18 +17,17 @@ class Hinter {
      */
     public evaluateGuess(guess: number): number {
         if (guess < this._secretNum) {
-            console.log("Hinter: higher");
+            console.log("+ Hinter: higher");
             return -1;
         } else if (guess > this._secretNum) {
-            console.log("Hinter: lower");
+            console.log("+ Hinter: lower");
             return 1;
         } else {
-            console.log("Hinter: You got it!");
-            console.log("Hinter: Congratulations!");
+            console.log("+ Hinter: You got it!");
+            console.log("+ Hinter: Congratulations!");
             return 0;
         }
     }
 }
-
 
 export default Hinter;

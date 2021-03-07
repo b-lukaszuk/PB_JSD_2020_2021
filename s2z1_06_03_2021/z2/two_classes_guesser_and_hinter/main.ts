@@ -3,6 +3,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 import Guesser from "./guesser";
 import Hinter from "./hinter";
+import Host from "./host";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,8 +17,13 @@ import Hinter from "./hinter";
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
 ///////////////////////////////////////////////////////////////////////////////
-let hinter: Hinter = new Hinter();
-let guesser: Guesser = new Guesser();
+// minimalna i maksymalna ranga guessow
+const minRange: number = 1; // inclusive
+const maxRange: number = 101; // exclusive
+// uczestnicy
+const hinter: Hinter = new Hinter(minRange, maxRange);
+const guesser: Guesser = new Guesser(minRange, maxRange);
+const host: Host = new Host();
 // do wymiany guessow miedzy guesserem a hinterem
 // Int (1-100, incl-incl)
 let lastGuess: number = 0; // modyfikowana w main()
@@ -25,7 +31,7 @@ let lastGuess: number = 0; // modyfikowana w main()
 // Int -1|0|1 (dla guess <|=|> SecretNum)
 let lastHint: number; // modyfikowana w main()
 // do decyzji czy zakonczyc gre
-let isGameOver: Boolean = false; // modyfikowana w main()
+let isGameOver: boolean = false; // modyfikowana w main()
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -33,29 +39,20 @@ let isGameOver: Boolean = false; // modyfikowana w main()
 ///////////////////////////////////////////////////////////////////////////////
 // glowna funkcja progamu
 function main(): void {
+    host.declareGameBegin(minRange, maxRange);
     let noOfGuesses: number = 1;
-    console.log("HOST: Let's start a game");
-    console.log("HOST: Hinter, You choose a random number between 1 and 100");
-    console.log("HOST: Guesser, You will take a guess");
-    console.log("HOST: Hinter,",
-        "You will provide a feedback regarding the guess correctness");
-    console.log("HOST: Let us begin");
-    console.log("======================");
     // 2^7 = 128, czyli 7 guessow powinno wystarczyc, jest z zapasem
-    for (; noOfGuesses < 10; noOfGuesses++) {
+    // jest break aby nie chodzic na pusto
+    while (noOfGuesses < 100) {
         lastGuess = guesser.getGuess();
         lastHint = hinter.evaluateGuess(lastGuess);
         isGameOver = guesser.isItOver(lastHint);
         if (isGameOver) {
             break;
         }
+        noOfGuesses++;
     }
-    console.log("======================");
-    console.log("HOST: The time allocated for the game has passed");
-    console.log("HOST: After", noOfGuesses, "guesses the result",
-        isGameOver ? "has been settled" : "has not been settled");
-    console.log("HOST:", isGameOver ? "Guesser wins" : "Hinter wins");
-    console.log("HOST: Anyway. Game over. Thank You for fair play");
+    host.declareGameEnd(noOfGuesses, isGameOver);
 }
 
 
