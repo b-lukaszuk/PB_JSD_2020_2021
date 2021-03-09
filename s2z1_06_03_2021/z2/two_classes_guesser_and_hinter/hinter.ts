@@ -1,4 +1,5 @@
 import { getRandNumFromRange } from "./utilities";
+import { Decision } from "./customTypes";
 
 class Hinter {
     private _secretNum: number;
@@ -10,12 +11,11 @@ class Hinter {
 
     /**
      * ocenia czy guess jest mniejszy (-1), rowny(0), czy wiekszy (1)
-     * niz sekretna liczba
-     * wypisuje monit: higher|lower|that's right
+     * niz sekretna liczba, wypisuje o tym informacje
      * @param {number} guess - liczba (Int) z zakr z ktorego utworz _secretNum
      * @return {number} -1|0|1 (dla guess <|=|> SecretNum)
      */
-    public evaluateGuess(guess: number): number {
+    public evaluateGuess(guess: number): Decision {
         if (guess < this._secretNum) {
             console.log("+ Hinter: higher");
             return -1;

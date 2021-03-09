@@ -4,14 +4,7 @@
 import Guesser from "./guesser";
 import Hinter from "./hinter";
 import Host from "./host";
-
-
-///////////////////////////////////////////////////////////////////////////////
-//                              uwagi dodatkowe                              //
-///////////////////////////////////////////////////////////////////////////////
-// "It counts only as one try if they input the same number multiple
-// times consecutively." - algorytm guesera nie powtorzy zgadywania tego samego
-// numeru => nie dodaje obslugi tego wymogu (jest on w ../human_user_guesser/)
+import { Decision } from "./customTypes";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -25,11 +18,14 @@ const hinter: Hinter = new Hinter(minRange, maxRange);
 const guesser: Guesser = new Guesser(minRange, maxRange);
 const host: Host = new Host();
 // do wymiany guessow miedzy guesserem a hinterem
-// Int (1-100, incl-incl)
-let lastGuess: number = 0; // modyfikowana w main()
+let curGuess: number; // modyfikowana w main()
+// do: "It counts only as one try if they input the same number
+// multiple times consecutively."
+// jesli ten sam guess pod rzad, ale jesli byla przerwa liczymy jako nowy
+let prevGuess: number = 0; // modyfikowana w main();
 // do wymiany hintow miedzy hinterem a guesserem
 // Int -1|0|1 (dla guess <|=|> SecretNum)
-let lastHint: number; // modyfikowana w main()
+let lastHint: Decision; // modyfikowana w main()
 // do decyzji czy zakonczyc gre
 let isGameOver: boolean = false; // modyfikowana w main()
 
@@ -40,17 +36,20 @@ let isGameOver: boolean = false; // modyfikowana w main()
 // glowna funkcja progamu
 function main(): void {
     host.declareGameBegin(minRange, maxRange);
-    let noOfGuesses: number = 1;
+    let noOfGuesses: number = 0;
     // 2^7 = 128, czyli 7 guessow powinno wystarczyc, jest z zapasem
     // jest break aby nie chodzic na pusto
-    while (noOfGuesses < 100) {
-        lastGuess = guesser.getGuess();
-        lastHint = hinter.evaluateGuess(lastGuess);
+    for (let i = 0; i < 100; i++) {
+        curGuess = guesser.getGuess();
+        lastHint = hinter.evaluateGuess(curGuess);
         isGameOver = guesser.isItOver(lastHint);
+        if (curGuess !== prevGuess) {
+            noOfGuesses++;
+            prevGuess = curGuess;
+        }
         if (isGameOver) {
             break;
         }
-        noOfGuesses++;
     }
     host.declareGameEnd(noOfGuesses, isGameOver);
 }

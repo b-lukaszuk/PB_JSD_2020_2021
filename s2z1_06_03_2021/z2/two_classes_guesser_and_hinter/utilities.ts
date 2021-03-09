@@ -1,12 +1,18 @@
 // zwraca srodek przedzialu Int (zaokraglenie)
-// lowerBoundary (inclusive), upperBoundary(exclusive)
+// lowerBoundary (inclusive), upperBoundary(INCLUSIVE)
+
+/**
+ * fn. zwraca srodek przedzialu Int (zaokraglenie)
+ * @param {number} lowerBoundary - (Int), poczatek zakresu (inclusive)
+ * @param {number} upperBoundary - (Int), koniec zakresu (INCLUSIVE)
+ * @return {number} Int (srodek zakresu)
+ */
 function getMiddleOfRange(lowerBoundary: number, upperBoundary: number): number {
-    return Math.round((lowerBoundary + upperBoundary - 2) / 2);
+    return Math.round((lowerBoundary + upperBoundary - 1) / 2);
 }
 
 /**
- * fn. pomocn - imitacja pythonowego range()
- * zwraca losowa liczbe (Int) z podanego zakresu
+ * fn. pomocn zwraca losowa liczbe (Int) z podanego zakresu
  * @param {number} start - liczba (Int), poczatek zakresu (inclusive)
  * @param {number} start - liczba (Int), koniec zakresu (exclusive)
  * @return {number} losowa liczba (Int) z wybranego zakresu
