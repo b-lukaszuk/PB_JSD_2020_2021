@@ -1,7 +1,7 @@
 class ListRotator {
     private _anArray: Array<any>;
 
-    constructor(someArray: Array<any>) {
+    public constructor(someArray: Array<any>) {
         // kopia arrayu przyj jako arg w konstruktorze 
         this._anArray = [...someArray];
     }

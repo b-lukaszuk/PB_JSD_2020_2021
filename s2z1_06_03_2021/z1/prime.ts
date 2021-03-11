@@ -2,7 +2,7 @@ import range from "./utilities";
 
 class Prime {
     // nie bedziemy nic robic w konstruktorze
-    constructor() {
+    public constructor() {
     }
 
     // za https://en.wikipedia.org/wiki/Prime_number#Formulas_for_primes

@@ -5,10 +5,6 @@ class Fibonacci {
         this._FibDict = { 1: 1, 2: 1 }; // pierwsze 2 liczby ciagu Fibonacciego
     }
 
-    getFibDict(): Object {
-        return this._FibDict;
-    }
-
     // uses recursion and dictionary search (to improve effectivenes)
     private getNthFib(n: number): number {
         if (this._FibDict.hasOwnProperty(n)) {

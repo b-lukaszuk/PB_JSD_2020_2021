@@ -1,6 +1,6 @@
 class Host {
     // klasa sluzy tylko do wypisywania informacji
-    constructor() {
+    public constructor() {
     }
 
     // oglasza rozpoczecie gry i o co w niej chodzi
