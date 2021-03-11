@@ -33,7 +33,6 @@ let isGameOver: boolean = false; // modyfikowana w main()
 ///////////////////////////////////////////////////////////////////////////////
 //                                  funkcje                                  //
 ///////////////////////////////////////////////////////////////////////////////
-// glowna funkcja progamu
 function main(): void {
     host.declareGameBegin(minRange, maxRange);
     let noOfGuesses: number = 0;

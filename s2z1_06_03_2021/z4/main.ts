@@ -1,26 +1,22 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  importy                                  //
 ///////////////////////////////////////////////////////////////////////////////
-import ListRotator from "./listRotator";
-
+import Fibonacci from "./fibonnaci";
 
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
 ///////////////////////////////////////////////////////////////////////////////
-const listRot: ListRotator = new ListRotator([1, 2, 3, 4, 5, 6]);
-const shift: number = 2;
+const fn: Fibonacci = new Fibonacci(); // uzywane w main()
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                                  funkcje                                  //
 ///////////////////////////////////////////////////////////////////////////////
 function main(): void {
-    console.log("starting list:");
-    listRot.printArray();
-    listRot.shiftByKelts(shift);
-    console.log("after shifting by:", shift);
-    console.log("final list:");
-    listRot.printArray();
+    console.log("Fib seq of 5 elts:", fn.getFibSequence(5));
+    console.log("Fib seq of 11 elts:", fn.getFibSequence(11));
+    console.log("Fib seq of 20 elts:", fn.getFibSequence(20));
+    console.log("Fib seq of 50 elts:", fn.getFibSequence(50));
 }
 
 
@@ -28,3 +24,4 @@ function main(): void {
 //                             wykonanie programu                            //
 ///////////////////////////////////////////////////////////////////////////////
 main();
+
