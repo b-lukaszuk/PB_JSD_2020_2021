@@ -25,6 +25,7 @@ class PigLatenizer {
         let latWords: Array<string> = [];
         for (let i = 0; i < words.length; i++) {
             let word: string = this.mvFirstLetToEnd(words[i]) + "ay";
+            // kapitalizacja pierwszej litery pierwszgo slowa w zdaniu
             if (i === 0) {
                 latWords.push(this.capitalize(word));
             } else {
@@ -40,6 +41,7 @@ class PigLatenizer {
     }
 
     private getDeLatWord(word: string): string {
+        // -2, bo oprocz 2 ostatnich liter -> pigLatynizowane "ay"
         return this.mvLastLetToFront(word.slice(0, -2));
     }
 
@@ -51,6 +53,7 @@ class PigLatenizer {
         let deLatWords: Array<string> = [];
         for (let i = 0; i < words.length; i++) {
             let word: string = this.getDeLatWord(words[i]);
+            // kapitalizacja pierwszego slowa w zdaniu
             if (i === 0) {
                 deLatWords.push(this.capitalize(word));
             } else {
