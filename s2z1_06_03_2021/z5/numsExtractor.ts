@@ -1,5 +1,6 @@
 class NumsExtractor {
-    public constructor(private _text: string) {
+    // tu w konstruktorze nie robimy nic ciekawego
+    public constructor() {
     }
 
     public getNumsFromString(text: string): Array<number> {

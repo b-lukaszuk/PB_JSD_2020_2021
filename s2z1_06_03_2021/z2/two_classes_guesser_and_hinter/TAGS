@@ -1,175 +1,0 @@
-
-guesser.ts,267
-class Guesser 4,91
-    private _minRangeForGuess: number;5,107
-    private _maxRangeForGuess: number;6,146
-    private _curGuess: number;7,185
-    public constructor(10,338
-    public getGuess(19,684
-    public isItOver(33,1236
-export default Guesser;52,1968
-
-host.ts,136
-class Host 1,0
-    constructor(3,64
-    public declareGameBegin(8,190
-    public declareGameEnd(20,745
-export default Host;31,1287
-
-main.ts,23
-function main(44,2189
-
-hinter.ts,151
-class Hinter 4,94
-    private _secretNum: number;5,109
-    public constructor(8,181
-    public evaluateGuess(19,630
-export default Hinter;34,1064
-
-utilities.ts,70
-function getMiddleOfRange(3,102
-function getRandNumFromRange(14,551
-
-customTypes.ts,32
-type Decision 1,0
-export 3,29
-
-guesser.ts,267
-class Guesser 4,91
-    private _minRangeForGuess: number;5,107
-    private _maxRangeForGuess: number;6,159
-    private _curGuess: number;7,211
-    public constructor(10,364
-    public getGuess(19,710
-    public isItOver(33,1262
-export default Guesser;50,1857
-
-host.ts,136
-class Host 1,0
-    constructor(3,64
-    public declareGameBegin(8,190
-    public declareGameEnd(20,745
-export default Host;31,1287
-
-main.ts,23
-function main(37,1722
-
-hinter.ts,151
-class Hinter 4,94
-    private _secretNum: number;5,109
-    public constructor(8,181
-    public evaluateGuess(18,608
-export default Hinter;33,1042
-
-utilities.ts,70
-function getMiddleOfRange(3,102
-function getRandNumFromRange(13,517
-
-customTypes.ts,32
-type Decision 1,0
-export 3,29
-
-guesser.ts,267
-class Guesser 4,91
-    private _minRangeForGuess: number;5,107
-    private _maxRangeForGuess: number;6,159
-    private _curGuess: number;7,211
-    public constructor(10,364
-    public getGuess(19,710
-    public isItOver(33,1262
-export default Guesser;50,1857
-
-host.ts,136
-class Host 1,0
-    constructor(3,64
-    public declareGameBegin(8,190
-    public declareGameEnd(20,745
-export default Host;31,1287
-
-main.ts,23
-function main(37,1717
-
-hinter.ts,151
-class Hinter 4,94
-    private _secretNum: number;5,109
-    public constructor(8,181
-    public evaluateGuess(18,608
-export default Hinter;33,1042
-
-utilities.ts,70
-function getMiddleOfRange(3,102
-function getRandNumFromRange(13,517
-
-customTypes.ts,32
-type Decision 1,0
-export 3,29
-
-guesser.ts,267
-class Guesser 4,91
-    private _minRangeForGuess: number;5,107
-    private _maxRangeForGuess: number;6,159
-    private _curGuess: number;7,211
-    public constructor(10,364
-    public getGuess(20,760
-    public isItOver(35,1351
-export default Guesser;50,1809
-
-host.ts,136
-class Host 1,0
-    constructor(3,64
-    public declareGameBegin(8,190
-    public declareGameEnd(20,745
-export default Host;31,1287
-
-main.ts,23
-function main(37,1717
-
-hinter.ts,151
-class Hinter 4,94
-    private _secretNum: number;5,109
-    public constructor(8,181
-    public evaluateGuess(18,608
-export default Hinter;33,1042
-
-utilities.ts,71
-function getMiddleOfRange(11,409
-function getRandNumFromRange(21,824
-
-customTypes.ts,32
-type Decision 1,0
-export 3,29
-
-guesser.ts,267
-class Guesser 4,91
-    private _minRangeForGuess: number;5,107
-    private _maxRangeForGuess: number;6,159
-    private _curGuess: number;7,211
-    public constructor(10,364
-    public getGuess(19,710
-    public isItOver(34,1301
-export default Guesser;49,1759
-
-host.ts,136
-class Host 1,0
-    constructor(3,64
-    public declareGameBegin(8,190
-    public declareGameEnd(20,745
-export default Host;31,1287
-
-main.ts,23
-function main(37,1717
-
-hinter.ts,151
-class Hinter 4,94
-    private _secretNum: number;5,109
-    public constructor(8,181
-    public evaluateGuess(18,608
-export default Hinter;33,1042
-
-utilities.ts,71
-function getMiddleOfRange(10,343
-function getRandNumFromRange(20,758
-
-customTypes.ts,32
-type Decision 1,0
-export 3,29
