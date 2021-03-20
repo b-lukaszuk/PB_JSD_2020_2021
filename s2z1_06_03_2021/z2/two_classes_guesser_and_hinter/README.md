@@ -8,6 +8,10 @@ At the end the number of tries needed should be printed.
 It counts only as one try if they input the same number multiple times consecutively.
 Range 1 - 100.
 
+## Uwaga dodatkowa (06-03-2021)
+
+Na cwiczeniach Karol doprecyzowal, aby wszystkie zadania starac sie robic klasowo
+
 # Przypomninie
 
 ## Uruchomienie programu

@@ -1,6 +1,7 @@
 # Tasks
 
 ## Task 1
+
 Write a program that prints all prime numbers in given range. Take sub from 1-100.
 
 ## Uwaga dodatkowa (06-03-2021)
