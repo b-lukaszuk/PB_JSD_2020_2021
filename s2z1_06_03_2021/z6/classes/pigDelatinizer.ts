@@ -1,4 +1,4 @@
-import { capitalize } from "./utilities";
+import { capitalize } from "../utilities/capitalize";
 
 class PigDelatenizer {
     // nothing fancy to do here

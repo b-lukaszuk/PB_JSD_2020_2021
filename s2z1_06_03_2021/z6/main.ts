@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  importy                                  //
 ///////////////////////////////////////////////////////////////////////////////
-import PigLatinizer from "./pigLatinizer";
-import PigDelatinizer from "./pigDelatinizer";
+import PigLatinizer from "./classes/pigLatinizer";
+import PigDelatinizer from "./classes/pigDelatinizer";
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -26,13 +26,14 @@ const deLatSent2: string = pigDelat.getDeLatSentence(latSent2);
 ///////////////////////////////////////////////////////////////////////////////
 function main(): void {
 
+    console.log("============");
     console.log("Pig latenizing:", origSent1, "=>", latSent1);
     console.log("Pig latenizing:", origSent2, "=>", latSent2);
     console.log("============");
-
     console.log("Delatenizing:", latSent1, "=>", deLatSent1);
     console.log("Delatenizing:", latSent2, "=>", deLatSent2);
     console.log("============");
+
     console.log("That's it. Goodbye");
 }
 
