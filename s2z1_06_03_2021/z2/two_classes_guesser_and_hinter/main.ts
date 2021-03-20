@@ -5,7 +5,6 @@ import Guesser from "./guesser";
 import Hinter from "./hinter";
 import Host from "./host";
 import Connection from "./connection";
-import { Decision } from "./customTypes";
 
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
@@ -22,7 +21,7 @@ const guesser: Guesser = new Guesser(minRange, maxRange);
 const host: Host = new Host();
 // do wymiany informacji (curGuess, prevGuess, lastHint, isGameOver)
 // miedzy guesserem a hinterem
-const connection: Connection = new Connection(
+const con: Connection = new Connection(
     minRange - 1,
     minRange - 1,
     -1,
@@ -36,22 +35,22 @@ function main(): void {
     host.declareGameBegin(minRange, maxRange);
     let noOfGuesses: number = 0; // ile razy juz zgadywano
     for (let i = 0; i < maxNumOfGuesses; i++) {
-        connection.setCurGuess(guesser.getGuess());
-        connection.setLastHint(
-            hinter.evaluateGuess(connection.getCurGuess())
+        con.setCurGuess(guesser.getGuess());
+        con.setLastHint(
+            hinter.evaluateGuess(con.getCurGuess())
         );
-        connection.setIsGameOver(
-            guesser.isItOver(connection.getLastHint())
+        con.setIsGameOver(
+            guesser.isItOver(con.getLastHint())
         );
-        if (connection.getCurGuess() !== connection.getPrevGuess()) {
+        if (con.getCurGuess() !== con.getPrevGuess()) {
             noOfGuesses++;
-            connection.setPrevGuess(connection.getCurGuess());
+            con.setPrevGuess(con.getCurGuess());
         }
-        if (connection.getIsGameOver()) {
+        if (con.getIsGameOver()) {
             break;
         }
     }
-    host.declareGameEnd(noOfGuesses, connection.getIsGameOver());
+    host.declareGameEnd(noOfGuesses, con.getIsGameOver());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
