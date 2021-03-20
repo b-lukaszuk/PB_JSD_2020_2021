@@ -1,39 +1,42 @@
-import { range } from "./utilities";
-
-class Prime {
+"use strict";
+exports.__esModule = true;
+var rangeFuncs_1 = require("../utilities/rangeFuncs");
+var Prime = /** @class */ (function () {
     // nie bedziemy nic robic w konstruktorze
-    public constructor() {
+    function Prime() {
     }
-
     // za https://en.wikipedia.org/wiki/Prime_number#Formulas_for_primes
     // quick and dirty (division by i from 2 to sqrt(testedNum))
     // (with small improvements) for isPrime
-    private isPrime(testedNum: number): boolean {
+    Prime.prototype.isPrime = function (testedNum) {
         if (testedNum < 1) {
             throw "The number must be an integer greater than 0";
-        } else if (testedNum === 1) {
+        }
+        else if (testedNum === 1) {
             return false;
-        } else if (testedNum <= 3) {
+        }
+        else if (testedNum <= 3) {
             return true;
-        } else if (testedNum % 2 === 0) {
+        }
+        else if (testedNum % 2 === 0) {
             return false;
-        } else {
+        }
+        else {
             // Math.ceil() +1, bo np. sqrt(25)=5, wtedy for sprawdzi tylko do 4
             // i += 2; bo powyzej 2 tylko inty nieparzyste sa primeami
-            for (let i = 3; i < Math.ceil(Math.sqrt(testedNum)) + 1; i += 2) {
+            for (var i = 3; i < Math.ceil(Math.sqrt(testedNum)) + 1; i += 2) {
                 if (testedNum % i === 0) {
                     return false;
                 }
             }
             return true;
         }
-    }
-
+    };
     // start-stop (inclusive-exclusive)
-    public getPrimesInRange(start: number, stop: number): Array<number> {
-        let numbers: Array<number> = range(start, stop);
+    Prime.prototype.getPrimesInRange = function (start, stop) {
+        var numbers = rangeFuncs_1.range(start, stop);
         return numbers.filter(this.isPrime);
-    }
-}
-
-export default Prime;
+    };
+    return Prime;
+}());
+exports["default"] = Prime;
