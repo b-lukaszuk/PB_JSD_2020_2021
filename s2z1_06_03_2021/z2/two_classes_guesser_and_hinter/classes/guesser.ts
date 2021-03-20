@@ -1,5 +1,5 @@
-import { getMiddleOfRange } from "./utilities";
-import { Decision } from "./customTypes";
+import { getMiddleOfRange } from "../utilities/rangeFuncs";
+import { Decision } from "../customTypes/decision";
 
 class Guesser {
     private _minRangeForGuess: number; // inclusive

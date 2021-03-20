@@ -1,4 +1,4 @@
-import { Decision } from "./customTypes";
+import { Decision } from "../customTypes/decision";
 
 class Connection {
 

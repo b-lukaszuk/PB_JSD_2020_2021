@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  importy                                  //
 ///////////////////////////////////////////////////////////////////////////////
-import Guesser from "./guesser";
-import Hinter from "./hinter";
-import Host from "./host";
-import Connection from "./connection";
+import Guesser from "./classes/guesser";
+import Hinter from "./classes/hinter";
+import Host from "./classes/host";
+import Connection from "./classes/connection";
 
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
