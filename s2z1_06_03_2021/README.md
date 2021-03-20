@@ -21,7 +21,7 @@ Write function that translates a text to Pig Latin and back. English is translat
 # Additional info/clues/recomendations from Karol (06-03-2021)
 
 - task 1, 2 i 4 najwazniejsze do optymalizacji/dobrego napisania
-- zacheta aby zrobic wszyskto (wszystkie zadania) klasowo
+- **zacheta aby zrobic wszyskto (wszystkie zadania) klasowo**
 - w task 2 maja byc 2 klasy:
   + jedna zgaduje/pyta,
   + druga wybiera tajemna liczbe i udziela odpowiedzi

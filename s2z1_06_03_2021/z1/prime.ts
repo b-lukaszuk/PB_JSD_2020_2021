@@ -1,4 +1,4 @@
-import range from "./utilities";
+import { range } from "./utilities";
 
 class Prime {
     // nie bedziemy nic robic w konstruktorze
@@ -10,16 +10,17 @@ class Prime {
     // (with small improvements) for isPrime
     private isPrime(testedNum: number): boolean {
         if (testedNum < 1) {
-            throw "Number must be an integer greater than 0";
+            throw "The number must be an integer greater than 0";
         } else if (testedNum === 1) {
             return false;
-        } else if (testedNum === 2) {
+        } else if (testedNum <= 3) {
             return true;
         } else if (testedNum % 2 === 0) {
             return false;
         } else {
-            // +1, bo np. sqrt(25) to 5 i wtedy w for-ze sprawdzi tylko do 4
-            for (let i = 2; i < Math.ceil(Math.sqrt(testedNum)) + 1; i++) {
+            // Math.ceil() +1, bo np. sqrt(25)=5, wtedy for sprawdzi tylko do 4
+            // i += 2; bo powyzej 2 tylko inty nieparzyste sa primeami
+            for (let i = 3; i < Math.ceil(Math.sqrt(testedNum)) + 1; i += 2) {
                 if (testedNum % i === 0) {
                     return false;
                 }

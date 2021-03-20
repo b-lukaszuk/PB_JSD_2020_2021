@@ -10,4 +10,4 @@ function range(start: number, stop: number, step: number = 1): Array<number> {
     return result;
 }
 
-export default range;
+export { range };
