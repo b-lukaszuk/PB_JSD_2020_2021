@@ -14,6 +14,7 @@ const prime: Prime = new Prime(); // uzyte w main()
 //                                  funkcje                                  //
 ///////////////////////////////////////////////////////////////////////////////
 function main(): void {
+    console.log("Prime numbers in range 1-100:");
     // inclusive-exclusive
     console.log(prime.getPrimesInRange(1, 101));
 }

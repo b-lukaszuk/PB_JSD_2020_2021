@@ -13,6 +13,8 @@ import { Decision } from "./customTypes";
 // minimalna i maksymalna ranga guessow
 const minRange: number = 1; // inclusive
 const maxRange: number = 101; // exclusive
+// 2^7 = 128, czyli 7 guessow powinno wystarczyc, jest z zapasem
+// jest break aby nie chodzic na pusto
 const maxNumOfGuesses: number = 10;
 // uczestnicy
 const hinter: Hinter = new Hinter(minRange, maxRange);
@@ -32,9 +34,7 @@ const connection: Connection = new Connection(
 ///////////////////////////////////////////////////////////////////////////////
 function main(): void {
     host.declareGameBegin(minRange, maxRange);
-    let noOfGuesses: number = 0;
-    // 2^7 = 128, czyli 7 guessow powinno wystarczyc, jest z zapasem
-    // jest break aby nie chodzic na pusto
+    let noOfGuesses: number = 0; // ile razy juz zgadywano
     for (let i = 0; i < maxNumOfGuesses; i++) {
         connection.setCurGuess(guesser.getGuess());
         connection.setLastHint(

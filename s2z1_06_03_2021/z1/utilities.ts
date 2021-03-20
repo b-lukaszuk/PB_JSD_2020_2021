@@ -3,11 +3,11 @@
 // https://www.w3schools.com/python/ref_func_range.asp
 // start-stop (inclusive-exclusive)
 function range(start: number, stop: number, step: number = 1): Array<number> {
-    let tmp: Array<number> = [];
+    let result: Array<number> = [];
     for (let i = start; i < stop; i += step) {
-        tmp.push(i);
+        result.push(i);
     }
-    return tmp;
+    return result;
 }
 
 export default range;

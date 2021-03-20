@@ -7,8 +7,8 @@ import NumsExtractor from "./numsExtractor";
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
 ///////////////////////////////////////////////////////////////////////////////
-const str1 = "2342";
-const str2 = "A243b";
+const str1: string = "2342";
+const str2: string = "A243b";
 const numsExtr: NumsExtractor = new NumsExtractor();
 
 

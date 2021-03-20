@@ -1,14 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  importy                                  //
 ///////////////////////////////////////////////////////////////////////////////
-import ListRotator from "./listRotator";
+import InplaceListRotator from "./inplaceListRotator";
 
 
 ///////////////////////////////////////////////////////////////////////////////
 //                              zmienne globalne                             //
 ///////////////////////////////////////////////////////////////////////////////
-const listRot: ListRotator = new ListRotator([1, 2, 3, 4, 5, 6]);
+const inplListRot: InplaceListRotator = new InplaceListRotator();
 const shift: number = 2;
+// const - bez ponownego przypisania, ale zmiana inplace jest OK
+// daje leta aby wiedziec, ze cos przy liscie moze byc dlubane
+let numbers: Array<number> = [1, 2, 3, 4, 5, 6];
 
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -16,11 +19,11 @@ const shift: number = 2;
 ///////////////////////////////////////////////////////////////////////////////
 function main(): void {
     console.log("starting list:");
-    listRot.printArray();
-    listRot.shiftByKelts(shift);
+    console.log(numbers);
+    inplListRot.shiftByKelts(numbers, shift);
     console.log("after shifting by:", shift);
     console.log("final list:");
-    listRot.printArray();
+    console.log(numbers);
 }
 
 

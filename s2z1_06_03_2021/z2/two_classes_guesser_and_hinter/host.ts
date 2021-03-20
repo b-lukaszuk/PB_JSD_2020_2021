@@ -21,7 +21,7 @@ class Host {
         isGameOver: boolean): void {
         console.log("======================");
         console.log("HOST: The time allocated for the game has passed");
-        console.log("HOST: After", numOfGuesses, "guesses the result",
+        console.log("HOST: After", numOfGuesses, "unique guesses the result",
             isGameOver ? "has been settled" : "has not been settled");
         console.log("HOST:", isGameOver ? "Guesser wins" : "Hinter wins");
         console.log("HOST: Game over. Thank You for fair play");
