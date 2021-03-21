@@ -6,7 +6,7 @@ class Prime {
     }
 
     // za https://en.wikipedia.org/wiki/Prime_number#Formulas_for_primes
-    // quick and dirty (division by i from 2 to sqrt(testedNum))
+    // quick and dirty (division by `i` from 2 to sqrt(testedNum))
     // (with small improvements) for isPrime
     private isPrime(testedNum: number): boolean {
         if (testedNum < 1) {
