@@ -13,6 +13,10 @@ const words: Array<string> = ["karakis", "baerren", "kajak",
 ///////////////////////////////////////////////////////////////////////////////
 //                           functions definitions                           //
 ///////////////////////////////////////////////////////////////////////////////
+/**
+ * tests for longest palindrom in the word
+ * declares it in the console
+ */
 function declarePalindrom(word: string): void {
     console.log("===");
     console.log("Searching for the first longest palindrome in: <<", word, ">>")
