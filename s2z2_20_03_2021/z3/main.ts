@@ -7,11 +7,8 @@ import OverlapDetector from "./classes/overlapDetector";
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
 const overDet: OverlapDetector = new OverlapDetector();
-const pairsOfWords = [
-    [
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "Pellentesque aliquet ni et urna venenatis. Dolor at pulvo ni soda.",
-    ],
+const pairsOfWords: Array<Array<string>> = [
+    ["Lorem ipsum dolor sit amet.", "Dolor at pulvo ni soda."],
     ["karol", "rolki"],
     ["rak", "kajak"],
     ["medicine", "house med. dr"],
@@ -22,6 +19,9 @@ const pairsOfWords = [
 ///////////////////////////////////////////////////////////////////////////////
 //                           functions definitions                           //
 ///////////////////////////////////////////////////////////////////////////////
+/**
+ * checks for overlap between two words, declares this in console
+ */
 function declareOverlap(twoWords: Array<string>): void {
     let [wordA, wordB] = twoWords;
     console.log("===");
