@@ -2,6 +2,7 @@
 // simple morse code chart (to copy-paste)
 // http://www.csgnetwork.com/morsecodechrtbl.html
 // note: it does not include all engl letters (e.g. those that come from french)
+// or special characters
 exports.__esModule = true;
 exports.engToMorse = void 0;
 // https://en.wikipedia.org/wiki/File:International_Morse_Code.svg
