@@ -1,22 +1,33 @@
 ///////////////////////////////////////////////////////////////////////////////
 //                                  imports                                  //
 ///////////////////////////////////////////////////////////////////////////////
-import MorseCoder from "./classes/morseCoder";
-import MorseDecoder from "./classes/morseDecoder";
+import MorseCoderDecoder from "./classes/morseCoderDecoder";
+import { engToMorse } from "./dictionaries/engToMorse"; // dictionary
+import { morseToEng } from "./dictionaries/morseToEng"; // dictionary
+// dictionaries were made based on simple morse chart from:
+// http://www.csgnetwork.com/morsecodechrtbl.html
+// note: they does not include all engl letters
+// (e.g. those that come from french) or special characters
 
 ///////////////////////////////////////////////////////////////////////////////
 //                         global constants/variables                        //
 ///////////////////////////////////////////////////////////////////////////////
-const morseCoder: MorseCoder = new MorseCoder();
-const morseDecoder: MorseDecoder = new MorseDecoder();
+const coder: MorseCoderDecoder = new MorseCoderDecoder(engToMorse);
+const decoder: MorseCoderDecoder = new MorseCoderDecoder(morseToEng);
 const messages: Array<string> = ["Hello there", "General Kenobi"];
 
 ///////////////////////////////////////////////////////////////////////////////
 //                           functions definitions                           //
 ///////////////////////////////////////////////////////////////////////////////
-function declareMorse(origMsg: string): void {
-    let codedMsg: string = morseCoder.codeMessage(origMsg);
-    let decodedMsg: string = morseDecoder.decodeMessage(codedMsg);
+/**
+ * declare coding/decoding of a message into console
+ */
+function declareCodDecod(origMsg: string,
+    coder: MorseCoderDecoder,
+    decoder: MorseCoderDecoder): void {
+
+    let codedMsg: string = coder.codeMessage(origMsg);
+    let decodedMsg: string = decoder.codeMessage(codedMsg);
 
     console.log("===");
     console.log("Original message:", "<<", origMsg, ">>");
@@ -30,7 +41,7 @@ function declareMorse(origMsg: string): void {
 
 function main() {
     messages.forEach((message) => {
-        declareMorse(message);
+        declareCodDecod(message, coder, decoder);
     })
     console.log("That's all. Goodbye!");
 }
