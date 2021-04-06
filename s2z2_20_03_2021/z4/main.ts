@@ -45,7 +45,7 @@ function main() {
     console.log("\ngives:\n");
     matr1.mult(matr2).print()
 
-    console.log("======\n");
+    console.log("\n======\n");
 
     matr3.print();
     console.log("\nmutliplied by:\n");
