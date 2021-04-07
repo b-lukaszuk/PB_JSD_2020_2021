@@ -1,4 +1,7 @@
-import { rPadNum, numLen, flatten2dArray } from "../utilities/utilities";
+import {
+    rPadNum, numLen,
+    flatten2dArray, zipWith
+} from "../utilities/utilities";
 
 class Matrix {
 
@@ -62,13 +65,10 @@ class Matrix {
         if (arr1.length !== arr2.length) {
             throw "Incorrect arrays length (lengths must be equal)";
         } else {
-            for (let i = 0; i < arr1.length; i++) {
-                result.push(arr1[i] * arr2[i]);
-            }
+            result = zipWith(arr1, arr2, (a, b) => { return a * b });
         }
         sum = result.reduce((acc, curVal) => { return acc + curVal; });
         return sum;
-
     }
 
     /**
@@ -83,9 +83,8 @@ class Matrix {
         let dimsMatr1 = this.getDim();
         let dimsMatr2 = otherMatr.getDim();
         if (dimsMatr1[1] !== dimsMatr2[0]) {
-            let msg = "Incompatible matrices. Required dims: [l, m] * [m, n]\n"
-            msg += "got [" + dimsMatr1.toString() + "] and [" +
-                dimsMatr2.toString() + "]";
+            let msg = "Required dims: l,m * m,n" + " => got: " +
+                dimsMatr1.toString() + " * " + dimsMatr2.toString();
             throw msg;
         } else {
             for (let rowArr1 = 0; rowArr1 < dimsMatr1[0]; rowArr1++) {

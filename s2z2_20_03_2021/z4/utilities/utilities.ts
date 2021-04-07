@@ -41,4 +41,30 @@ function flatten2dArray(array2d: Array<Array<number>>): Array<number> {
     return result;
 }
 
-export { rPadNum, numLen, flatten2dArray };
+/**
+ * like zipWith in Haskell => takes two lists takes one elt from each of them
+ * applies a function to the elts and the result is put into another list
+ * resulting list length is equal to the shorter of lists
+ * @param {Array<any>} arr1
+ * @param {Array<any>} arr2
+ * @param {Function} fn - function taking 2 args
+ * @returns {Array<any>} retValDescription
+ */
+function zipWith(arr1: Array<any>, arr2: Array<any>,
+    fn: Function): Array<any> {
+
+    let result: Array<any> = [];
+    let min: number = Math.min(arr1.length, arr2.length);
+
+    for (let i = 0; i < min; i++) {
+        result.push(fn(arr1[i], arr2[i]));
+    }
+
+    return result;
+}
+
+
+export {
+    rPadNum, numLen, flatten2dArray,
+    zipWith
+};
