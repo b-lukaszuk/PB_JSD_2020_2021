@@ -1,5 +1,5 @@
 import {
-    rPadNum, numLen,
+    rightPad, numLen,
     flatten2dArray, zipWith
 } from "../utilities/utilities";
 
@@ -103,14 +103,20 @@ class Matrix {
         let flatArray: Array<number> = flatten2dArray(this.matrix);
         let maxNum: number = Math.max(...flatArray);
         let maxNumLen = numLen(maxNum);
-        let colSep = "  ";
+        let colSep = "|";
+        let rowSepSingleCell = "+" + rightPad("-", maxNumLen, "-");
+        let rowSep = rightPad(rowSepSingleCell,
+            this.getDim()[1] * rowSepSingleCell.length,
+            rowSepSingleCell) + "+";
+        console.log(rowSep);
         for (let row = 0; row < this.matrix.length; row++) {
-            let rowToPrint = "";
+            let rowToPrint = "|";
             for (let col = 0; col < this.matrix[row].length; col++) {
-                rowToPrint += rPadNum(this.matrix[row][col], maxNumLen, " ") +
+                rowToPrint += rightPad(this.matrix[row][col], maxNumLen, " ") +
                     colSep;
             }
             console.log(rowToPrint);
+            console.log(rowSep);
         }
     }
 }
