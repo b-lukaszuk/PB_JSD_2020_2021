@@ -47,7 +47,7 @@ class MorseCoderDecoder {
         return codedWord;
     }
 
-    public codeMessage(rawMessage: string,
+    private codeMessage(rawMessage: string,
         rawWordsSep: string = this.dict["sourceWordsSep"],
         codedWordsSep: string = this.dict["targetWordsSep"],
         rawLettersSep: string = this.dict["sourceLettersSep"],
@@ -59,6 +59,10 @@ class MorseCoderDecoder {
         });
         let codedMessage: string = codedWords.join(codedWordsSep);
         return codedMessage;
+    }
+
+    public translateMsg(rawMsg: string): string {
+        return this.codeMessage(rawMsg);
     }
 }
 
