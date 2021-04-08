@@ -1,17 +1,17 @@
 /**
  * returns number as string padded from right to desired length
- * @param {number} numToPad number to be padded
+ * @param {number} numOrStrToPad number or string to be padded
  * @param {number} finalLen total length of the resulting string
  * @param {string} pad character(s) to serve as padding from right
  * @returns {string} padded number
  */
-function rPadNum(
-    numToPad: number,
+function rightPad(
+    numOrStrToPad: number | string,
     finalLen: number,
     pad: string = " "
 ): string {
-    let result: string = numToPad.toString(10);
-    for (let i = result.length; i < finalLen; i++) {
+    let result: string = String(numOrStrToPad);
+    while (result.length < finalLen) {
         result += pad;
     }
     return result;
@@ -65,6 +65,6 @@ function zipWith(arr1: Array<any>, arr2: Array<any>,
 
 
 export {
-    rPadNum, numLen, flatten2dArray,
+    rightPad, numLen, flatten2dArray,
     zipWith
 };
