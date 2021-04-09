@@ -48,7 +48,7 @@ function flatten2dArray(array2d: Array<Array<number>>): Array<number> {
  * @param {Array<any>} arr1
  * @param {Array<any>} arr2
  * @param {Function} fn - function taking 2 args
- * @returns {Array<any>} retValDescription
+ * @returns {Array<any>} array, every elt is fn(arr1elt, arr2elt)
  */
 function zipWith(arr1: Array<any>, arr2: Array<any>,
     fn: Function): Array<any> {
