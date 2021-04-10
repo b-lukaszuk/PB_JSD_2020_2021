@@ -4,9 +4,9 @@ class OverlapDetector {
     }
 
     /**
-    * returns an array of all possible (sub)strings of given length
-    * e.g. "monica", 2 => ["mo", "on", "ni", "ic", "ca"]
-    * lowercases letters, traverses word from left to right
+     * returns an array of all possible (sub)strings of given length
+     * e.g. "monica", 2 => ["mo", "on", "ni", "ic", "ca"]
+     * lowercases letters, traverses word from left to right
      * @param {string} word string on which we will perform operations
      * @param {number} len length of substrings to search in word
      * @returns {array<string>} array of substrings of given length
@@ -19,7 +19,8 @@ class OverlapDetector {
             throw "incorrect substing length";
         } else {
             while (endInd <= word.length) {
-                result.push(word.toLocaleLowerCase().substring(startInd, endInd));
+                result.push(
+                    word.toLocaleLowerCase().substring(startInd, endInd));
                 // move the frame right by 1
                 startInd++;
                 endInd++;
@@ -61,9 +62,13 @@ class OverlapDetector {
         let countDownCounter: number = Math.min(wordA.length, wordB.length);
         while (countDownCounter > 0 && !Boolean(result)) {
             let tabOfSubstrA: Array<string> = this.getAllSubstrOfLen(
-                wordA, countDownCounter);
+                wordA,
+                countDownCounter
+            );
             let tabOfSubstrB: Array<string> = this.getAllSubstrOfLen(
-                wordB, countDownCounter);
+                wordB,
+                countDownCounter
+            );
             result = this.getFirstAinB(tabOfSubstrA, tabOfSubstrB);
             countDownCounter--;
         }
