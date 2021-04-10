@@ -14,8 +14,7 @@ import { morseToEng } from "./dictionaries/morseToEng"; // dictionary
 ///////////////////////////////////////////////////////////////////////////////
 const coder: MorseCoderDecoder = new MorseCoderDecoder(engToMorse);
 const decoder: MorseCoderDecoder = new MorseCoderDecoder(morseToEng);
-const messages: Array<string> = ["Hello there", "General Kenobi",
-    "SOS", "A"];
+const messages: Array<string> = ["Hello there", "General Kenobi", "SOS", "A"];
 
 ///////////////////////////////////////////////////////////////////////////////
 //                           functions definitions                           //
@@ -23,10 +22,11 @@ const messages: Array<string> = ["Hello there", "General Kenobi",
 /**
  * declare coding/decoding of a message into console
  */
-function declareCodDecod(origMsg: string,
+function declareCodDecod(
+    origMsg: string,
     coder: MorseCoderDecoder,
-    decoder: MorseCoderDecoder): void {
-
+    decoder: MorseCoderDecoder
+): void {
     let codedMsg: string = coder.translateMsg(origMsg);
     let decodedMsg: string = decoder.translateMsg(codedMsg);
 
@@ -39,11 +39,10 @@ function declareCodDecod(origMsg: string,
     console.log("===\n");
 }
 
-
 function main() {
     messages.forEach((message) => {
         declareCodDecod(message, coder, decoder);
-    })
+    });
     console.log("That's all. Goodbye!");
 }
 

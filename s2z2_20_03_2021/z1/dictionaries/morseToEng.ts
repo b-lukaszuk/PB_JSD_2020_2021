@@ -53,10 +53,10 @@ let morseToEng: Object = {
     ".....": "5",
     "--...": "7",
     "----.": "9",
-    "sourceWordsSep": "\t",
-    "sourceLettersSep": " ",
-    "targetWordsSep": " ",
-    "targetLettersSep": ""
+    sourceWordsSep: "\t",
+    sourceLettersSep: " ",
+    targetWordsSep: " ",
+    targetLettersSep: "",
 };
 
 export { morseToEng };

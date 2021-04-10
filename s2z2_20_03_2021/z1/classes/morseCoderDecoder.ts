@@ -27,7 +27,7 @@ class MorseCoderDecoder {
      * also fields: sourceWordsSep, sourceLettersSep,
      * targetWordsSep, targetLettersSep
      */
-    public constructor(dict) {
+    public constructor(dict: Object) {
         this.dict = dict;
     }
 
@@ -35,10 +35,11 @@ class MorseCoderDecoder {
         return this.dict[rawLetter.toUpperCase()];
     }
 
-    private codeWord(rawWord: string,
+    private codeWord(
+        rawWord: string,
         rawLettersSep: string = this.dict["sourceLettersSep"],
-        codedLettersSep: string = this.dict["targetLettersSep"]): string {
-
+        codedLettersSep: string = this.dict["targetLettersSep"]
+    ): string {
         let rawLetters: Array<string> = rawWord.split(rawLettersSep);
         let codedLetters: Array<string> = rawLetters.map((letter: string) => {
             return this.codeLetter(letter);
@@ -47,12 +48,13 @@ class MorseCoderDecoder {
         return codedWord;
     }
 
-    private codeMessage(rawMessage: string,
+    private codeMessage(
+        rawMessage: string,
         rawWordsSep: string = this.dict["sourceWordsSep"],
         codedWordsSep: string = this.dict["targetWordsSep"],
         rawLettersSep: string = this.dict["sourceLettersSep"],
-        codedLettersSep: string = this.dict["targetLettersSep"]): string {
-
+        codedLettersSep: string = this.dict["targetLettersSep"]
+    ): string {
         let rawWords: Array<string> = rawMessage.split(rawWordsSep);
         let codedWords: Array<string> = rawWords.map((word: string) => {
             return this.codeWord(word, rawLettersSep, codedLettersSep);
