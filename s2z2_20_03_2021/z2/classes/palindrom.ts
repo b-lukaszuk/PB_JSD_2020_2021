@@ -18,9 +18,9 @@ class Palindrom {
     }
 
     /**
-    * returns an array of all possible (sub)strings of given length
-    * e.g. "monica", 2 => ["mo", "on", "ni", "ic", "ca"]
-    * lowercases letters, traverses word from left to right
+     * returns an array of all possible (sub)strings of given length
+     * e.g. "monica", 2 => ["mo", "on", "ni", "ic", "ca"]
+     * lowercases letters, traverses word from left to right
      * @param {string} word string on which we will perform operations
      * @param {number} len length of substrings to search in word
      * @returns {array<string>} array of substrings of given length
@@ -81,9 +81,10 @@ class Palindrom {
      */
     public getLongestPalindrome(word: string): string {
         let substrings: Array<string> = this.getAllSubstr(word);
-        let palindrome: string = this.findInArray(substrings, (substr) => {
-            return this.isPalindrom(substr);
-        })
+        let palindrome: string = this.findInArray(substrings,
+            (substr: string) => {
+                return this.isPalindrom(substr);
+            });
         return palindrome || "no palindrome found";
     }
 }
