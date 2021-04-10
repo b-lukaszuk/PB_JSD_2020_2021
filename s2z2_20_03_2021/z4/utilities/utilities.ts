@@ -50,9 +50,7 @@ function flatten2dArray(array2d: Array<Array<number>>): Array<number> {
  * @param {Function} fn - function taking 2 args
  * @returns {Array<any>} array, every elt is fn(arr1elt, arr2elt)
  */
-function zipWith(arr1: Array<any>, arr2: Array<any>,
-    fn: Function): Array<any> {
-
+function zipWith(arr1: Array<any>, arr2: Array<any>, fn: Function): Array<any> {
     let result: Array<any> = [];
     let min: number = Math.min(arr1.length, arr2.length);
 
@@ -63,8 +61,4 @@ function zipWith(arr1: Array<any>, arr2: Array<any>,
     return result;
 }
 
-
-export {
-    rightPad, numLen, flatten2dArray,
-    zipWith
-};
+export { rightPad, numLen, flatten2dArray, zipWith };
