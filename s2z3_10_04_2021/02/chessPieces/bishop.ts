@@ -1,8 +1,8 @@
 import Piece from "./piece";
 
 class Bishop extends Piece {
-    public constructor() {
-        super(3);
+    public constructor(rowId: number, colId: number) {
+        super(rowId, colId, 3);
     }
 
     public toStr(): string {

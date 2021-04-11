@@ -1,8 +1,8 @@
 import Piece from "./piece";
 
 class None extends Piece {
-    public constructor() {
-        super(0);
+    public constructor(rowId: number, colId: number) {
+        super(rowId, colId, 0);
     }
 }
 

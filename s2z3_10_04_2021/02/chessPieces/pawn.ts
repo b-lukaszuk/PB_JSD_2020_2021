@@ -1,8 +1,8 @@
 import Piece from "./piece";
 
 class Pawn extends Piece {
-    public constructor() {
-        super(1);
+    public constructor(rowId: number, colId: number) {
+        super(rowId, colId, 1);
     }
 
     public toStr(): string {
