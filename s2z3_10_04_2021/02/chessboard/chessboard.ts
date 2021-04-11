@@ -6,6 +6,7 @@ import Bishop from "../chessPieces/bishop";
 import Rook from "../chessPieces/rook";
 import Queen from "../chessPieces/queen";
 import King from "../chessPieces/king";
+import Taken from "../chessPieces/taken";
 import rightPad from "../utils/rightPad";
 
 class Chessboard {
@@ -17,33 +18,33 @@ class Chessboard {
             let chessBoardRow: Array<Piece> = [];
             if (type === 1 && (r === 0 || r === 7)) {
                 chessBoardRow = [
-                    new Rook(),
-                    new Knight(),
-                    new Bishop(),
-                    new Queen(),
-                    new King(),
-                    new Rook(),
-                    new Knight(),
-                    new Bishop(),
+                    new Rook(r, 0),
+                    new Knight(r, 1),
+                    new Bishop(r, 2),
+                    new Queen(r, 3),
+                    new King(r, 4),
+                    new Rook(r, 5),
+                    new Knight(r, 6),
+                    new Bishop(r, 7),
                 ];
                 this._chessBoard.push(chessBoardRow);
                 continue;
             } else if (type === 1 && (r === 1 || r === 6)) {
                 chessBoardRow = [
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
-                    new Pawn(),
+                    new Pawn(r, 0),
+                    new Pawn(r, 1),
+                    new Pawn(r, 2),
+                    new Pawn(r, 3),
+                    new Pawn(r, 4),
+                    new Pawn(r, 5),
+                    new Pawn(r, 6),
+                    new Pawn(r, 7),
                 ];
                 this._chessBoard.push(chessBoardRow);
                 continue;
             }
             for (let c = 0; c < 8; c++) {
-                chessBoardRow.push(new None());
+                chessBoardRow.push(new None(r, c));
             }
             this._chessBoard.push(chessBoardRow);
         }
@@ -71,7 +72,17 @@ class Chessboard {
 
     public mvPiece(rFrom: number, cFrom: number, rTo: number, cTo: number): void {
         this.setField(rTo, cTo, this.getField(rFrom, cFrom));
-        this.setField(rFrom, cFrom, new None());
+        this.setField(rFrom, cFrom, new None(rFrom, cFrom));
+    }
+
+    public setFieldsToTaken(fields: Array<Array<number>>): void {
+        for (let i = 0; i < fields.length; i++) {
+            if (fields[i] !== undefined) {
+                let rId: number, cId: number;
+                [rId, cId] = fields[i];
+                this.setField(rId, cId, new Taken(rId, cId));
+            }
+        }
     }
 
     public print(): void {
@@ -101,9 +112,9 @@ class Chessboard {
     }
 }
 
-new Chessboard().print();
-console.log();
-console.log();
-new Chessboard(1).print();
+let x: Chessboard = new Chessboard();
+x.setField(3, 3, new King(3, 3));
+x.setFieldsToTaken(new King(3, 3).getMoves());
+x.print();
 
 export default Chessboard;
