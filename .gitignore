@@ -46,3 +46,6 @@ s2z1_06_03_2021/z2/two_classes_guesser_and_hinter/*.js
 ### dla s2z3_10_04_2021
 # ignoruj pliki *.js
 s2z3_10_04_2021/01/*.js
+
+## ignoruj wszystkie pliki *.js w tym folderze i jego podfolderach
+s2z3_10_04_2021/**/*.js
