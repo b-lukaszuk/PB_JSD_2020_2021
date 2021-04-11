@@ -113,8 +113,8 @@ class Chessboard {
 }
 
 let x: Chessboard = new Chessboard();
-x.setField(3, 3, new King(3, 3));
-x.setFieldsToTaken(new King(3, 3).getMoves());
+x.setField(3, 3, new Rook(3, 3));
+x.setFieldsToTaken(new Rook(3, 3).getMoves());
 x.print();
 
 export default Chessboard;
