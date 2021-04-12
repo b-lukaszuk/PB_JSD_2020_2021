@@ -18,7 +18,7 @@ class Chessboard {
         for (let r = 0; r < 8; r++) {
             let chessBoardRow: Array<ChessField> = [];
             for (let c = 0; c < 8; c++) {
-                chessBoardRow.push(new ChessField(r, c, 0, curColor));
+                chessBoardRow.push(new ChessField(0, curColor));
                 curColor = toggleColor(curColor);
             }
             // first field of the next row starts with the same color
@@ -26,6 +26,10 @@ class Chessboard {
             curColor = toggleColor(curColor);
             this._chessBoard.push(chessBoardRow);
         }
+    }
+
+    public setAtPos(row: number, col: number, what: number | Piece) {
+        this._chessBoard[row][col].setTo(what);
     }
 
     // prints current chessboard state
@@ -53,6 +57,10 @@ class Chessboard {
 }
 
 let x: Chessboard = new Chessboard();
+x.setAtPos(3, 3, new Queen(Color.White));
+x.setAtPos(0, 0, new Queen(Color.Black));
+x.setAtPos(1, 1, 1);
+x.setAtPos(1, 0, 1);
 x.print();
 
 export default Chessboard;
