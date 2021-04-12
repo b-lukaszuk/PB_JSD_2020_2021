@@ -11,6 +11,7 @@ import { Color, toggleColor } from "../dataTypes/color";
 
 class Chessboard {
     private _chessBoard: Array<Array<ChessField>> = [];
+    private _corrPiecesPos: boolean = true; // flag
 
     // initializes empty chessboard
     constructor() {
@@ -28,20 +29,50 @@ class Chessboard {
         }
     }
 
-    public setAtPos(row: number, col: number, what: number | Piece) {
-        this._chessBoard[row][col].setTo(what);
+    /**
+     * returns info about correct or not position of chessboard
+     */
+    public isCorPosition() {
+        return this._corrPiecesPos;
     }
 
     /**
-     * pawns on the first or last row gets promoted
+     * sets a field at 0 some value
+     * updates flag _corrPiecesPos while setting;
+     */
+    public setAtPos(row: number, col: number, what: number | Piece) {
+
+        this._chessBoard[row][col].setTo(what);
+
+        if (what instanceof Pawn) { // check for correct pawn position
+            this._corrPiecesPos = !this.isPawnOnFirstOrLastRow();
+        }
+        if (what instanceof King) {
+            // king moves one field in every direction
+            // no other king is allowed to allready stand there
+            let adjoinPos: Array<Array<number>> = what.getAllMoves(row, col);
+            for (let position of adjoinPos) {
+                let pRow: number, pCol: number;
+                [pRow, pCol] = position;
+                if (this._chessBoard[pRow][pCol].getVal() instanceof King) {
+                    this._corrPiecesPos = false;
+                    break;
+                }
+            }
+        }
+    }
+
+    /**
+     * pawns start from second row
+     * pawns on the first or last row gets promoted (oppowite side)
      * (and won't be a pawn anymore)
      */
-    private pawnOnFirstOrLastRow(): boolean {
+    private isPawnOnFirstOrLastRow(): boolean {
         let onFirstRow: boolean = this._chessBoard[0].some((field) => {
-            return field instanceof Pawn;
+            return field.getVal() instanceof Pawn;
         })
         let onLastRow: boolean = this._chessBoard[7].some((field) => {
-            return field instanceof Pawn;
+            return field.getVal() instanceof Pawn;
         })
         return onFirstRow || onLastRow;
     }
@@ -71,10 +102,11 @@ class Chessboard {
 }
 
 let x: Chessboard = new Chessboard();
-x.setAtPos(3, 3, new Queen(Color.White));
-x.setAtPos(0, 0, new Queen(Color.Black));
+x.setAtPos(7, 1, new King(Color.White));
+x.setAtPos(7, 0, new King(Color.Black));
 x.setAtPos(1, 1, 1);
 x.setAtPos(1, 0, 1);
 x.print();
+console.log(x.isCorPosition());
 
 export default Chessboard;
