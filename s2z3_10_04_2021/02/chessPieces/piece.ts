@@ -1,7 +1,8 @@
 class Piece {
     private _value: number;
 
-    /** IDs:
+    /**
+     * IDs:
      * 1 - pawn, 2 - knight
      * 3 - bishop, 5 - rook
      * 6 - queen, 7 - king
@@ -11,7 +12,8 @@ class Piece {
         this._value = value;
     }
 
-    /** shifts by 1 field for diagonal moves in all directions
+    /**
+     * shifts by 1 field for diagonal moves in all directions
      * to be overlayed on piece position [row, col]
      * DIAG.: all configurations of +/-1 in [row or col]
      * @returns {Array<Array<number>>} shifts by 1 field for diagonal moves
@@ -27,7 +29,8 @@ class Piece {
         return diagShifts;
     }
 
-    /** shifts by 1 field for horizontal and vertical moves in all directions
+    /**
+     * shifts by 1 field for horizontal and vertical moves in all directions
      * to be overlayed on piece position [row, col]
      * hor/vert.: all configurations of +/-1 and 0
      * @returns {Array<Array<number>>} shifts by 1 field for hor/vert moves
@@ -46,7 +49,8 @@ class Piece {
         return horAndVertShifts;
     }
 
-    /** shifts by 1 move for L-shaped moves (knight)
+    /**
+     * shifts by 1 move for L-shaped moves (knight)
      * to be overlayed on piece position [row, col]
      * L-shape: all configurations of +/-2 and +/-1
      * @returns {Array<Array<number>>} shifts by 1 move for knight
