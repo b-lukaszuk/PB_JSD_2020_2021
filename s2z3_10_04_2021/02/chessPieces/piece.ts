@@ -114,6 +114,17 @@ class Piece {
         return lShapedShifts;
     }
 
+    /**
+     * mock implementation it will be overwrittn by children methods
+     * necessary for setAtPos() from ChessBoard class
+     * @param {number} row - Int: 0-7 (incl-incl), current position row
+     * @param {number} col - Int: 0-7 (incl-incl), current position col
+     * @returns {Array<Array<number>>} coordinates of possible moves
+     */
+    public getAllMoves(row?: number, col?: number): Array<Array<number>> {
+        return [];
+    }
+
     public getValue() {
         return this._value;
     }
