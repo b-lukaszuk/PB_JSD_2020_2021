@@ -12,6 +12,7 @@ import { Color, toggleColor } from "../dataTypes/color";
 class Chessboard {
     private _chessBoard: Array<Array<ChessField>> = [];
     private _corrPiecesPos: boolean = true; // flag
+    private _possibleCaptures: Array<Array<number>> = [];
 
     // initializes empty chessboard
     constructor() {
@@ -37,12 +38,44 @@ class Chessboard {
     }
 
     /**
+     * returns array of possible captures
+     * does not make copy of _possibleCaptures
+     * so do not modify
+     */
+    public getPossibleCaptures(): Array<Array<number>> {
+        return this._possibleCaptures;
+    }
+
+    /**
+     * updates fields with move indicators Field value 1
+     * only if the field is empty
+     */
+    private updateFieldIndicators(positions: Array<Array<number>>): void {
+        for (let position of positions) {
+            let pRow: number, pCol: number;
+            [pRow, pCol] = position;
+            if (this._chessBoard[pRow][pCol].getVal() === 0) {
+                this._chessBoard[pRow][pCol].setTo(1);
+            }
+            if (this._chessBoard[pRow][pCol].getVal() instanceof Piece) {
+                this._possibleCaptures.push([pRow, pCol]);
+            }
+        }
+    }
+
+    /**
      * sets a field at 0 some value
      * updates flag _corrPiecesPos while setting;
      */
     public setAtPos(row: number, col: number, what: number | Piece) {
 
+        let possibleMoves: Array<Array<number>> = [];
+        if (what instanceof Piece) {
+            possibleMoves = what.getAllMoves(row, col);
+        }
+
         this._chessBoard[row][col].setTo(what);
+        this.updateFieldIndicators(possibleMoves);
 
         if (what instanceof Pawn) { // check for correct pawn position
             this._corrPiecesPos = !this.isPawnOnFirstOrLastRow();
@@ -50,8 +83,7 @@ class Chessboard {
         if (what instanceof King) {
             // king moves one field in every direction
             // no other king is allowed to allready stand there
-            let adjoinPos: Array<Array<number>> = what.getAllMoves(row, col);
-            for (let position of adjoinPos) {
+            for (let position of possibleMoves) {
                 let pRow: number, pCol: number;
                 [pRow, pCol] = position;
                 if (this._chessBoard[pRow][pCol].getVal() instanceof King) {
@@ -102,11 +134,10 @@ class Chessboard {
 }
 
 let x: Chessboard = new Chessboard();
-x.setAtPos(7, 1, new King(Color.White));
-x.setAtPos(7, 0, new King(Color.Black));
-x.setAtPos(1, 1, 1);
-x.setAtPos(1, 0, 1);
+x.setAtPos(6, 1, new Queen(Color.White));
+x.setAtPos(3, 4, new King(Color.Black));
 x.print();
-console.log(x.isCorPosition());
+console.log("Possible captures (none if empty): ");
+console.log(x.getPossibleCaptures());
 
 export default Chessboard;
