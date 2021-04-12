@@ -32,6 +32,20 @@ class Chessboard {
         this._chessBoard[row][col].setTo(what);
     }
 
+    /**
+     * pawns on the first or last row gets promoted
+     * (and won't be a pawn anymore)
+     */
+    private pawnOnFirstOrLastRow(): boolean {
+        let onFirstRow: boolean = this._chessBoard[0].some((field) => {
+            return field instanceof Pawn;
+        })
+        let onLastRow: boolean = this._chessBoard[7].some((field) => {
+            return field instanceof Pawn;
+        })
+        return onFirstRow || onLastRow;
+    }
+
     // prints current chessboard state
     public print(): void {
         let fieldLen: number = this._chessBoard[0][0].toString().length;
