@@ -1,5 +1,3 @@
-import range from "../utils/range";
-
 class Piece {
     private _value: number;
 
