@@ -1,9 +1,10 @@
 import Piece from "./piece";
+import { Color } from "../dataTypes/color";
 
 class Queen extends Piece {
-    public constructor() {
+    public constructor(color: Color) {
         // queen's ID: 6
-        super(6);
+        super(6, color, "q");
     }
 
     /**

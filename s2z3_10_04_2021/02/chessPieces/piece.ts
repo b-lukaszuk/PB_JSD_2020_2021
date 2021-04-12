@@ -1,15 +1,46 @@
+import { Color } from "../dataTypes/color";
+
 class Piece {
     private _value: number;
+    private _color: Color;
+    private _repr: string; // string representation
 
     /**
      * IDs:
      * 1 - pawn, 2 - knight
      * 3 - bishop, 5 - rook
      * 6 - queen, 7 - king
-     * @param {number} value - ID of a piece
      */
-    public constructor(value: number) {
+    public constructor(value: number, color: Color,
+        strRepresentation: string) {
         this._value = value;
+        this._color = color;
+        this._repr = strRepresentation;
+    }
+
+    /**
+     * returns value (piece ID)
+     */
+    public getVal(): number {
+        return this._value;
+    }
+
+    /**
+     * returns piece color
+     */
+    public getCol(): Color {
+        return this._color;
+    }
+
+    /**
+     * returns string representation of a piece
+     * small letters for black, capital letters for white
+     */
+    public toString(): string {
+        if (this._color === Color.White) {
+            return this._repr.toLocaleUpperCase();
+        }
+        return this._repr.toLocaleLowerCase();
     }
 
     /**

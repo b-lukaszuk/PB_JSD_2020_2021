@@ -1,9 +1,10 @@
 import Piece from "./piece";
+import { Color } from "../dataTypes/color";
 
 class Pawn extends Piece {
-    public constructor() {
+    public constructor(color: Color) {
         // pawn's ID: 1
-        super(1);
+        super(1, color, "p");
     }
 
     /**
