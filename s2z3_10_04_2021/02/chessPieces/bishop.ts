@@ -2,25 +2,33 @@ import Piece from "./piece";
 
 class Bishop extends Piece {
 
-    public constructor(rowId: number, colId: number) {
-        super(rowId, colId, 3);
-        this.directions = [2, 5, 7, 10];
+    public constructor() {
+        // bishop's ID: 3
+        super(3);
     }
 
-    public toStr(): string {
-        return " B ";
-    }
+    /**
+     * gets all possible moves for a bishop from a given position
+     * bishop moves on diagonals, forward-backward, by upto 7 fields from start
+     * @param {number} row - Int: 0-7 (incl-incl), current position row
+     * @param {number} col - Int: 0-7 (incl-incl), current position col
+     * @returns {Array<Array<number>>} coordinates of possible moves
+     */
+    public getAllMoves(row: number, col: number): Array<Array<number>> {
 
-    public getMoves(): Array<Array<number>> {
-        let result: Array<Array<number>> = [];
-        for (let direction of this.directions) {
-            for (let dist = 1; dist <= 8; dist++) {
+        let positions: Array<Array<number>> = []; // result
+        let viableShifts: Array<Array<number>> = this.getDiagShifts();
+
+        for (let aShift of viableShifts) {
+            for (let distance = 1; distance < 8; distance++) {
                 let move: Array<number> = [];
-                move = this.getMvNto(direction, dist);
-                result.push(move);
+                move = [row + aShift[0] * distance, col + aShift[1] * distance];
+                if (this.isMoveOk(move)) {
+                    positions.push(move);
+                }
             }
         }
-        return result;
+        return positions;
     }
 }
 

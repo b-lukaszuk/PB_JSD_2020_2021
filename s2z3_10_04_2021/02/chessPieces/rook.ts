@@ -1,25 +1,33 @@
 import Piece from "./piece";
 
 class Rook extends Piece {
-    public constructor(rowId: number, colId: number) {
-        super(rowId, colId, 5);
-        this.directions = [12, 3, 6, 9];
+    public constructor() {
+        // rook's ID: 5
+        super(5);
     }
 
-    public toStr(): string {
-        return " R ";
-    }
+    /**
+     * gets all possible moves for a rook from a given position
+     * rook moves vert-horiz, forward-backward, upto 7 fields from start
+     * @param {number} row - Int: 0-7 (incl-incl), current position row
+     * @param {number} col - Int: 0-7 (incl-incl), current position col
+     * @returns {Array<Array<number>>} coordinates of possible moves
+     */
+    public getAllMoves(row: number, col: number): Array<Array<number>> {
 
-    public getMoves(): Array<Array<number>> {
-        let result: Array<Array<number>> = [];
-        for (let direction of this.directions) {
-            for (let dist = 1; dist <= 8; dist++) {
+        let positions: Array<Array<number>> = []; // result
+        let possibleShifts: Array<Array<number>> = this.getHorAndVertShifts();
+
+        for (let aShift of possibleShifts) {
+            for (let distance = 1; distance < 8; distance++) {
                 let move: Array<number> = [];
-                move = this.getMvNto(direction, dist);
-                result.push(move);
+                move = [row + aShift[0] * distance, col + aShift[1] * distance];
+                if (this.isMoveOk(move)) {
+                    positions.push(move);
+                }
             }
         }
-        return result;
+        return positions;
     }
 }
 

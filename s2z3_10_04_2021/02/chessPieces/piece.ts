@@ -13,6 +13,20 @@ class Piece {
     }
 
     /**
+     * checks if coordinates are in a chessboard (r/c from 0-7)
+     * @param {Array<number>} coords [row, col]
+     * @returns {boolean} are both coords within 0-7 (incl-incl)
+     */
+    protected isMoveOk(coords: Array<number>): boolean {
+        for (let coord of coords) {
+            if (coord < 0 || coord > 7) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * shifts by 1 field for diagonal moves in all directions
      * to be overlayed on piece position [row, col]
      * DIAG.: all configurations of +/-1 in [row or col]

@@ -1,17 +1,30 @@
 import Piece from "./piece";
 
 class Knight extends Piece {
-    public constructor(rowId: number, colId: number) {
-        super(rowId, colId, 2);
+    public constructor() {
+        // knight's ID: 2
+        super(2);
     }
 
-    public toStr(): string {
-        return " N ";
-    }
-
-    public getMoves(): Array<Array<number>> {
-        let result: Array<Array<number>> = this.goToLs();
-        return result;
+    /**
+     * gets all possible moves for a knight from a given position
+     * knight moves L-Shaped 2 fields in one direction and 1 field in the other
+     * @param {number} row - Int: 0-7 (incl-incl), current position row
+     * @param {number} col - Int: 0-7 (incl-incl), current position col
+     * @returns {Array<Array<number>>} coordinates of possible moves
+     */
+    public getAllMoves(row: number, col: number): Array<Array<number>> {
+        let positions: Array<Array<number>> = []; // result
+        let possibleShifts: Array<Array<number>> = this.getLShapedShifts();
+        let distance: number = 1;
+        for (let aShift of possibleShifts) {
+            let move: Array<number> = [];
+            move = [row + aShift[0] * distance, col + aShift[1] * distance];
+            if (this.isMoveOk(move)) {
+                positions.push(move);
+            }
+        }
+        return positions;
     }
 }
 

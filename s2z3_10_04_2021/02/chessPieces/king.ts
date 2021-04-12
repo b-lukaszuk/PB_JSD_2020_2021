@@ -2,24 +2,33 @@ import Piece from "./piece";
 
 class King extends Piece {
 
-    public constructor(rowId: number, colId: number) {
-        super(rowId, colId, 7);
+    public constructor() {
+        // king's ID: 7
+        super(7);
     }
 
-    public toStr(): string {
-        return " K ";
-    }
+    /**
+     * gets all possible moves for a king from a given position
+     * king moves diag, vert-horiz, forward-backward, by 1 field from start
+     * @param {number} row - Int: 0-7 (incl-incl), current position row
+     * @param {number} col - Int: 0-7 (incl-incl), current position col
+     * @returns {Array<Array<number>>} coordinates of possible moves
+     */
+    public getAllMoves(row: number, col: number): Array<Array<number>> {
 
+        let positions: Array<Array<number>> = []; // result
+        let viableShifts: Array<Array<number>>;
+        viableShifts = this.getDiagShifts().concat(this.getHorAndVertShifts());
+        let distance: number = 1;
 
-    public getMoves(): Array<Array<number>> {
-        const distance: number = 1;
-        let result: Array<Array<number>> = [];
-        for (let direction of this.directions) {
+        for (let aShift of viableShifts) {
             let move: Array<number> = [];
-            move = this.getMvNto(direction, distance);
-            result.push(move);
+            move = [row + aShift[0] * distance, col + aShift[1] * distance];
+            if (this.isMoveOk(move)) {
+                positions.push(move);
+            }
         }
-        return result;
+        return positions;
     }
 }
 
