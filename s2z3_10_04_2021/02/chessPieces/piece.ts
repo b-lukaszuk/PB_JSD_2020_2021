@@ -28,7 +28,7 @@ class Piece {
     /**
      * returns piece color
      */
-    public getCol(): Color {
+    public getColor(): Color {
         return this._color;
     }
 
