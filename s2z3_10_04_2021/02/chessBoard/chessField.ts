@@ -16,12 +16,15 @@ class ChessField {
         private _color: Color) {
     }
 
+    /**
+     * returns string indicator for middle of the field (empty, move or figure)
+     */
     private getValAsStr(): string {
         switch (this._value) {
             case 0:
                 return this._color === Color.Black ? "#" : " ";
             case 1:
-                return "^";
+                return ".";
             default:
                 return this._value.toString();
         }

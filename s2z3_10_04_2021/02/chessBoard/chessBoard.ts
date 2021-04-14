@@ -1,25 +1,22 @@
-import Bishop from "../chessPieces/bishop";
 import ChessField from "./chessField";
 import King from "../chessPieces/king";
-import Knight from "../chessPieces/knight";
 import Pawn from "../chessPieces/pawn";
 import Piece from "../chessPieces/piece";
-import Queen from "../chessPieces/queen";
-import Rook from "../chessPieces/rook";
 import rightPad from "../utils/rightPad";
 import { Color, toggleColor } from "../dataTypes/color";
 
 class Chessboard {
+    // internal representation of the chessBoard
     private _chessBoard: Array<Array<ChessField>> = [];
-    private _corrPiecesPos: boolean = true; // flag
     // possible moves of pieces on chessboard
-    private _possibleMoves: Array<Array<number>> = []
+    private _viableMovesPositions: Array<Array<number>> = [];
     // possible captures by any piece at the board
-    private _possibleCaptures: Array<Array<number>> = [];
-    // locations of pieces at the board
-    private _piecesLocations: Array<Array<number>> = [];
+    private _viableCapturesPositions: Array<Array<number>> = [];
+    private _piecesOnBoardPositions: Array<Array<number>> = [];
 
-    // initializes empty chessboard
+    private _corrPiecesPos: boolean = true; // flag, for correct board setting
+
+    // empty board initialization
     constructor() {
         let curColor: Color = Color.Black;
         for (let r = 0; r < 8; r++) {
@@ -36,28 +33,27 @@ class Chessboard {
     }
 
     /**
-     * returns info about correct or not position of chessboard
+     * returns info about correct or incorrect position on the chessboard
      */
-    public isCorPosition() {
+    public isCorrPositionOnBoard() {
         return this._corrPiecesPos;
     }
 
     /**
      * returns array of possible captures
-     * does not make copy of _possibleCaptures
+     * does not make (deep) copy of _viableCapturesPositions
      * so do not modify
      */
     public getPossibleCaptures(): Array<Array<number>> {
-        this.checkForCaptures();
-        return this._possibleCaptures;
+        this.updateViableCapturePositions(); // sets _viableCapturesPositions
+        return this._viableCapturesPositions;
     }
 
     /**
-     * updates fields with move indicators Field value 1
-     * only if the field is empty
+     * updates fields with move indicators (Field value 1) if the field is empty
      */
-    private updateFieldIndicators(positions: Array<Array<number>>): void {
-        for (let position of positions) {
+    private updateMovesIndicators(movesPositions: Array<Array<number>>): void {
+        for (let position of movesPositions) {
             let pRow: number, pCol: number;
             [pRow, pCol] = position;
             if (this._chessBoard[pRow][pCol].getVal() === 0) {
@@ -66,79 +62,89 @@ class Chessboard {
         }
     }
 
-    private compare2dArrays(arr1, arr2): boolean {
-        for (let i = 0; i < arr1.length; i++) {
-            if (arr1[i] !== arr2[i]) {
+    /**
+     * updates this._viableCapturesPositions by new moves positions
+     */
+    private updateViableMovesPositions(
+        newMovesPositions: Array<Array<number>>
+    ): void {
+        if (this._viableMovesPositions.length === 0) {
+            this._viableMovesPositions = newMovesPositions;
+        } else {
+            this._viableMovesPositions.concat(newMovesPositions);
+        }
+    }
+
+    /**
+     * checks for positions [r1, c1] and [r2, c2] equality, e.g.
+     * r1 === r2 && c1 === c2
+     */
+    private arePositionsEql(pos1: Array<number>, pos2: Array<number>): boolean {
+        for (let i = 0; i < pos1.length; i++) {
+            if (pos1[i] !== pos2[i]) {
                 return false;
             }
         }
         return true;
     }
 
-    private checkForCaptures(): void {
-        for (let i = 0; i < this._piecesLocations.length; i++) {
-            for (let j = 0; j < this._possibleMoves.length; j++) {
-                if (this.compare2dArrays(this._piecesLocations[i],
-                    this._possibleMoves[j])) {
-                    this._possibleCaptures.push(this._piecesLocations[i]);
+    private updateViableCapturePositions(): void {
+        for (let i = 0; i < this._piecesOnBoardPositions.length; i++) {
+            for (let j = 0; j < this._viableMovesPositions.length; j++) {
+                if (this.arePositionsEql(this._piecesOnBoardPositions[i],
+                    this._viableMovesPositions[j])) {
+                    this._viableCapturesPositions.push(
+                        this._piecesOnBoardPositions[i]
+                    );
                 }
             }
         }
     }
 
     /**
-     * sets a field at 0 some value
-     * updates flag _corrPiecesPos while setting;
+     * king moves one field in every direction
+     * opponent's king is not allowed to allready stand there
+     */
+    private isCollidingWithOtherKing(row: number, col: number,
+        king: King): boolean {
+
+        let kingsMovesPos: Array<Array<number>> = king.getAllMoves(row, col);
+
+        // checking for otehr king standing within a move/field distance
+        for (let position of kingsMovesPos) {
+            let pRow: number, pCol: number;
+            [pRow, pCol] = position;
+            if (this._chessBoard[pRow][pCol].getVal() instanceof King) {
+                console.log("kings collision detected");
+                return true;
+            }
+        }
+    }
+
+    /**
+     * sets a field at some value (0 - empty, 1 - move indicator, Piece)
+     * updates this._corrPiecesPos
      */
     public setAtPos(row: number, col: number, what: number | Piece) {
 
-        // possible moves of a piece that is being set
-        // necessary (for checking correctness of the position)
-        let possibleMoves: Array<Array<number>> = [];
+        let thePiecePossibleMoves: Array<Array<number>> = [];
+
         if (what instanceof Piece) {
-            possibleMoves = what.getAllMoves(row, col);
-            if (this._possibleMoves.length === 0) {
-                this._possibleMoves = possibleMoves;
-            } else {
-                this._possibleMoves.concat(possibleMoves);
-            }
+            thePiecePossibleMoves = what.getAllMoves(row, col);
+            this.updateViableMovesPositions(thePiecePossibleMoves);
+        }
+        if (what instanceof King) {
+            this._corrPiecesPos = !this.isCollidingWithOtherKing(row, col,
+                what);
+        }
+        if (what instanceof Pawn) {
+            // pawns start from 2nd row, and are promoted at last row
+            this._corrPiecesPos = (row !== 0) && (row !== 7);
         }
 
         this._chessBoard[row][col].setTo(what);
-        this._piecesLocations.push([row, col]);
-        this.updateFieldIndicators(possibleMoves);
-
-        // checking for conflict of pieces settings with the rules
-        if (what instanceof Pawn) { // check for correct pawn position
-            this._corrPiecesPos = !this.isPawnOnFirstOrLastRow();
-        }
-        if (what instanceof King) {
-            // king moves one field in every direction
-            // no other king is allowed to allready stand there
-            for (let position of possibleMoves) {
-                let pRow: number, pCol: number;
-                [pRow, pCol] = position;
-                if (this._chessBoard[pRow][pCol].getVal() instanceof King) {
-                    this._corrPiecesPos = false;
-                    break;
-                }
-            }
-        }
-    }
-
-    /**
-     * pawns start from second row
-     * pawns on the first or last row gets promoted (oppowite side)
-     * (and won't be a pawn anymore)
-     */
-    private isPawnOnFirstOrLastRow(): boolean {
-        let onFirstRow: boolean = this._chessBoard[0].some((field) => {
-            return field.getVal() instanceof Pawn;
-        })
-        let onLastRow: boolean = this._chessBoard[7].some((field) => {
-            return field.getVal() instanceof Pawn;
-        })
-        return onFirstRow || onLastRow;
+        this._piecesOnBoardPositions.push([row, col]);
+        this.updateMovesIndicators(thePiecePossibleMoves);
     }
 
     // prints current chessboard state
@@ -152,9 +158,10 @@ class Chessboard {
                 8 * rowSepSingleCell.length,
                 rowSepSingleCell
             ) + "+";
+        console.log("   0   1   2   3   4   5   6   7  "); // cols numbering
         console.log(rowSep);
         for (let row = 0; row < this._chessBoard.length; row++) {
-            let rowToPrint: string = row + "|";
+            let rowToPrint: string = row + "|"; // row numbering on left
             for (let col = 0; col < this._chessBoard[row].length; col++) {
                 rowToPrint += this._chessBoard[row][col].toString();
                 rowToPrint += colSep;
@@ -164,12 +171,5 @@ class Chessboard {
         }
     }
 }
-
-let x: Chessboard = new Chessboard();
-x.setAtPos(6, 1, new Queen(Color.White));
-x.setAtPos(3, 4, new King(Color.Black));
-x.print();
-console.log("Possible captures (none if empty): ");
-console.log(x.getPossibleCaptures());
 
 export default Chessboard;
