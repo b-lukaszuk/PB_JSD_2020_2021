@@ -12,7 +12,12 @@ import { Color, toggleColor } from "../dataTypes/color";
 class Chessboard {
     private _chessBoard: Array<Array<ChessField>> = [];
     private _corrPiecesPos: boolean = true; // flag
+    // possible moves of pieces on chessboard
+    private _possibleMoves: Array<Array<number>> = []
+    // possible captures by any piece at the board
     private _possibleCaptures: Array<Array<number>> = [];
+    // locations of pieces at the board
+    private _piecesLocations: Array<Array<number>> = [];
 
     // initializes empty chessboard
     constructor() {
@@ -43,6 +48,7 @@ class Chessboard {
      * so do not modify
      */
     public getPossibleCaptures(): Array<Array<number>> {
+        this.checkForCaptures();
         return this._possibleCaptures;
     }
 
@@ -57,8 +63,25 @@ class Chessboard {
             if (this._chessBoard[pRow][pCol].getVal() === 0) {
                 this._chessBoard[pRow][pCol].setTo(1);
             }
-            if (this._chessBoard[pRow][pCol].getVal() instanceof Piece) {
-                this._possibleCaptures.push([pRow, pCol]);
+        }
+    }
+
+    private compare2dArrays(arr1, arr2): boolean {
+        for (let i = 0; i < arr1.length; i++) {
+            if (arr1[i] !== arr2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private checkForCaptures(): void {
+        for (let i = 0; i < this._piecesLocations.length; i++) {
+            for (let j = 0; j < this._possibleMoves.length; j++) {
+                if (this.compare2dArrays(this._piecesLocations[i],
+                    this._possibleMoves[j])) {
+                    this._possibleCaptures.push(this._piecesLocations[i]);
+                }
             }
         }
     }
@@ -69,14 +92,23 @@ class Chessboard {
      */
     public setAtPos(row: number, col: number, what: number | Piece) {
 
+        // possible moves of a piece that is being set
+        // necessary (for checking correctness of the position)
         let possibleMoves: Array<Array<number>> = [];
         if (what instanceof Piece) {
             possibleMoves = what.getAllMoves(row, col);
+            if (this._possibleMoves.length === 0) {
+                this._possibleMoves = possibleMoves;
+            } else {
+                this._possibleMoves.concat(possibleMoves);
+            }
         }
 
         this._chessBoard[row][col].setTo(what);
+        this._piecesLocations.push([row, col]);
         this.updateFieldIndicators(possibleMoves);
 
+        // checking for conflict of pieces settings with the rules
         if (what instanceof Pawn) { // check for correct pawn position
             this._corrPiecesPos = !this.isPawnOnFirstOrLastRow();
         }
@@ -114,7 +146,7 @@ class Chessboard {
         let fieldLen: number = this._chessBoard[0][0].toString().length;
         let colSep: string = "|";
         let rowSepSingleCell: string = "+" + rightPad("-", fieldLen, "-");
-        let rowSep: string =
+        let rowSep: string = " " +
             rightPad(
                 rowSepSingleCell,
                 8 * rowSepSingleCell.length,
@@ -122,7 +154,7 @@ class Chessboard {
             ) + "+";
         console.log(rowSep);
         for (let row = 0; row < this._chessBoard.length; row++) {
-            let rowToPrint: string = "|";
+            let rowToPrint: string = row + "|";
             for (let col = 0; col < this._chessBoard[row].length; col++) {
                 rowToPrint += this._chessBoard[row][col].toString();
                 rowToPrint += colSep;
