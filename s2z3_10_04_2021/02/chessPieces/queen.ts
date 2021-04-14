@@ -9,7 +9,7 @@ class Queen extends Piece {
 
     /**
      * gets all possible moves for a bishop from a given position
-     * queen moves diag, vert-horiz, forward-backward, upto 7 fields from start 
+     * queen moves diag, vert-horiz, forward-backward, upto 7 fields from start
      * @param {number} row - Int: 0-7 (incl-incl), current position row
      * @param {number} col - Int: 0-7 (incl-incl), current position col
      * @returns {Array<Array<number>>} coordinates of possible moves

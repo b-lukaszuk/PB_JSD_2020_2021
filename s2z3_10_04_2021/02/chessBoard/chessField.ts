@@ -1,10 +1,4 @@
-import Bishop from "../chessPieces/bishop";
-import King from "../chessPieces/king";
-import Knight from "../chessPieces/knight";
-import Pawn from "../chessPieces/pawn";
 import Piece from "../chessPieces/piece";
-import Queen from "../chessPieces/queen";
-import Rook from "../chessPieces/rook";
 import { Color } from "../dataTypes/color";
 
 class ChessField {
@@ -22,9 +16,9 @@ class ChessField {
     private getValAsStr(): string {
         switch (this._value) {
             case 0:
-                return this._color === Color.Black ? "#" : " ";
+                return this._color === Color.Black ? "." : " ";
             case 1:
-                return ".";
+                return "*";
             default:
                 return this._value.toString();
         }
@@ -36,7 +30,7 @@ class ChessField {
     public toString(): string {
         let theString: string = " " + this.getValAsStr() + " ";
         if (this._color === Color.Black) {
-            theString = "#" + this.getValAsStr() + "#";
+            theString = "." + this.getValAsStr() + ".";
         }
         return theString;
     }
