@@ -1,3 +1,4 @@
+import areArraysEqual from "../utils/arraysComparator";
 import ChessField from "./chessField";
 import King from "../chessPieces/king";
 import Pawn from "../chessPieces/pawn";
@@ -18,6 +19,16 @@ class Chessboard {
 
     // empty board initialization
     constructor() {
+        this.setEmptyBoard();
+    }
+
+    public setEmptyBoard(): void {
+        this._chessBoard = [];
+        this._viableMovesPositions = [];
+        this._viableCapturesPositions = [];
+        this._piecesOnBoardPositions = [];
+        this._corrPiecesPos = true; // flag, for correct board setting
+
         let curColor: Color = Color.Black;
         for (let r = 0; r < 8; r++) {
             let chessBoardRow: Array<ChessField> = [];
@@ -71,7 +82,8 @@ class Chessboard {
         if (this._viableMovesPositions.length === 0) {
             this._viableMovesPositions = newMovesPositions;
         } else {
-            this._viableMovesPositions.concat(newMovesPositions);
+            this._viableMovesPositions = this._viableMovesPositions.concat(
+                newMovesPositions);
         }
     }
 
@@ -80,18 +92,14 @@ class Chessboard {
      * r1 === r2 && c1 === c2
      */
     private arePositionsEql(pos1: Array<number>, pos2: Array<number>): boolean {
-        for (let i = 0; i < pos1.length; i++) {
-            if (pos1[i] !== pos2[i]) {
-                return false;
-            }
-        }
-        return true;
+        return areArraysEqual(pos1, pos2);
     }
 
     private updateViableCapturePositions(): void {
         for (let i = 0; i < this._piecesOnBoardPositions.length; i++) {
             for (let j = 0; j < this._viableMovesPositions.length; j++) {
-                if (this.arePositionsEql(this._piecesOnBoardPositions[i],
+                if (this.arePositionsEql(
+                    this._piecesOnBoardPositions[i],
                     this._viableMovesPositions[j])) {
                     this._viableCapturesPositions.push(
                         this._piecesOnBoardPositions[i]
@@ -147,6 +155,15 @@ class Chessboard {
         this.updateMovesIndicators(thePiecePossibleMoves);
     }
 
+    /**
+     * returns positions of all the pieces on chessBoard
+     * helps with testing (easier to locate a piece on the printed chessBoard)
+     * doesn't return a copy of the private field, so do not modify the result
+     */
+    public getPiecesOnBoardPositions(): Array<Array<number>> {
+        return this._piecesOnBoardPositions;
+    }
+
     // prints current chessboard state
     public print(): void {
         let fieldLen: number = this._chessBoard[0][0].toString().length;
@@ -172,4 +189,24 @@ class Chessboard {
     }
 }
 
-export default Chessboard;
+// singelton required by the task
+const singelton = (function() {
+    let instance = undefined;
+
+    function init() {
+        return new Chessboard();
+    }
+
+    function getInstance(): Chessboard {
+        if (!Boolean(instance)) {
+            instance = init();
+        }
+        return instance;
+    }
+
+    return {
+        getChessBoardInstance: getInstance
+    }
+})();
+
+export default singelton;
