@@ -32,7 +32,8 @@ function displayGameInfo(): void {
     console.log("Q|q - queen");
     console.log("K|k - king");
     console.log("=============");
-    console.log(" *  inside a field designates a piece movement");
+    console.log(" *  inside a field designates a theoretical possibility for "
+        + "piece movement");
 }
 
 // modifies gameBoard
