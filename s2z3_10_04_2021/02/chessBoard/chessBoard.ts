@@ -46,7 +46,7 @@ class Chessboard {
     /**
      * returns info about correct or incorrect position on the chessboard
      */
-    public isCorrPositionOnBoard() {
+    public isCorrPositionOnBoard(): boolean {
         return this._corrPiecesPos;
     }
 
@@ -113,7 +113,7 @@ class Chessboard {
      * king moves one field in every direction
      * opponent's king is not allowed to allready stand there
      */
-    private isCollidingWithOtherKing(row: number, col: number,
+    private isKingCollidingWithOtherKing(row: number, col: number,
         king: King): boolean {
 
         let kingsMovesPos: Array<Array<number>> = king.getAllMoves(row, col);
@@ -142,7 +142,7 @@ class Chessboard {
             this.updateViableMovesPositions(thePiecePossibleMoves);
         }
         if (what instanceof King) {
-            this._corrPiecesPos = !this.isCollidingWithOtherKing(row, col,
+            this._corrPiecesPos = !this.isKingCollidingWithOtherKing(row, col,
                 what);
         }
         if (what instanceof Pawn) {
@@ -191,7 +191,7 @@ class Chessboard {
 
 // singelton required by the task
 const singelton = (function() {
-    let instance = undefined;
+    let instance: Chessboard; 	// no initialization so undefined
 
     function init() {
         return new Chessboard();
