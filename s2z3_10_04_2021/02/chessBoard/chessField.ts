@@ -16,7 +16,7 @@ class ChessField {
     private getValAsStr(): string {
         switch (this._value) {
             case 0:
-                return this._color === Color.Black ? "." : " ";
+                return this._color === Color.Black ? "!" : " ";
             case 1:
                 return "*";
             default:
@@ -30,7 +30,7 @@ class ChessField {
     public toString(): string {
         let theString: string = " " + this.getValAsStr() + " ";
         if (this._color === Color.Black) {
-            theString = "." + this.getValAsStr() + ".";
+            theString = "!" + this.getValAsStr() + "!";
         }
         return theString;
     }
