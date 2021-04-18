@@ -14,3 +14,13 @@ W sumie krol tez jest klopotliwy (krol do krola sie nie przytula).
 
 "Except first one" - niejasne sformulowanie.
 Na cwiczeniach Karol mowil, ze po prostu maja byc dwie bierki na szachownicy.
+
+**Najpierw utworzono terminal-version, potem zamiana na browser-version (w Angularze)
+Browser version moze zawierac (niepotrzebne) pozostalosci z terminal-version.**
+
+# Uruchomienie
+
+```bash
+cd simplified-chess
+ng serve -o # opens localhost://4200 in the browser
+```
