@@ -1,0 +1,38 @@
+<!-- copy-pasted from: https://codepen.io/smabe/pen/xxEWjeO 
+     modified by me  -->
+<div>
+  <table>
+    <tr>
+      <td>
+	  <p>WHITE'S SIDE</p>
+        <div class="chessboard">
+          <div *ngFor="let row of gameBoard.getChessBoard(); index as rId">
+            <div
+              *ngFor="let field of row; index as cId"
+              [ngClass]="[
+                field.getFieldColorAsString(),
+                field.getFieldValAsNum() === 1 ? 'green' : '',
+                isPosInViableCaptures(rId, cId)
+                  ? 'red'
+                  : ''
+              ]"
+            >
+              {{ field.getValAsString() }}
+            </div>
+          </div>
+        </div>
+	  <p>BLACK'S SIDE</p>
+      </td>
+      <td>
+        <button type="button" (click)="setTwoRandPiecesOnBoard()">
+          Set two random pieces on board
+        </button>
+	<br/> <br/>
+	<span *ngIf="gameBoard.getPossibleCaptures().length === 0"> NO </span>
+	<span>CAPTURE(S) DETECTED</span>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<router-outlet></router-outlet>
