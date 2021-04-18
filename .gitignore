@@ -60,3 +60,14 @@ s2z3_10_04_2021/02/browser_version/simplified-chess/*
 s2z3_10_04_2021/02/browser_version/simplified-chess/src/*
 ## oprocz folderu app
 !s2z3_10_04_2021/02/browser_version/simplified-chess/src/app/
+
+## ignoruj wszystkie pliki w folderze bouncing-ball
+s2z3_10_04_2021/03/browser_version/bouncing-ball/*
+## oprocz plikow: package.json, package-lock.json i folderu src
+!s2z3_10_04_2021/03/browser_version/bouncing-ball/package.json
+!s2z3_10_04_2021/03/browser_version/bouncing-ball/package-lock.json
+!s2z3_10_04_2021/03/browser_version/bouncing-ball/src
+## ignoruj wszystkie pliki w folderze src
+s2z3_10_04_2021/03/browser_version/bouncing-ball/src/*
+## oprocz folderu app
+!s2z3_10_04_2021/03/browser_version/bouncing-ball/src/app/
