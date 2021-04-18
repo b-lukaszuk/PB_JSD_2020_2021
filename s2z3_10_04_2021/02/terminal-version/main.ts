@@ -33,7 +33,7 @@ function displayGameInfo(): void {
     console.log("K|k - king");
     console.log("=============");
     console.log(" *  inside a field designates a theoretical possibility for "
-        + "piece movement");
+        + "piece movement on an empty board");
 }
 
 // modifies gameBoard

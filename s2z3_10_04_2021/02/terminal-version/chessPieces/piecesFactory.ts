@@ -39,7 +39,7 @@ class PiecesFactory {
 
 // singelton required by the task
 const singelton = (function() {
-    let instance = undefined;
+    let instance: PiecesFactory; // uninitialized so undefined
 
     function init() {
         return new PiecesFactory();

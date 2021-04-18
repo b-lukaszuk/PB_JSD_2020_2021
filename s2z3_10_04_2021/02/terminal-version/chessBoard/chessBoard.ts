@@ -127,6 +127,7 @@ class Chessboard {
                 return true;
             }
         }
+        return false;
     }
 
     /**
@@ -142,12 +143,23 @@ class Chessboard {
             this.updateViableMovesPositions(thePiecePossibleMoves);
         }
         if (what instanceof King) {
-            this._corrPiecesPos = !this.isKingCollidingWithOtherKing(row, col,
-                what);
+            // change only if previously this._corPiecesPos was correct (true)
+            // prevents accidental overwrite of false with true
+            if (this._corrPiecesPos) {
+                this._corrPiecesPos = !this.isKingCollidingWithOtherKing(
+                    row,
+                    col,
+                    what
+                );
+            }
         }
         if (what instanceof Pawn) {
-            // pawns start from 2nd row, and are promoted at last row
-            this._corrPiecesPos = (row !== 0) && (row !== 7);
+            // change only if previously this._corPiecesPos was correct (true)
+            // prevents accidental overwrite of false with true
+            if (this._corrPiecesPos) {
+                // pawns start from 2nd row, and are promoted at last row
+                this._corrPiecesPos = row !== 0 && row !== 7;
+            }
         }
 
         this._chessBoard[row][col].setTo(what);
