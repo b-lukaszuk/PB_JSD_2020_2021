@@ -4,7 +4,7 @@
   <table>
     <tr>
       <td>
-	  <p>WHITE'S SIDE</p>
+        <p>WHITE'S SIDE</p>
         <div class="chessboard">
           <div *ngFor="let row of gameBoard.getChessBoard(); index as rId">
             <div
@@ -12,24 +12,27 @@
               [ngClass]="[
                 field.getFieldColorAsString(),
                 field.getFieldValAsNum() === 1 ? 'green' : '',
-                isPosInViableCaptures(rId, cId)
-                  ? 'red'
-                  : ''
+                isPosInViableCaptures(rId, cId) ? 'red' : ''
               ]"
             >
               {{ field.getValAsString() }}
             </div>
           </div>
         </div>
-	  <p>BLACK'S SIDE</p>
+        <p>BLACK'S SIDE</p>
       </td>
       <td>
+        <p>
+          Press the button to set two random pieces (one black and one white) on
+          the board in two random locations
+        </p>
         <button type="button" (click)="setTwoRandPiecesOnBoard()">
-          Set two random pieces on board
+          Set the pieces
         </button>
-	<br/> <br/>
-	<span *ngIf="gameBoard.getPossibleCaptures().length === 0"> NO </span>
-	<span>CAPTURE(S) DETECTED</span>
+        <br />
+        <br />
+        <span *ngIf="gameBoard.getPossibleCaptures().length === 0"> NO </span>
+        <span>CAPTURE(S) DETECTED</span>
       </td>
     </tr>
   </table>
