@@ -27,12 +27,22 @@ class GameBoard {
      * sets a ball at a given position
      * updates this._gameBoard
      */
-    public setAtPos(row: number, col: number): void {
+    public setBallAtPos(pos: number[]): void {
+        let [row, col] = pos;
         this._gameBoard[row][col] = 1;
     }
 
     public getVal(row: number, col: number): number {
         return this._gameBoard[row][col];
+    }
+
+    public getNCol(): number {
+        // all rows are of equal length
+        return this._gameBoard[0].length;
+    }
+
+    public getNRows(): number {
+        return this._gameBoard.length;
     }
 }
 
