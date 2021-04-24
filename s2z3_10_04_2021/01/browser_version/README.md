@@ -29,3 +29,10 @@ Your program should output the cells it visits during its search, and a message 
 "upper left corner (at 1,1)" - przeciez w JS-ie jest indeksacja od 0,0?
 
 Patrzac na mape, widze, ze ma byc indeksowanie od 1 (incl) do 5 (incl)
+
+# Uruchomienie
+
+```bash
+cd treasure-map
+ng serve -o # opens localhost://4200 in the browser
+```
