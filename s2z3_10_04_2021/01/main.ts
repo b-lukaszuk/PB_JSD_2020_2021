@@ -38,7 +38,7 @@ function searchForTreasure(map: number[][]): void {
     // next place to go (coordinates read from the map)
     let nextTrip: number[] = [];
 
-    let clue: number = -99; // clue from the plac on map
+    let clue: number = undefined; // clue from the place on map
 
     while (true) {
         console.log("Visiting [" + (visRow + 1) + ", " + (visCol + 1) + "]");
