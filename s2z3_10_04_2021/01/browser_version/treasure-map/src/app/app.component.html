@@ -1,4 +1,4 @@
-<div> 
+<div>
   <table>
     <tr>
       <td>
@@ -7,7 +7,9 @@
           <div *ngFor="let row of treasureMap; index as rId">
             <div
               *ngFor="let field of row; index as cId"
-		class="field"
+              [ngClass]="[
+                areTwoArrEql([rId, cId], currentlyVisited) ? 'green' : 'field'
+              ]"
             >
               {{ field }}
             </div>
@@ -15,16 +17,21 @@
         </div>
       </td>
       <td>
-        <p>
-            Press the button to search for treasure
-        </p>
-        <button type="button">
-            Search for treasure
+        <p>Press the button to search for treasure</p>
+        <button type="button" (click)="searchForTreasureInHtml()">
+          Search for treasure
         </button>
         <br />
+        <br />
+        <span>TREASURE</span>
+        <span *ngIf="!isTreasureFound"> NOT</span>
+        <span> FOUND!</span>
+        <p *ngIf="isTreasureFound">
+          AMOUNT OF GOLD FOUND:
+          {{ getTresaureFromCurrentField() }}
+        </p>
       </td>
     </tr>
   </table>
-
 </div>
 <router-outlet></router-outlet>
