@@ -9,7 +9,6 @@ let treasureMap: Array<Array<number>> = [
     [21, 52, 33, 13, 23],
 ]
 
-
 ///////////////////////////////////////////////////////////////////////////////
 //                                 functions                                 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -44,7 +43,7 @@ function searchForTreasure(map: number[][]): void {
         console.log("Visiting [" + (visRow + 1) + ", " + (visCol + 1) + "]");
         clue = map[visRow][visCol];
         if (clue === ((visRow + 1) * 10 + (visCol + 1))) {
-            console.log("Treasure found!");
+            console.log("\nTreasure found!");
             console.log("Amount of gold: " + clue);
             break;
         }
@@ -54,7 +53,17 @@ function searchForTreasure(map: number[][]): void {
     }
 }
 
+function printTreasureMap(treasureMap) {
+    console.log("Behold the treasure map\n");
+    for (let i = 0; i < treasureMap.length; i++) {
+        console.log(treasureMap[i].toString());;
+    }
+}
+
+
 function main(): void {
+    printTreasureMap(treasureMap);
+    console.log("\nLet's look for the treasure\n");
     searchForTreasure(treasureMap);
 }
 
