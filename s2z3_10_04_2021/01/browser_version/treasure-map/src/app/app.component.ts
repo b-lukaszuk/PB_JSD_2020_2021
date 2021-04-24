@@ -17,6 +17,7 @@ export class AppComponent {
         [21, 52, 33, 13, 23],
     ]
 
+    // coordinates of currently visited cell on treasureMap
     public currentlyVisited: number[] = [0, 0];
 
     public isTreasureFound = false;
@@ -49,7 +50,7 @@ export class AppComponent {
      * @param {number[][]} map treasure map in the format specified by the task
      */
     public searchForTreasure1step(map: number[][] = this.treasureMap): boolean {
-        // visited cells
+        // visited cells row and col coordinates
         let [visRow, visCol] = this.currentlyVisited;
         // next place to go (coordinates read from the map)
         let nextTrip: number[] = [];
