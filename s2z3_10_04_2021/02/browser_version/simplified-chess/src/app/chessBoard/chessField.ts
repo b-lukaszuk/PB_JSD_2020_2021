@@ -10,20 +10,6 @@ class ChessField {
         private _color: Color) {
     }
 
-    /**
-     * returns string indicator for middle of the field (empty, move or figure)
-     */
-    private getValAsStr(): string {
-        switch (this._value) {
-            case 0:
-                return this._color === Color.Black ? "!" : " ";
-            case 1:
-                return "*";
-            default:
-                return this._value.toString();
-        }
-    }
-
     public getFieldColorAsString(): string {
         return this._color === Color.Black ? "black" : "white";
     }
@@ -36,17 +22,6 @@ class ChessField {
     }
 
     /**
-     * returns string of field contents
-     */
-    public toString(): string {
-        let theString: string = " " + this.getValAsStr() + " ";
-        if (this._color === Color.Black) {
-            theString = "!" + this.getValAsStr() + "!";
-        }
-        return theString;
-    }
-
-    /**
      * sets field to 0 (empty), 1 (move indicator) or Piece
      */
     public setTo(what: number | Piece): void {
@@ -54,7 +29,7 @@ class ChessField {
     }
 
     /**
-     * returns value of a field
+     * returns value of a field number or Piece
      */
     public getVal(): number | Piece {
         return this._value;

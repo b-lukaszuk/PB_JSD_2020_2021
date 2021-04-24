@@ -18,6 +18,10 @@ class Piece {
         this._repr = strRepresentation;
     }
 
+    public toString() {
+        return this._repr;
+    }
+
     /**
      * returns value (piece ID)
      */
@@ -30,17 +34,6 @@ class Piece {
      */
     public getColor(): Color {
         return this._color;
-    }
-
-    /**
-     * returns string representation of a piece
-     * small letters for black, capital letters for white
-     */
-    public toString(): string {
-        if (this._color === Color.White) {
-            return this._repr.toLocaleUpperCase();
-        }
-        return this._repr.toLocaleLowerCase();
     }
 
     /**

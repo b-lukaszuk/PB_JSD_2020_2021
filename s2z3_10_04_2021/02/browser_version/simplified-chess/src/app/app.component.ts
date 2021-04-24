@@ -30,12 +30,12 @@ export class AppComponent {
 
     // modifies gameBoard INPLACE
     public setTwoRandPiecesOnBoard(): void {
-        let pos1: Array<number>;
-        let pos2: Array<number>;
+        let pos1: number[];
+        let pos2: number[];
         let idPiece1: number;
         let idPiece2: number;
         let color1: Color = Color.White;
-        let color2: Color = Color.Black;
+        let color2: Color = toggleColor(color1);
         do {
             pos1 = [randInt(8), randInt(8)];
             pos2 = [randInt(8), randInt(8)];

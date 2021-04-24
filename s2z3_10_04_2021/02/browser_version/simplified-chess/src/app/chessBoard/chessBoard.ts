@@ -180,32 +180,6 @@ class Chessboard {
         return this._piecesOnBoardPositions;
     }
 
-    // prints current chessboard state
-    public print(): void {
-        let fieldLen: number = this._chessBoard[0][0].toString().length;
-        let colSep: string = '|';
-        let rowSepSingleCell: string = '+' + rightPad('-', fieldLen, '-');
-        let rowSep: string =
-            ' ' +
-            rightPad(
-                rowSepSingleCell,
-                8 * rowSepSingleCell.length,
-                rowSepSingleCell
-            ) +
-            '+';
-        console.log('   0   1   2   3   4   5   6   7  '); // cols numbering
-        console.log(rowSep);
-        for (let row = 0; row < this._chessBoard.length; row++) {
-            let rowToPrint: string = row + '|'; // row numbering on left
-            for (let col = 0; col < this._chessBoard[row].length; col++) {
-                rowToPrint += this._chessBoard[row][col].toString();
-                rowToPrint += colSep;
-            }
-            console.log(rowToPrint);
-            console.log(rowSep);
-        }
-    }
-
     public getChessBoard(): Array<Array<ChessField>> {
         return this._chessBoard;
     }
