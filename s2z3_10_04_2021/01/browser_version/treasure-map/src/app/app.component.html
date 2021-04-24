@@ -1,0 +1,30 @@
+<div> 
+  <table>
+    <tr>
+      <td>
+        <p>TREASURE MAP</p>
+        <div class="treasureMap">
+          <div *ngFor="let row of treasureMap; index as rId">
+            <div
+              *ngFor="let field of row; index as cId"
+		class="field"
+            >
+              {{ field }}
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p>
+            Press the button to search for treasure
+        </p>
+        <button type="button">
+            Search for treasure
+        </button>
+        <br />
+      </td>
+    </tr>
+  </table>
+
+</div>
+<router-outlet></router-outlet>

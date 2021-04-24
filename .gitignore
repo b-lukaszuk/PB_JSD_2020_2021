@@ -71,3 +71,6 @@ s2z3_10_04_2021/03/browser_version/bouncing-ball/*
 s2z3_10_04_2021/03/browser_version/bouncing-ball/src/*
 ## oprocz folderu app
 !s2z3_10_04_2021/03/browser_version/bouncing-ball/src/app/
+
+# ignoruj node_modules gdziekolwiek w s2z3 to jest
+/s2z3_10_04_2021/*/node_modules
