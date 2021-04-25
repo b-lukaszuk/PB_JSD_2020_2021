@@ -31,3 +31,29 @@
   box-sizing: border-box;
   border: 1px solid black;
 }
+
+#searchSpeeds {
+    width: 5em;
+    height: 2em;
+    background-color: #008cba;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+button {
+    background-color: #008CBA; /* blue */
+    border: none;
+    border-radius: 0.4em;
+    color: white;
+    padding: 0.4em 0.8em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+}

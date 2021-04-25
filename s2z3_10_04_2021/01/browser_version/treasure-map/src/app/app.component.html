@@ -17,10 +17,21 @@
         </div>
       </td>
       <td>
-	  <h1>Task/Game Description</h1>
-	  <p>Start from field [1, 1]. Goto coordinates shown in the field</p>
-	  <p>Continue until field coordinates are equal to its content</p>
-	  <p>Voila. Treasure Found</p>
+        <h1>Task/Game Description</h1>
+        <p>Start from field [1, 1]. Goto coordinates shown in the field</p>
+        <p>Continue until field coordinates are equal to its content</p>
+        <p>Voila. Treasure Found</p>
+        <h1>Choose search speed</h1>
+        <label for="searchSpeeds"> Search speed [secs]: </label>
+        <select
+          name="searchSpeeds"
+          id="searchSpeeds"
+          [(ngModel)]="selectedSearchSpeedSecs"
+        >
+          <option *ngFor="let speed of searchSpeedsSecs" [value]="speed">
+            {{ speed }}
+          </option>
+        </select>
         <h1>Press the button to search for treasure</h1>
         <button type="button" (click)="searchForTreasureInHtml()">
           Search for treasure

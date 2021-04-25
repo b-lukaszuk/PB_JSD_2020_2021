@@ -17,6 +17,9 @@ export class AppComponent {
         [21, 52, 33, 13, 23],
     ]
 
+    public searchSpeedsSecs: number[] = [0.5, 1, 2, 3, 5];
+    public selectedSearchSpeedSecs: number = 0.5;
+
     // coordinates of currently visited cell on treasureMap
     public currentlyVisited: number[] = [0, 0];
 
@@ -56,12 +59,9 @@ export class AppComponent {
         let nextTrip: number[] = [];
         let clue: number; // clue from the place on map
 
-        console.log("Visiting [" + (visRow + 1) + ", " + (visCol + 1) + "]");
-        this.currentlyVisited = [visRow, visCol];
         clue = map[visRow][visCol];
+        // is field content equal to its coordinates
         if (clue === ((visRow + 1) * 10 + (visCol + 1))) {
-            console.log("\nTreasure found!");
-            console.log("Amount of gold: " + clue);
             return true;
         }
         nextTrip = this.twoDigitNumToCoord(map[visRow][visCol]);
@@ -77,6 +77,6 @@ export class AppComponent {
                 clearInterval(intervalId);
                 this.isTreasureFound = true;
             };
-        }, 1000);
+        }, this.selectedSearchSpeedSecs * 1000);
     }
 }
