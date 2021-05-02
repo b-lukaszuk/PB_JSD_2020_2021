@@ -5,6 +5,9 @@ import { Component } from '@angular/core';
 import { singelton, GameBoard } from './gameBoard/gameBoard';
 import areArraysEqual from './utils/arraysComparator';
 import isBetween from './utils/betweenTwoNums';
+import Point from "./point/point";
+import Ball from "./point/ball";
+import Brick from "./point/brick";
 
 @Component({
     selector: 'app-root',
@@ -15,60 +18,49 @@ export class AppComponent {
 
     public title: string = 'bouncing-ball';
     public gameBoard: GameBoard = singelton.getGameBoardInstance();
-    public ballStartPos: number[] = [5, 4];
-    public ballCurPos: number[] = this.ballStartPos;
-    public ballCurShift: number[] = [1, 1];
+    public shift: Point = new Point(1, 1);
+    public initialBall: Ball = this.gameBoard.getBall();
     public intervalId: any;
     public shouldBallBeStopped: boolean = false;
 
-    public shiftBallBy(shiftVect: number[]): number[] {
-        let [currRow, currCol] = [...this.ballCurPos];
-        let [sRow, sCol] = [...shiftVect];
-        return [currRow + sRow, currCol + sCol];
+    public getClassForField(pos: number[]): string {
+        if (this.gameBoard.getContent(pos) instanceof Brick) {
+            return "boarder";
+        } else if (this.gameBoard.getContent(pos) instanceof Ball) {
+            return "ball";
+        } else {
+            return "empty";
+        }
     }
 
-    public moveBall(): void {
-        this.ballCurShift = this.getNextShiftVector();
-        this.ballCurPos = this.shiftBallBy(this.ballCurShift);
-        this.gameBoard.setEmptyBoard();
-        this.gameBoard.setBallAtPos(this.ballCurPos);
-        if (areArraysEqual(this.ballCurPos, this.ballStartPos)) {
+    public moveBallByOneField(): void {
+        let curBall: Ball = this.gameBoard.getBall();
+        let [bRow, bCol] = curBall.getPos();
+        // where the ball will be after the shift
+        let newBall: Ball = curBall.add(this.shift);
+
+        // if ball is off the board, change the shift
+        if (!newBall.isXBetween(1, this.gameBoard.getNRows() - 2)) {
+            this.shift.setX(this.shift.getX() * -1);
+        }
+        if (!newBall.isYBetween(1, this.gameBoard.getNCols() - 2)) {
+            this.shift.setY(this.shift.getY() * -1);
+        }
+        // re-create newBall in case the shift has changed
+        newBall = curBall.add(this.shift);
+
+        this.gameBoard.setObjAtPos(new Point(bRow, bCol), [bRow, bCol]);
+        this.gameBoard.setObjAtPos(newBall, newBall.getPos());
+
+        if (newBall.equal(this.initialBall)) {
             this.shouldBallBeStopped = true;
         }
     }
 
-    public indexOfVector(vector: number[], arrOfVects: number[][]): number {
-        for (let i = 0; i < arrOfVects.length; i++) {
-            if (areArraysEqual(vector, arrOfVects[i])) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    // public indexOfVector(vector: number[], arrOfVects: number[][]): number {
 
-    public getNextShiftVector(): number[] {
-        let [shiftRow, shiftCol] = [...this.ballCurShift];
-        let [nextRow, nextCol] = this.shiftBallBy(this.ballCurShift);
-        let [lowerLimit, upperLimit] = [0, 9];
-        if (!isBetween(nextRow, lowerLimit, upperLimit)) {
-            shiftRow *= -1; 	// negate it
-        }
-        if (!isBetween(nextCol, lowerLimit, upperLimit)) {
-            shiftCol *= -1; 	// negate it
-        }
-        return [shiftRow, shiftCol];
-    }
-
-    public setEmptyGameBoard(): void {
-        this.gameBoard.setEmptyBoard();
-    }
-
-    public getValAtPos(row: number, col: number): number {
-        return this.gameBoard.getVal(row, col);
-    }
-
-    public setBallValAtPos(pos: number[]): void {
-        this.gameBoard.setBallAtPos(pos);
+    public initializeGameBoard(): void {
+        this.gameBoard.initializeBoard();
     }
 
     /**
@@ -78,11 +70,11 @@ export class AppComponent {
      */
     public setBallIntoMotion() {
         let intervalId = setInterval(() => {
-            this.moveBall();
+            this.moveBallByOneField();
             if (this.shouldBallBeStopped) {
                 this.stopTheBall();
             }
-        }, 500);
+        }, 200);
         this.intervalId = intervalId;
     }
 
@@ -91,8 +83,7 @@ export class AppComponent {
     }
 
     ngOnInit() {
-        this.setEmptyGameBoard();
-        this.setBallValAtPos(this.ballStartPos);
+        this.initializeGameBoard();
     }
 
 

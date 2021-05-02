@@ -6,7 +6,7 @@
           <div *ngFor="let row of gameBoard.getGameBoard(); index as rId">
             <div
               *ngFor="let col of row; index as cId"
-              [ngClass]="getValAtPos(rId, cId) === 0 ? 'empty ' : 'ball'"
+              [ngClass]="getClassForField([rId, cId])"
             >
               <span> </span>
             </div>
@@ -18,13 +18,9 @@
         <p>
           The ball will stop automatically once it reaches its starting position
         </p>
-        <p>Or after you click the stop button</p>
         <button type="button" (click)="setBallIntoMotion()">
-          Set ball into motion
+            Set ball into motion
         </button>
-        <br />
-        <br />
-        <button type="button" (click)="stopTheBall()">Stop the ball</button>
       </td>
     </tr>
   </table>

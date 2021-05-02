@@ -1,42 +1,64 @@
+import board from "./examInput";
+import Point from "../point/point";
+import Ball from "../point/ball";
+import Brick from "../point/brick";
+
 class GameBoard {
     // internal representation of the chessBoard
-    private _gameBoard: number[][] = [];
+    private _gameBoard: Point[][] = [];
+    private _ball: Ball = new Ball(0, 0);
 
     // empty board initialization
     constructor() {
-        this.setEmptyBoard();
+        this.initializeBoard();
     }
 
-    public setEmptyBoard(): void {
+    public initializeBoard(): void {
+        // may be invoked when the board is non empty
         this._gameBoard = [];
 
-        for (let r = 0; r < 10; r++) {
-            let row: number[] = [];
-            for (let c = 0; c < 10; c++) {
-                row.push(0);
+        for (let r = 0; r < board.length; r++) {
+            let row: Point[] = [];
+            for (let c = 0; c < board[r].length; c++) {
+                if (board[r][c] === "X") {
+                    row.push(new Brick(r, c));
+                } else if (board[r][c] === "1") {
+                    this._ball = new Ball(r, c);
+                    row.push(this._ball);
+                } else {
+                    row.push(new Point(r, c));
+                }
             }
             this._gameBoard.push(row);
         }
     }
 
-    public getGameBoard(): number[][] {
+    public getGameBoard(): Point[][] {
         return this._gameBoard;
     }
 
-    /**
-     * sets a ball at a given position
-     * updates this._gameBoard
-     */
-    public setBallAtPos(pos: number[]): void {
-        let [row, col] = pos;
-        this._gameBoard[row][col] = 1;
+    public getBall(): Ball {
+        return this._ball;
     }
 
-    public getVal(row: number, col: number): number {
+    /**
+     * sets Point or its subclasses Ball and Brick at a given position
+     * updates this._gameBoard
+     */
+    public setObjAtPos(obj: Point, pos: number[]): void {
+        let [row, col] = pos;
+        if (obj instanceof Ball) {
+            this._ball = obj;
+        }
+        this._gameBoard[row][col] = obj;
+    }
+
+    public getContent(pos: number[]): Point {
+        let [row, col] = pos;
         return this._gameBoard[row][col];
     }
 
-    public getNCol(): number {
+    public getNCols(): number {
         // all rows are of equal length
         return this._gameBoard[0].length;
     }
