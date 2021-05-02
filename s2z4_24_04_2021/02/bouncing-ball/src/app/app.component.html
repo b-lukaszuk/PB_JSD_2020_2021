@@ -1,0 +1,12 @@
+<div class="gameboard">
+  <div *ngFor="let row of gameBoard.getGameBoard(); index as rId">
+    <div
+      *ngFor="let col of row; index as cId"
+      [ngClass]="getValAtPos(rId, cId) === 0 ? 'empty ' : 'ball'"
+    >
+      <span> </span>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
