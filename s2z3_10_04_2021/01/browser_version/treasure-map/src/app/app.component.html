@@ -33,7 +33,8 @@
           </option>
         </select>
         <h1>Press the button to search for treasure</h1>
-        <button type="button" (click)="searchForTreasureInHtml()">
+        <button type="button" (click)="searchForTreasureInHtml()"
+		      [disabled]="isTreasureFound">
           Search for treasure
         </button>
         <br />

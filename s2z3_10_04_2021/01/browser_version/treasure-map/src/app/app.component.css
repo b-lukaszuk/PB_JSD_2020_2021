@@ -57,3 +57,8 @@ button {
 button:hover {
     cursor: pointer;
 }
+
+button:disabled {
+    background-color: lightgray;
+    cursor: auto;
+}
