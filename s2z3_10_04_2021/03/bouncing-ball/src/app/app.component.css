@@ -45,3 +45,8 @@ button:hover {
     cursor: pointer;
     background-color: #3566e4; /* blue */
 }
+
+button:disabled {
+    cursor: auto;
+    background-color: lightgray;
+}

@@ -33,28 +33,35 @@ export class AppComponent {
         }
     }
 
+    /**
+     * detects collisions of someBall position with the walls of gameBoard
+     * changes this.shift X and/or Y coordinate (negates it)
+     */
+    public collisionDetection(someBall: Ball): void {
+        // if ball is off the board, change the shift
+        if (!someBall.isXBetween(1, this.gameBoard.getNRows() - 2)) {
+            this.shift.setX(this.shift.getX() * -1);
+        }
+        if (!someBall.isYBetween(1, this.gameBoard.getNCols() - 2)) {
+            this.shift.setY(this.shift.getY() * -1);
+        }
+    }
+
     public moveBallByOneField(): void {
         let curBall: Ball = this.gameBoard.getBall();
         let [bRow, bCol] = curBall.getPos();
         // where the ball will be after the shift
         let newBall: Ball = curBall.add(this.shift);
 
-        // if ball is off the board, change the shift
-        if (!newBall.isXBetween(1, this.gameBoard.getNRows() - 2)) {
-            this.shift.setX(this.shift.getX() * -1);
-        }
-        if (!newBall.isYBetween(1, this.gameBoard.getNCols() - 2)) {
-            this.shift.setY(this.shift.getY() * -1);
-        }
-        // re-create newBall in case the shift has changed
+        this.collisionDetection(newBall);
+
+        // re-create newBall in case the shift has changed after collision
         newBall = curBall.add(this.shift);
 
         this.gameBoard.setObjAtPos(new Point(bRow, bCol), [bRow, bCol]);
         this.gameBoard.setObjAtPos(newBall, newBall.getPos());
 
-        if (newBall.equal(this.initialBall)) {
-            this.shouldBallBeStopped = true;
-        }
+        this.shouldBallBeStopped = newBall.equal(this.initialBall);
     }
 
     // public indexOfVector(vector: number[], arrOfVects: number[][]): number {

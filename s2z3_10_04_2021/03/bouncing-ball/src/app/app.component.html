@@ -18,8 +18,12 @@
         <p>
           The ball will stop automatically once it reaches its starting position
         </p>
-        <button type="button" (click)="setBallIntoMotion()">
-            Set ball into motion
+        <button
+          type="button"
+          (click)="setBallIntoMotion(); setIntoMotionBtn.disabled = true"
+          #setIntoMotionBtn
+        >
+          Set ball into motion
         </button>
       </td>
     </tr>
