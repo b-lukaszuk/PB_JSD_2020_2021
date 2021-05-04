@@ -1,4 +1,20 @@
 <div>
-    <h1>Memory game goes here</h1>
+  <table>
+    <tr>
+      <td>
+        <div>
+          <div *ngFor="let row of cards; index as rId">
+            <div
+              *ngFor="let card of row; index as cId"
+              [ngClass]="card.getStatus()"
+            >
+              {{ card.toString() }}
+            </div>
+          </div>
+        </div>
+      </td>
+      <td></td>
+    </tr>
+  </table>
 </div>
 <router-outlet></router-outlet>

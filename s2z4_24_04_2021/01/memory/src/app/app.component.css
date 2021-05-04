@@ -1,0 +1,41 @@
+.covered {
+  float: left;
+  width: 4em;
+  height: 4em;
+  background-color: darkgray;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1em solid white;
+  box-sizing: border-box;
+  padding: 0.2em;
+}
+
+.uncovered {
+  float: left;
+  width: 4em;
+  height: 4em;
+  background-color: lightblue;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1em solid white;
+  box-sizing: border-box;
+  padding: 0.2em;
+}
+
+.matched {
+  float: left;
+  width: 4em;
+  height: 4em;
+  background-color: white;
+  font-size: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1em solid white;
+  box-sizing: border-box;
+  padding: 0.2em;
+}
