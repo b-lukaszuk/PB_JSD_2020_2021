@@ -35,7 +35,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.1em solid white;
+  border: 0.1em dashed yellow;
   box-sizing: border-box;
   padding: 0.2em;
 }
@@ -55,4 +55,9 @@ button {
 
 button:hover {
     cursor: pointer;
+}
+
+button:disabled {
+    background-color: lightgray;
+    cursor: auto;
 }

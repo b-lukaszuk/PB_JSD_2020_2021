@@ -32,7 +32,9 @@ class Player {
         return this._color;
     }
 
-
+    public addPoints(): void {
+        this._points += 100;
+    }
 
     /**
      * returns player name

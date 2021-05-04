@@ -2,15 +2,28 @@ class Card {
     private _symbol: string;
     private _covered: boolean;
     private _matched: boolean;
+    private _id: number;
+    static counter: number = 0;
 
     public constructor(symbol: string) {
         this._symbol = symbol;
         this._covered = true; // covered/uncovered right now
         this._matched = false; // is matched with other card of a pair
+        this._id = Card.counter;
+        Card.counter += 1;
+
+    }
+
+    public getSymbol(): string {
+        return this._symbol;
+    }
+
+    public isEqual(other: Card) {
+        return this._id === other._id;
     }
 
     public toString(): string {
-        return this._covered || this._matched ? '' : this._symbol;
+        return this._covered ? '' : this._symbol;
     }
 
     public toggleCovered(): void {
@@ -23,6 +36,10 @@ class Card {
 
     public isMatched(): boolean {
         return this._matched;
+    }
+
+    public isCovered() {
+        return this._covered;
     }
 
     public getStatus(): string {

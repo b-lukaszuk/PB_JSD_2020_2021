@@ -13,14 +13,15 @@
           </div>
         </div>
       </td>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>&nbsp;&nbsp;&nbsp;</td>
       <td>
+        <h1>Num of players [2-4]: {{players.length}}</h1>
         <div *ngFor="let player of players">
           <div>
             <h1
               [style.color]="player.getColor()"
               [style.background]="
-                player.getId() === answPlayerId ? 'lightgray' : 'white'
+                player.getId() === playerOnMoveId ? 'lightgray' : 'white'
               "
             >
               {{ player.getName() }} : {{ player.getPoints() }} pts
@@ -28,9 +29,14 @@
           </div>
         </div>
       </td>
-      <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>&nbsp;&nbsp;&nbsp;</td>
       <td>
-        <button type="button" (click)="makeMove()">Make a move</button>
+	  <h1>Game status: </h1>
+	  <h1 *ngIf="!gameOver">IN PROGRESS</h1>
+	  <h1 *ngIf="gameOver">GAME OVER</h1>
+          <button type="button" (click)="makeMove()"
+		  [disabled]="gameOver"
+	  >On move: {{players[playerOnMoveId].getName()}}</button>
       </td>
     </tr>
   </table>
