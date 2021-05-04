@@ -18,6 +18,7 @@ export class AppComponent {
     public playerOnMoveId = 0;
     public gameOver: boolean = false;
     public shownCards: Card[] = [];
+    public round: number = 1;
 
     private initializeCards(): void {
         // number of cards is always even (two of a kind)
@@ -27,6 +28,7 @@ export class AppComponent {
             let row: Card[] = [];
             for (let c = 0; c < nOfCols; c++) {
                 let aCard: Card = this.cardFactory.getRandCard();
+                aCard.setXYpos(r, c);
                 row.push(aCard);
             }
             this.cards.push(row);
@@ -42,6 +44,7 @@ export class AppComponent {
     private initializePlayers(): void {
         let colors: string[] = ['red', 'black', 'blue', 'orange'];
         let numOfPlayers = randInt(2, 5);
+        // let numOfPlayers = 2;
         for (let i = 0; i < numOfPlayers; i++) {
             this.players.push(new Player(i, colors[i], this.cardsGetDims()));
         }
@@ -55,20 +58,23 @@ export class AppComponent {
     }
 
     private getTwoGuesses(aPlayer: Player): [Card, Card] {
-        let g1Row, g1Col, g2Row, g2Col: number;
+        let g1, g2: number[];
         let c1, c2: Card;
         do {
-            [g1Row, g1Col] = aPlayer.getRandomGuess();
-            [g2Row, g2Col] = aPlayer.getRandomGuess();
-            c1 = this.cards[g1Row][g1Col];
-            c2 = this.cards[g2Row][g2Col];
+            [g1, g2] = aPlayer.getBestGuess(); // two positions, 1 pos: [x, y]
+            c1 = this.cards[g1[0]][g1[1]];
+            c2 = this.cards[g2[0]][g2[1]];
         } while (c1.isEqual(c2) || c1.isMatched() || c2.isMatched());
         return [c1, c2];
     }
 
-    private updatePlayerOnMoveId(): void {
+    /**
+     * if playerOnMoveId is too high, resets it to 0
+     */
+    private correctPlayerOnMoveId(): void {
         if (this.playerOnMoveId === this.players.length) {
             this.playerOnMoveId = 0;
+            this.round += 1;
         }
     }
 
@@ -88,6 +94,8 @@ export class AppComponent {
     public makeMove(): void {
         this.coverVisibleCards();
         let [c1, c2] = this.getTwoGuesses(this.players[this.playerOnMoveId]);
+        this.players[this.playerOnMoveId].updateKnownCards(c1);
+        this.players[this.playerOnMoveId].updateKnownCards(c2);
         c1.toggleCovered();
         c2.toggleCovered();
 
@@ -97,10 +105,14 @@ export class AppComponent {
             c2.toggleMatched();
             this.players[this.playerOnMoveId].addPoints();
             this.playerOnMoveId -= 1; // player has another move
+            for (let player of this.players) {
+                player.removeKnownCard(c1);
+                player.removeKnownCard(c2);
+            }
         }
 
         this.playerOnMoveId += 1;
-        this.updatePlayerOnMoveId();
+        this.correctPlayerOnMoveId();
         this.updateGameOver();
     }
 

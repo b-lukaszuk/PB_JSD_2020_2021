@@ -34,6 +34,7 @@
 	  <h1>Game status: </h1>
 	  <h1 *ngIf="!gameOver">IN PROGRESS</h1>
 	  <h1 *ngIf="gameOver">GAME OVER</h1>
+	  <h1>ROUND: {{round}}</h1>
           <button type="button" (click)="makeMove()"
 		  [disabled]="gameOver"
 	  >On move: {{players[playerOnMoveId].getName()}}</button>

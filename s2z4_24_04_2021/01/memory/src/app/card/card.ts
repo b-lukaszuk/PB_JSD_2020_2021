@@ -3,6 +3,8 @@ class Card {
     private _covered: boolean;
     private _matched: boolean;
     private _id: number;
+    private _xPos: number = 0;
+    private _yPos: number = 0;
     static counter: number = 0;
 
     public constructor(symbol: string) {
@@ -11,7 +13,10 @@ class Card {
         this._matched = false; // is matched with other card of a pair
         this._id = Card.counter;
         Card.counter += 1;
+    }
 
+    public getId(): number {
+        return this._id;
     }
 
     public getSymbol(): string {
@@ -40,6 +45,19 @@ class Card {
 
     public isCovered() {
         return this._covered;
+    }
+
+    public getXpos(): number {
+        return this._xPos;
+    }
+
+    public getYpos(): number {
+        return this._yPos;
+    }
+
+    public setXYpos(xPos: number, yPos: number): void {
+        this._xPos = xPos;
+        this._yPos = yPos;
     }
 
     public getStatus(): string {
