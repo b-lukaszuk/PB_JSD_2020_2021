@@ -13,7 +13,25 @@
           </div>
         </div>
       </td>
-      <td></td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>
+        <div *ngFor="let player of players">
+          <div>
+            <h1
+              [style.color]="player.getColor()"
+              [style.background]="
+                player.getId() === answPlayerId ? 'lightgray' : 'white'
+              "
+            >
+              {{ player.getName() }} : {{ player.getPoints() }} pts
+            </h1>
+          </div>
+        </div>
+      </td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td>
+        <button type="button" (click)="makeMove()">Make a move</button>
+      </td>
     </tr>
   </table>
 </div>

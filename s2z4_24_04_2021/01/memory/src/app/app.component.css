@@ -39,3 +39,20 @@
   box-sizing: border-box;
   padding: 0.2em;
 }
+
+button {
+    background-color: #008CBA; /* blue */
+    border: none;
+    border-radius: 0.4em;
+    color: white;
+    padding: 0.4em 0.8em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 2em;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+}
