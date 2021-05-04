@@ -21,6 +21,10 @@ class Card {
         this._matched = !this._matched;
     }
 
+    public isMatched(): boolean {
+        return this._matched;
+    }
+
     public getStatus(): string {
         if (this._matched) {
             return 'matched';
