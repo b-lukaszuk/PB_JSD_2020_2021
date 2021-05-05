@@ -14,8 +14,9 @@ class CardFactory {
         '=',
         '+',
         '-',
-        '_',
+        '~',
     ];
+    // I changed _ to ~ because its easier to tell the difference with -
 
     // private _symbols: string[] = [
     //     '!',
