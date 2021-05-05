@@ -77,3 +77,6 @@ s2z3_10_04_2021/03/browser_version/bouncing-ball/src/*
 
 # ignoruj node_modules gdziekolwiek w s2z4 to jest
 /s2z4_24_04_2021/*/node_modules
+
+# pozwol na pliki *js w folderze z testami canvasa
+!/s2z3_10_04_2021/03/canvasTesty/*js
