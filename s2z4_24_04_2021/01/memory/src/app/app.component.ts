@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
 import singlCardFactory from './card/cardFactory';
-import Card from './card/card';
-import Player from './player/player';
+import singlPlayerFactory from './player/playerFactory';
+import Card from './card/card'; // for code checker
+import Player from './player/player'; // for code checker
 import randInt from './utils/randInt';
 
 @Component({
@@ -13,6 +14,7 @@ import randInt from './utils/randInt';
 export class AppComponent {
     public title: string = 'memory';
     public cardFactory = singlCardFactory.getCardFactoryInstance();
+    public playerFactory = singlPlayerFactory.getPlayerFactoryInstance();
     public cards: Card[][] = this.getAllCards();
     public players: Player[] = this.getFrom2To4Players();
     public playerToMove: Player = this.players[0];
@@ -47,7 +49,7 @@ export class AppComponent {
         let colors: string[] = ['red', 'black', 'blue', 'orange'];
         let numOfPlayers = randInt(2, 5);
         for (let i = 0; i < numOfPlayers; i++) {
-            thePlayers.push(new Player(i, colors[i]));
+            thePlayers.push(this.playerFactory.getPlayer(colors[i]));
         }
         return thePlayers;
     }

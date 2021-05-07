@@ -7,10 +7,12 @@ class Player {
     private _points: number = 0;
     private _knownCards: Card[] = [];
     private _knownTwoSymbols: string[] = [];
+    static counter: number = 0;
 
-    public constructor(id: number, color: string) {
-        this._id = id;
+    public constructor(color: string) {
+        this._id = Player.counter;
         this._color = color;
+        Player.counter++;
     }
 
     public getId(): number {
