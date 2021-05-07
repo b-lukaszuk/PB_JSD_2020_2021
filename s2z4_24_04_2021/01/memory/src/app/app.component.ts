@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 
-import singlCardFactory from './card/cardFactory';
-import singlPlayerFactory from './player/playerFactory';
 import Card from './card/card'; // for code checker
 import Player from './player/player'; // for code checker
 import randInt from './utils/randInt';
+import singlCardFactory from './card/cardFactory';
+import singlPlayerFactory from './player/playerFactory';
 
 @Component({
     selector: 'app-root',
@@ -13,13 +13,13 @@ import randInt from './utils/randInt';
 })
 export class AppComponent {
     public title: string = 'memory';
-    public cardFactory = singlCardFactory.getCardFactoryInstance();
-    public playerFactory = singlPlayerFactory.getPlayerFactoryInstance();
+    private cardFactory = singlCardFactory.getCardFactoryInstance();
+    private playerFactory = singlPlayerFactory.getPlayerFactoryInstance();
     public cards: Card[][] = this.getAllCards();
     public players: Player[] = this.getFrom2To4Players();
     public playerToMove: Player = this.players[0];
     public gameOver: boolean = false;
-    public matchedCards: Card[] = [];
+    private matchedCards: Card[] = [];
     public round: number = 1;
 
     private getAllCards(): Card[][] {
@@ -70,7 +70,7 @@ export class AppComponent {
         }
     }
 
-    // assumption card we are looking for is always in the cards
+    // assumption: card we are looking for is always in the cards
     private getCardOfId(cardId: number): Card {
         let foundCard: Card = this.cards[0][0];
         for (let r = 0; r < this.cards.length; r++) {
@@ -105,23 +105,38 @@ export class AppComponent {
         }
     }
 
+    private uncoverCards(...cards: Card[]): void {
+        for (let i = 0; i < cards.length; i++) {
+            if (cards[i].isCovered()) {
+                cards[i].toggleCovered();
+            }
+        }
+    }
+
+    private markCardsAsMatched(...cards: Card[]): void {
+        for (let i = 0; i < cards.length; i++) {
+            if (!cards[i].isMatched()) {
+                cards[i].toggleMatched();
+            }
+        }
+    }
+
+
     public makeMove(): void {
         this.coverVisibleCards();
 
-        let [c1, c2] = this.getTwoGuesses(this.playerToMove);
-        this.playerToMove.updateKnownCards(c1);
-        this.playerToMove.updateKnownCards(c2);
-        c1.toggleCovered(); // uncover card
-        c2.toggleCovered(); // uncover card
+        let c1, c2: Card;
+        [c1, c2] = this.getTwoGuesses(this.playerToMove);
+
+        this.playerToMove.updateKnownCards(c1, c2);
+        this.uncoverCards(c1, c2);
 
         if (c1.getSymbol() === c2.getSymbol()) {
             this.matchedCards.push(c1, c2);
-            c1.toggleMatched();
-            c2.toggleMatched();
+            this.markCardsAsMatched(c1, c2);
             this.playerToMove.addPoints(100);
             for (let player of this.players) {
-                player.removeKnownCard(c1);
-                player.removeKnownCard(c2);
+                player.removeKnownCards(c1, c2);
             }
             this.updateGameOver();
         } else {

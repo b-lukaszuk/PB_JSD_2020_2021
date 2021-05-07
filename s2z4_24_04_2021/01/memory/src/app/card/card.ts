@@ -45,6 +45,7 @@ class Card {
         return this._covered;
     }
 
+    // for setting class of the displayed card in html
     public getStatus(): string {
         if (this._matched) {
             return 'matched';

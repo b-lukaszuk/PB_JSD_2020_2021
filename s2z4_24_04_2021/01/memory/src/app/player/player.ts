@@ -38,11 +38,11 @@ class Player {
     /**
      * returns a random guess (id of a card)
      */
-    public getRandomGuess(from0ToExcl: number): number {
+    private getRandomGuess(from0ToExcl: number): number {
         return randInt(from0ToExcl);
     }
 
-    public getTwoRandomGuesses(from0ToExcl: number): number[] {
+    private getTwoRandomGuesses(from0ToExcl: number): number[] {
         let g1, g2: number;
         do {
             g1 = this.getRandomGuess(from0ToExcl);
@@ -53,7 +53,7 @@ class Player {
 
     /**
      * remember to check its output, since it may use randInt
-     * it may chose previously matched cards
+     * so it may choose previously matched cards
      */
     public getTwoBestGuesses(rangeFrom0toExcl: number): number[] {
         let bestGuesses: number[] = this.getIdsOfCardsForTwoKnownSymbols();
@@ -64,14 +64,15 @@ class Player {
         }
     }
 
-    public getKnownCards(): Card[] {
-        return this._knownCards;
-    }
+    // for testing this class outside
+    // public getKnownCards(): Card[] {
+    //     return this._knownCards;
+    // }
 
     /**
      * returns number[] (ids) of two known cards from memory or [] if empty
      */
-    public getIdsOfCardsForTwoKnownSymbols(): number[] {
+    private getIdsOfCardsForTwoKnownSymbols(): number[] {
         let theIds: number[] = [];
         let cards: Card[] = this._knownCards.filter((card) => {
             return card.getSymbol() === this._knownTwoSymbols[0];
@@ -82,11 +83,12 @@ class Player {
         return theIds;
     }
 
-    public getKnownTwoSymbols(): string[] {
-        return this._knownTwoSymbols;
-    }
+    // for testing this class outside
+    // public getKnownTwoSymbols(): string[] {
+    //     return this._knownTwoSymbols;
+    // }
 
-    public removeKnownCard(aCard: Card): void {
+    private removeKnownCard(aCard: Card): void {
         this._knownCards = this._knownCards.filter((card) => {
             return card.getId() !== aCard.getId();
         })
@@ -97,7 +99,13 @@ class Player {
         }
     };
 
-    public updateKnownCards(aCard: Card): void {
+    public removeKnownCards(...cards: Card[]) {
+        for (let i = 0; i < cards.length; i++) {
+            this.removeKnownCard(cards[i]);
+        }
+    }
+
+    private updateKnownCard(aCard: Card): void {
         let cardOnList: boolean = this._knownCards.some(
             (card) => {
                 return card.getId() === aCard.getId()
@@ -111,6 +119,12 @@ class Player {
         }
         if (!cardOnList && symbolOnList) {
             this._knownTwoSymbols.push(aCard.getSymbol());
+        }
+    }
+
+    public updateKnownCards(...cards: Card[]): void {
+        for (let i = 0; i < cards.length; i++) {
+            this.updateKnownCard(cards[i]);
         }
     }
 }
