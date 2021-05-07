@@ -4,20 +4,13 @@ import Card from "../card/card";
 class Player {
     private _id: number;
     private _color: string;
-    private _uptoRow: number; 	// exclusive
-    private _uptoCol: number; 	// exclusive
-    private _points: number = 0; // each correct match is 100 points
+    private _points: number = 0;
     private _knownCards: Card[] = [];
     private _knownTwoSymbols: string[] = [];
 
-    /**
-     * @param {number[]} guessesRange range for guesses [rowExcl, colExcl]
-     */
-    public constructor(id: number, color: string,
-        guessesRange: number[]) {
+    public constructor(id: number, color: string) {
         this._id = id;
         this._color = color;
-        [this._uptoRow, this._uptoCol] = guessesRange;
     }
 
     public getId(): number {
@@ -32,41 +25,40 @@ class Player {
         return this._color;
     }
 
-    public addPoints(): void {
-        this._points += 100;
+    public addPoints(howMany: number): void {
+        this._points += howMany;
     }
 
-    /**
-     * returns player name
-     */
     public getName(): string {
-        return "Player " + this._id.toString();
+        return "Player " + (this._id + 1).toString();
     }
 
     /**
-     * returns a random guess (position of the card from range)
+     * returns a random guess (id of a card)
      */
-    public getRandomGuess(): number[] {
-        let randRow = randInt(this._uptoRow);
-        let randCol = randInt(this._uptoCol);
-        return [randRow, randCol];
+    public getRandomGuess(from0ToExcl: number): number {
+        return randInt(from0ToExcl);
     }
 
-    public getTwoRandomGuesses(): number[][] {
-        let g1Row, g1Col, g2Row, g2Col: number;
+    public getTwoRandomGuesses(from0ToExcl: number): number[] {
+        let g1, g2: number;
         do {
-            [g1Row, g1Col] = this.getRandomGuess();
-            [g2Row, g2Col] = this.getRandomGuess();
-        } while (g1Row === g2Row && g1Col === g2Col)
-        return [[g1Row, g1Col], [g2Row, g2Col]];
+            g1 = this.getRandomGuess(from0ToExcl);
+            g2 = this.getRandomGuess(from0ToExcl);
+        } while (g1 === g2)
+        return [g1, g2];
     }
 
-    public getBestGuess(): number[][] {
-        let bestGuess: number[][] = this.getPosOfTwoKnownSymbols();
-        if (bestGuess.length !== 0) {
-            return bestGuess;
+    /**
+     * remember to check its output, since it may use randInt
+     * it may chose previously matched cards
+     */
+    public getTwoBestGuesses(rangeFrom0toExcl: number): number[] {
+        let bestGuesses: number[] = this.getIdsOfCardsForTwoKnownSymbols();
+        if (bestGuesses.length !== 0) {
+            return bestGuesses;
         } else {
-            return this.getTwoRandomGuesses();
+            return this.getTwoRandomGuesses(rangeFrom0toExcl);
         }
     }
 
@@ -75,20 +67,17 @@ class Player {
     }
 
     /**
-     * returns number[][] or [] if no double symbols are known
+     * returns number[] (ids) of two known cards from memory or [] if empty
      */
-    public getPosOfTwoKnownSymbols(): number[][] {
-        let positions: number[][] = [];
+    public getIdsOfCardsForTwoKnownSymbols(): number[] {
+        let theIds: number[] = [];
         let cards: Card[] = this._knownCards.filter((card) => {
             return card.getSymbol() === this._knownTwoSymbols[0];
         })
-        for (let i = 0; i < cards.length; i++) {
-            let x, y: number;
-            x = cards[i].getXpos();
-            y = cards[i].getYpos();
-            positions.push([x, y]);
+        if (cards.length === 2) {
+            theIds = [cards[0].getId(), cards[1].getId()];
         }
-        return positions;
+        return theIds;
     }
 
     public getKnownTwoSymbols(): string[] {

@@ -21,7 +21,7 @@
             <h1
               [style.color]="player.getColor()"
               [style.background]="
-                player.getId() === playerOnMoveId ? 'lightgray' : 'white'
+                player.getId() === playerToMove.getId() ? 'lightgray' : 'white'
               "
             >
               {{ player.getName() }} : {{ player.getPoints() }} pts
@@ -37,7 +37,7 @@
 	  <h1>ROUND: {{round}}</h1>
           <button type="button" (click)="makeMove()"
 		  [disabled]="gameOver"
-	  >On move: {{players[playerOnMoveId].getName()}}</button>
+	  >To move: {{playerToMove.getName()}}</button>
       </td>
     </tr>
   </table>
