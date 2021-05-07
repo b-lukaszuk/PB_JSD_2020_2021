@@ -6,3 +6,5 @@ Create memory game. Where computer plays with itself. The number of players rand
 
 > memory gamne input
 > const figures = ["!", "@", "#", "$", "%", "^", "&", "*", "=", "+", "-", "_"];
+
+Zamienilem `_` na `~` bo sie bardziej rozni od `-` z listy

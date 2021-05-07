@@ -10,3 +10,5 @@ Create bouncy simulator. Get board from ExampleInput.js. Y – when bouncing obj
 
 > memory gamne input
 > const figures = ["!", "@", "#", "$", "%", "^", "&", "*", "=", "+", "-", "_"];
+
+Zamienilem `_` na `~` bo sie bardziej rozni od `-` z listy
