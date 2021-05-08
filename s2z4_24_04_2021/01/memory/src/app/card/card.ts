@@ -21,6 +21,10 @@ class Card {
         return this._symbol;
     }
 
+    public isSymbolEqual(other: Card) {
+        return this._symbol === other._symbol;
+    }
+
     public isEqual(other: Card) {
         return this._id === other._id;
     }

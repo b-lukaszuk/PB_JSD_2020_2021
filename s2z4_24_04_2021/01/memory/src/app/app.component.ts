@@ -89,8 +89,9 @@ export class AppComponent {
         let id1, id2: number;
         let c1, c2: Card;
         // players take care not to guess visible cards (so no do-while here)
-        [id1, id2] = aPlayer.getTwoBestGuesses();
+        id1 = aPlayer.getFirstGuess();
         c1 = this.getCardOfId(id1);
+        id2 = aPlayer.getSecondGuess(c1);
         c2 = this.getCardOfId(id2);
         return [c1, c2];
     }

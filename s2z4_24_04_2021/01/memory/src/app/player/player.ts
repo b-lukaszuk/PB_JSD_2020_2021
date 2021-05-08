@@ -50,26 +50,29 @@ class Player {
         return this._availableCardIds[randInt(this._availableCardIds.length)];
     }
 
-    private getTwoRandomGuesses(): number[] {
-        let g1, g2: number;
-        do {
-            g1 = this.getRandomGuess();
-            g2 = this.getRandomGuess();
-        } while (g1 === g2)
-        return [g1, g2];
-    }
-
-    /**
-     * remember to check its output, since it may use randInt
-     * so it may choose previously matched cards
-     */
-    public getTwoBestGuesses(): number[] {
+    public getFirstGuess(): number {
         let bestGuesses: number[] = this.getIdsOfCardsForTwoKnownSymbols();
         if (bestGuesses.length !== 0) {
-            return bestGuesses;
+            return bestGuesses[0];
         } else {
-            return this.getTwoRandomGuesses();
+            return this.getRandomGuess();
         }
+    }
+
+    public getSecondGuess(prevGuess: Card): number {
+        let result: number;
+        let matchingCard: Card[] = [];
+        matchingCard = this._knownCards.filter((card) => {
+            return card.isSymbolEqual(prevGuess) && !card.isEqual(prevGuess);
+        });
+        if (matchingCard.length !== 0) {
+            result = matchingCard[0].getId();
+        } else {
+            do {
+                result = this.getRandomGuess();
+            } while (result === prevGuess.getId());
+        }
+        return result;
     }
 
     // used for testing
