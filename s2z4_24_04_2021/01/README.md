@@ -8,3 +8,10 @@ Create memory game. Where computer plays with itself. The number of players rand
 > const figures = ["!", "@", "#", "$", "%", "^", "&", "*", "=", "+", "-", "_"];
 
 Zamienilem `_` na `~` bo sie bardziej rozni od `-` z listy
+
+# Uruchamianie aplikacji
+
+```bash
+cd memory
+ng serve -o # opens localhost://4200 in the browser
+```
