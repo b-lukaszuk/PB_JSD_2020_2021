@@ -50,3 +50,33 @@
   box-sizing: border-box;
   border: 4px solid red;
 }
+
+button {
+    background-color: #008CBA; /* blue */
+    border: none;
+    border-radius: 0.4em;
+    color: white;
+    padding: 0.4em 0.8em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: lightgray;
+    cursor: auto;
+}
+
+p {
+    font-size: 1.5em;
+}
+
+span {
+    font-size: 1.5em;
+}
