@@ -88,11 +88,10 @@ export class AppComponent {
     private getTwoGuesses(aPlayer: Player): [Card, Card] {
         let id1, id2: number;
         let c1, c2: Card;
-        do {
-            [id1, id2] = aPlayer.getTwoBestGuesses();
-            c1 = this.getCardOfId(id1);
-            c2 = this.getCardOfId(id2);
-        } while (c1.isEqual(c2) || c1.isMatched() || c2.isMatched())
+        // players take care not to guess visible cards (so no do-while here)
+        [id1, id2] = aPlayer.getTwoBestGuesses();
+        c1 = this.getCardOfId(id1);
+        c2 = this.getCardOfId(id2);
         return [c1, c2];
     }
 
