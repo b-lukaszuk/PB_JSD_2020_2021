@@ -35,3 +35,7 @@ T zwraca true/false
 placzenie nie musi byc bezposrednie a c, ale tez a-b-c (polaczenie miedzy a i c istnieje przez b)
 
 Napisac zwykly program, a nie uzywac Jest-a ktory byl dzisiaj na wykladzie.
+
+Napisac to z jakas grafika.
+
+Stan poczatkowy - randomowy (z randomowa szansa np. 1/3, 1/4 szans na ozycie komorki)
