@@ -121,16 +121,20 @@ export class AppComponent {
         }
     }
 
+    // inform all players about match (so they don't type the cards again)
+    private informAllPlayersOfMatch(c1: Card, c2: Card): void {
+        for (let player of this.players) {
+            player.removeKnownCards(c1, c2);
+        }
+    }
+
     private handleMatchedCards(c1: Card, c2: Card): void {
         this.matchedCards.push(c1, c2);
         this.markCardsAsMatched(c1, c2);
 
         this.playerToMove.addPoints(100);
+        this.informAllPlayersOfMatch(c1, c2);
 
-        // inform all players about match (so they don't type the cards again)
-        for (let player of this.players) {
-            player.removeKnownCards(c1, c2);
-        }
         this.updateGameOver();
     }
 
