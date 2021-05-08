@@ -19,3 +19,19 @@ You have been giving a task of building and testing a network. You are receiving
 # Task 2 Exam
 
 Implement:  https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life
+
+# Dodatkowe info od Karola
+
+## Do Task 1
+
+Otrzymujemy tabele polecen (patrz wyzej)
+B - zbuduj polaczenie miedzy dwoma adresami IP
+T - przetestuj czy takie polaczenie bedzie dzialac (czy wczesniej zostalo zbudowane to polaczenie)
+
+jeden node moze byc polaczony z wieksza iloscia innych nodow
+
+T zwraca true/false
+
+placzenie nie musi byc bezposrednie a c, ale tez a-b-c (polaczenie miedzy a i c istnieje przez b)
+
+Napisac zwykly program, a nie uzywac Jest-a ktory byl dzisiaj na wykladzie.
