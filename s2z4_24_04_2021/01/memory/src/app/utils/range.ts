@@ -5,7 +5,7 @@
  * range(1, 3) -> [1, 2, 3]; range(-1, -3) -> [-1, -2] (default by=1)
  * @param {number} start first value (incl)
  * @param {number} end end value (excl)
- * @param {number} by step betw vals
+ * @param {number} by step betw vals (always positive, even if numbers go down)
  * @returns {Array<number>} array of vals from, to, by
  */
 function pyRange(start: number, end?: number, by?: number): Array<number> {
