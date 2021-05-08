@@ -10,6 +10,10 @@
   border: 0.1em solid white;
   box-sizing: border-box;
   padding: 0.2em;
+  box-shadow: 0.05em 0.05em gray;
+  border-radius: 0.3em;
+  margin: 0.1em;
+  background-image: linear-gradient(to bottom right, darkgray, lightgray, gainsboro);
 }
 
 .uncovered {
@@ -21,9 +25,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.1em solid white;
+  border: 0.1em solid blue;
   box-sizing: border-box;
   padding: 0.2em;
+  box-shadow: 0.05em 0.05em yellow;
+  border-radius: 0.3em;
+  margin: 0.1em;
+  background-image: linear-gradient(to bottom right, #6a93ff, #6a93cd,  white);
 }
 
 .matched {
@@ -32,12 +40,17 @@
   height: 4em;
   background-color: white;
   font-size: 3em;
+  text-shadow: 0.3em 0.3em 0.1em white;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 0.1em dashed yellow;
+  border: 0.1em dotted white;
   box-sizing: border-box;
   padding: 0.2em;
+  box-shadow: 0.05em 0.05em lightgray;
+  border-radius: 0.3em;
+  margin: 0.1em;
+  background-image: linear-gradient(to bottom right, lightgray, whitesmoke , white);
 }
 
 button {
@@ -60,4 +73,8 @@ button:hover {
 button:disabled {
     background-color: lightgray;
     cursor: auto;
+}
+
+p {
+    font-size:  1.7em;
 }
