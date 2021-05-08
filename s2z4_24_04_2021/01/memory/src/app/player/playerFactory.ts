@@ -5,8 +5,8 @@ class PlayerFactory {
         // nothing to do here
     }
 
-    public getPlayer(color: string): Player {
-        return new Player(color);
+    public getPlayer(color: string, cardsIdUptoExcl: number): Player {
+        return new Player(color, cardsIdUptoExcl);
     }
 }
 

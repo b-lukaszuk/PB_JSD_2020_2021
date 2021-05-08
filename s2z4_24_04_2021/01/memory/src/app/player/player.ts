@@ -1,4 +1,5 @@
 import randInt from "../utils/randInt";
+import range from "../utils/range";
 import Card from "../card/card";
 
 class Player {
@@ -7,12 +8,14 @@ class Player {
     private _points: number = 0;
     private _knownCards: Card[] = [];
     private _knownTwoSymbols: string[] = [];
+    private _availableCardIds: number[] = []; // to get card id at random
     static counter: number = 0;
 
-    public constructor(color: string) {
+    public constructor(color: string, cardsIdUptoExcl: number) {
         this._id = Player.counter;
         this._color = color;
         Player.counter++;
+        this._availableCardIds = range(cardsIdUptoExcl);
     }
 
     public getId(): number {
@@ -35,18 +38,23 @@ class Player {
         return "Player " + (this._id + 1).toString();
     }
 
+    // used for testing
+    // public getAvailableCardsIds(): number[] {
+    //     return this._availableCardIds;
+    // }
+
     /**
      * returns a random guess (id of a card)
      */
-    private getRandomGuess(from0ToExcl: number): number {
-        return randInt(from0ToExcl);
+    private getRandomGuess(): number {
+        return this._availableCardIds[randInt(this._availableCardIds.length)];
     }
 
-    private getTwoRandomGuesses(from0ToExcl: number): number[] {
+    private getTwoRandomGuesses(): number[] {
         let g1, g2: number;
         do {
-            g1 = this.getRandomGuess(from0ToExcl);
-            g2 = this.getRandomGuess(from0ToExcl);
+            g1 = this.getRandomGuess();
+            g2 = this.getRandomGuess();
         } while (g1 === g2)
         return [g1, g2];
     }
@@ -55,16 +63,16 @@ class Player {
      * remember to check its output, since it may use randInt
      * so it may choose previously matched cards
      */
-    public getTwoBestGuesses(rangeFrom0toExcl: number): number[] {
+    public getTwoBestGuesses(): number[] {
         let bestGuesses: number[] = this.getIdsOfCardsForTwoKnownSymbols();
         if (bestGuesses.length !== 0) {
             return bestGuesses;
         } else {
-            return this.getTwoRandomGuesses(rangeFrom0toExcl);
+            return this.getTwoRandomGuesses();
         }
     }
 
-    // for testing this class outside
+    // used for testing
     // public getKnownCards(): Card[] {
     //     return this._knownCards;
     // }
@@ -83,20 +91,21 @@ class Player {
         return theIds;
     }
 
-    // for testing this class outside
+    // used for testing
     // public getKnownTwoSymbols(): string[] {
     //     return this._knownTwoSymbols;
     // }
 
-    private removeKnownCard(aCard: Card): void {
+    private removeKnownCard(cardIn: Card): void {
         this._knownCards = this._knownCards.filter((card) => {
-            return card.getId() !== aCard.getId();
+            return card.getId() !== cardIn.getId();
         })
-        let indx: number = this._knownTwoSymbols.indexOf(aCard.getSymbol());
-        if (indx !== -1) {
-            // Array.splice() ret. an array and modif the original array inplace
-            this._knownTwoSymbols.splice(indx, 1);
-        }
+        this._knownTwoSymbols = this._knownTwoSymbols.filter((symbol) => {
+            return symbol !== cardIn.getSymbol();
+        })
+        this._availableCardIds = this._availableCardIds.filter((someId) => {
+            return someId !== cardIn.getId();
+        })
     };
 
     public removeKnownCards(...cards: Card[]) {
@@ -105,20 +114,20 @@ class Player {
         }
     }
 
-    private updateKnownCard(aCard: Card): void {
-        let cardOnList: boolean = this._knownCards.some(
+    private updateKnownCard(cardIn: Card): void {
+        let cardIdInKnownCards: boolean = this._knownCards.some(
             (card) => {
-                return card.getId() === aCard.getId()
+                return card.getId() === cardIn.getId()
             })
-        let symbolOnList: boolean = this._knownCards.some(
+        let cardSymbolInKnownCards: boolean = this._knownCards.some(
             (card) => {
-                return card.getSymbol() === aCard.getSymbol()
+                return card.getSymbol() === cardIn.getSymbol()
             })
-        if (!cardOnList) {
-            this._knownCards.push(aCard);
+        if (!cardIdInKnownCards) {
+            this._knownCards.push(cardIn);
         }
-        if (!cardOnList && symbolOnList) {
-            this._knownTwoSymbols.push(aCard.getSymbol());
+        if (!cardIdInKnownCards && cardSymbolInKnownCards) {
+            this._knownTwoSymbols.push(cardIn.getSymbol());
         }
     }
 

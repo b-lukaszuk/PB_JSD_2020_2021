@@ -24,9 +24,9 @@ export class AppComponent {
 
     private getAllCards(): Card[][] {
         let theCards: Card[][] = [];
-        // factory returns always even no of cards (two of a kind) and >= 4
-        let nOfRows: number = this.cardFactory.getNOfCards() / 4;
-        let nOfCols: number = this.cardFactory.getNOfCards() / nOfRows;
+        // factory returns always even Num of cards (two of a kind) and >= 4
+        let nOfRows: number = this.cardFactory.getNumOfCards() / 4;
+        let nOfCols: number = this.cardFactory.getNumOfCards() / nOfRows;
         for (let r = 0; r < nOfRows; r++) {
             let row: Card[] = [];
             for (let c = 0; c < nOfCols; c++) {
@@ -49,7 +49,8 @@ export class AppComponent {
         let colors: string[] = ['red', 'black', 'blue', 'orange'];
         let numOfPlayers = randInt(2, 5);
         for (let i = 0; i < numOfPlayers; i++) {
-            thePlayers.push(this.playerFactory.getPlayer(colors[i]));
+            thePlayers.push(this.playerFactory.getPlayer(colors[i],
+                this.getNumOfCards()));
         }
         return thePlayers;
     }
@@ -88,14 +89,14 @@ export class AppComponent {
         let id1, id2: number;
         let c1, c2: Card;
         do {
-            [id1, id2] = aPlayer.getTwoBestGuesses(this.getNumOfCards());
+            [id1, id2] = aPlayer.getTwoBestGuesses();
             c1 = this.getCardOfId(id1);
             c2 = this.getCardOfId(id2);
         } while (c1.isEqual(c2) || c1.isMatched() || c2.isMatched())
         return [c1, c2];
     }
 
-    private coverVisibleCards(): void {
+    private coverAllVisibleCards(): void {
         for (let r = 0; r < this.cards.length; r++) {
             for (let c = 0; c < this.cards[r].length; c++) {
                 if (!this.cards[r][c].isCovered()) {
@@ -121,9 +122,21 @@ export class AppComponent {
         }
     }
 
+    private handleMatchedCards(c1: Card, c2: Card): void {
+        this.matchedCards.push(c1, c2);
+        this.markCardsAsMatched(c1, c2);
+
+        this.playerToMove.addPoints(100);
+
+        // inform all players about match (so they don't type the cards again)
+        for (let player of this.players) {
+            player.removeKnownCards(c1, c2);
+        }
+        this.updateGameOver();
+    }
 
     public makeMove(): void {
-        this.coverVisibleCards();
+        this.coverAllVisibleCards();
 
         let c1, c2: Card;
         [c1, c2] = this.getTwoGuesses(this.playerToMove);
@@ -132,13 +145,7 @@ export class AppComponent {
         this.uncoverCards(c1, c2);
 
         if (c1.getSymbol() === c2.getSymbol()) {
-            this.matchedCards.push(c1, c2);
-            this.markCardsAsMatched(c1, c2);
-            this.playerToMove.addPoints(100);
-            for (let player of this.players) {
-                player.removeKnownCards(c1, c2);
-            }
-            this.updateGameOver();
+            this.handleMatchedCards(c1, c2);
         } else {
             this.changePlayerToMoveToNextInLine();
         }

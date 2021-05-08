@@ -18,6 +18,7 @@ class CardFactory {
     ];
     // I changed _ to ~ because its easier to tell the difference with -
 
+    // used for testing
     // private _symbols: string[] = [
     //     '!',
     //     '@',
@@ -34,7 +35,7 @@ class CardFactory {
         }
     }
 
-    public getNOfCards(): number {
+    public getNumOfCards(): number {
         return this._cards.length;
     }
 
