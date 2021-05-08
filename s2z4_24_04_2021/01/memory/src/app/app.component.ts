@@ -55,7 +55,7 @@ export class AppComponent {
         return thePlayers;
     }
 
-    private changePlayerToMoveToNextInLine(): void {
+    private changePlayerToMoveToNextOneInLine(): void {
         let nextPlayerId: number = this.playerToMove.getId() + 1;
         if (nextPlayerId < this.players.length) {
             this.playerToMove = this.players[nextPlayerId];
@@ -85,7 +85,8 @@ export class AppComponent {
         return foundCard;
     }
 
-    private getTwoGuesses(aPlayer: Player): [Card, Card] {
+    private getTwoGuessesIeCards(aPlayer: Player): [Card, Card] {
+        // we start with numbers (ids) cause at first a player knows no cards
         let id1, id2: number;
         let c1, c2: Card;
         // players take care not to guess visible cards (so no do-while here)
@@ -122,10 +123,10 @@ export class AppComponent {
         }
     }
 
-    // inform all players about match (so they don't type the cards again)
-    private informAllPlayersOfMatch(c1: Card, c2: Card): void {
+    // inform all players of matched cards (so they don't guess the cards again)
+    private informAllPlayersOfMatchedCards(c1: Card, c2: Card): void {
         for (let player of this.players) {
-            player.removeKnownCards(c1, c2);
+            player.handleMatchedCards(c1, c2);
         }
     }
 
@@ -134,7 +135,7 @@ export class AppComponent {
         this.markCardsAsMatched(c1, c2);
 
         this.playerToMove.addPoints(100);
-        this.informAllPlayersOfMatch(c1, c2);
+        this.informAllPlayersOfMatchedCards(c1, c2);
 
         this.updateGameOver();
     }
@@ -143,7 +144,7 @@ export class AppComponent {
         this.coverAllVisibleCards();
 
         let c1, c2: Card;
-        [c1, c2] = this.getTwoGuesses(this.playerToMove);
+        [c1, c2] = this.getTwoGuessesIeCards(this.playerToMove);
 
         this.playerToMove.updateKnownCards(c1, c2);
         this.uncoverCards(c1, c2);
@@ -151,7 +152,7 @@ export class AppComponent {
         if (c1.getSymbol() === c2.getSymbol()) {
             this.handleMatchedCards(c1, c2);
         } else {
-            this.changePlayerToMoveToNextInLine();
+            this.changePlayerToMoveToNextOneInLine();
         }
     }
 

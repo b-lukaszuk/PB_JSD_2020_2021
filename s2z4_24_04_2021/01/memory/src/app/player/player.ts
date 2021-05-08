@@ -99,7 +99,7 @@ class Player {
     //     return this._knownTwoSymbols;
     // }
 
-    private removeKnownCard(cardIn: Card): void {
+    private handleMatchedCard(cardIn: Card): void {
         this._knownCards = this._knownCards.filter((card) => {
             return card.getId() !== cardIn.getId();
         })
@@ -111,9 +111,9 @@ class Player {
         })
     };
 
-    public removeKnownCards(...cards: Card[]) {
+    public handleMatchedCards(...cards: Card[]) {
         for (let i = 0; i < cards.length; i++) {
-            this.removeKnownCard(cards[i]);
+            this.handleMatchedCard(cards[i]);
         }
     }
 
