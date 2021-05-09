@@ -39,3 +39,5 @@ Napisac zwykly program, a nie uzywac Jest-a ktory byl dzisiaj na wykladzie.
 Napisac to z jakas grafika.
 
 Stan poczatkowy - randomowy (z randomowa szansa np. 1/3, 1/4 szans na ozycie komorki)
+
+Dopuszczalne sa zmiany typu: zamiast niby adresu url moga byc krotkie liczby typu 1-9
