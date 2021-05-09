@@ -2,10 +2,12 @@ let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 
 // koordynaty srodka x,y + promien kola
-let x = 100;
-let y = 150;
-let r = 20;
-let color = "blue";
+const initialX = 150;
+const initialY = 120;
+let x = initialX;
+let y = initialY;
+const r = 20;
+const color = "blue";
 
 // przesuniecie
 let xShift = 5;
@@ -34,11 +36,14 @@ function moveBall() {
 }
 
 
-setInterval(() => {
+let intervalId = setInterval(() => {
     console.log(xShift, " ", yShift);
     clearBoard();
     drawBall();
     moveBall();
+    if (x === initialX && y === initialY) {
+        clearInterval(intervalId)
+    }
 }, 50);
 
 
