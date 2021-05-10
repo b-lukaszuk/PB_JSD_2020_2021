@@ -76,9 +76,9 @@ class Player {
     }
 
     // used for testing
-    // public getKnownCards(): Card[] {
-    //     return this._knownCards;
-    // }
+    public getKnownCards(): Card[] {
+        return this._knownCards;
+    }
 
     /**
      * returns number[] (ids) of two known cards from memory or [] if empty
