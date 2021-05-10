@@ -149,16 +149,15 @@ export class AppComponent {
         this.playerToMove.updateKnownCards(c1, c2);
         this.uncoverCards(c1, c2);
 
-        console.log(this.playerToMove.getName());
-        console.log("known cards:");
-        console.log(this.playerToMove.getKnownCards().map(
-            (card) => { return card.getSymbol() }));
-
         if (c1.getSymbol() === c2.getSymbol()) {
             this.handleMatchedCards(c1, c2);
         } else {
             this.changePlayerToMoveToNextOneInLine();
         }
+
+        console.log(this.playerToMove.getName(), "known cards:");
+        console.log(this.playerToMove.getKnownCards().map(
+            (card) => { return card.getSymbol() }).sort());
     }
 
     ngOnInit() {
