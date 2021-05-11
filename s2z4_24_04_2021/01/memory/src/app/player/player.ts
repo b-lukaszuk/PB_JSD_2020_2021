@@ -38,11 +38,6 @@ class Player {
         return "Player " + (this._id + 1).toString();
     }
 
-    // used for testing
-    // public getAvailableCardsIds(): number[] {
-    //     return this._availableCardIds;
-    // }
-
     /**
      * returns a random guess (id of a card)
      */
@@ -75,7 +70,6 @@ class Player {
         return result;
     }
 
-    // used for testing
     public getKnownCards(): Card[] {
         return this._knownCards;
     }
@@ -93,11 +87,6 @@ class Player {
         }
         return theIds;
     }
-
-    // used for testing
-    // public getKnownTwoSymbols(): string[] {
-    //     return this._knownTwoSymbols;
-    // }
 
     private handleMatchedCard(cardIn: Card): void {
         this._knownCards = this._knownCards.filter((card) => {
