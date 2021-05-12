@@ -20,6 +20,13 @@
         </p>
         <button
           type="button"
+          (click)="setRandomBallPosition()"
+        >
+          Set random ball position
+        </button>
+	<br/> <br/>
+        <button
+          type="button"
           (click)="setBallIntoMotion(); setIntoMotionBtn.disabled = true"
           #setIntoMotionBtn
         >

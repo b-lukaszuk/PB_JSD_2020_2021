@@ -9,6 +9,8 @@ import Point from './point/point';
 import Ball from './point/ball';
 import Brick from './point/brick';
 import MagicBrick from './point/magicBrick';
+import randInt from "./utils/randInt"
+import board from './gameBoard/examInput';
 
 @Component({
     selector: 'app-root',
@@ -68,6 +70,22 @@ export class AppComponent {
         this.gameBoard.initializeBoard();
     }
 
+    public setRandomBallPosition() {
+        let curBall: Ball = this.gameBoard.getBall();
+        let newX: number, newY: number;
+        let curX: number, curY: number;
+        let newBall: Ball;
+        [curX, curY] = curBall.getPos();
+        do {
+            newX = randInt(this.gameBoard.getNRows());
+            newY = randInt(this.gameBoard.getNCols())
+        } while (this.gameBoard.getContent([newX, newY]) instanceof Brick)
+        newBall = new Ball(newX, newY);
+        this.gameBoard.setObjAtPos(new Point(curX, curY), [curX, curY]);
+        this.gameBoard.setObjAtPos(newBall, [newX, newY]);
+        this.initialBall = newBall;
+    }
+
     /**
      * sets ball into motion
      * sets this.internalId = to interval id from setInterval
@@ -79,7 +97,7 @@ export class AppComponent {
             if (this.shouldBallBeStopped) {
                 this.stopTheBall();
             }
-        }, 500);
+        }, 200);
         this.intervalId = intervalId;
     }
 
