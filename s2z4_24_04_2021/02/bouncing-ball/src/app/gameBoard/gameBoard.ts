@@ -27,8 +27,8 @@ class GameBoard {
             for (let c = 0; c < yLim; c++) {
                 if (board[r][c] === "X") {
                     row.push(new Brick(r, c,
-                        !isBetween(r, 1, xLim - 2),
-                        !isBetween(c, 1, yLim - 2)));
+                        this.shouldLimitX(r, c),
+                        this.shouldLimitY(r, c)));
                 } else if (board[r][c] === "1") {
                     this._ball = new Ball(r, c);
                     row.push(this._ball);
@@ -38,6 +38,70 @@ class GameBoard {
             }
             this._gameBoard.push(row);
         }
+    }
+
+    private shouldLimitX(curBrickX: number, curBrickY: number): boolean {
+        let laysOnXEdge: boolean = false;
+        let laysOnYEdge: boolean = false;
+        let neighboursWithBrick: boolean = false
+        laysOnXEdge = !isBetween(curBrickX, 1, board.length - 2);
+        laysOnYEdge = !isBetween(curBrickY, 1, board[0].length - 2);
+        if (laysOnXEdge) {
+            return true;
+        } else if (!laysOnYEdge) {
+            neighboursWithBrick = this.isBrickOneShiftOnXaxis(
+                curBrickX, curBrickY);
+            if (neighboursWithBrick) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private shouldLimitY(curBrickX: number, curBrickY: number): boolean {
+        let laysOnXEdge: boolean = false;
+        let laysOnYEdge: boolean = false;
+        let neighboursWithBrick: boolean = false
+        laysOnXEdge = !isBetween(curBrickX, 1, board.length - 2);
+        laysOnYEdge = !isBetween(curBrickY, 1, board[0].length - 2);
+        if (laysOnYEdge) {
+            return true;
+        } else if (!laysOnXEdge) {
+            neighboursWithBrick = this.isBrickOneShiftOnYaxis(
+                curBrickX, curBrickY);
+            if (neighboursWithBrick) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private isBrickOneShiftOnXaxis(curBrickX: number,
+        curBrickY: number): boolean {
+        let gotBrickOnLeft: boolean = false;
+        let gotBrickOnRight: boolean = false;
+        if (isBetween(curBrickX, 1, board.length)) {
+            gotBrickOnLeft = board[curBrickX - 1][curBrickY] === "X";
+            gotBrickOnRight = board[curBrickX + 1][curBrickY] === "X";
+        }
+        // if (gotBrickOnLeft || gotBrickOnRight) {
+        //     console.log("[", curBrickX, ",", curBrickY, "]", "brick on x axis");
+        // }
+        return gotBrickOnLeft || gotBrickOnRight;
+    }
+
+    private isBrickOneShiftOnYaxis(curBrickX: number,
+        curBrickY: number): boolean {
+        let gotBrick1Up: boolean = false;
+        let gotBrick1Down: boolean = false;
+        if (isBetween(curBrickY, 1, board[0].length - 2)) {
+            gotBrick1Up = board[curBrickX][curBrickY - 1] === "X";
+            gotBrick1Down = board[curBrickX][curBrickY + 1] === "X";
+        }
+        // if (gotBrick1Down || gotBrick1Up) {
+        //     console.log("[", curBrickX, ",", curBrickY, "]", "brick on y axis");
+        // }
+        return gotBrick1Up || gotBrick1Down;
     }
 
     public getGameBoard(): Point[][] {

@@ -77,7 +77,7 @@ export class AppComponent {
             if (this.shouldBallBeStopped) {
                 this.stopTheBall();
             }
-        }, 200);
+        }, 500);
         this.intervalId = intervalId;
     }
 
@@ -86,6 +86,5 @@ export class AppComponent {
     }
 
     ngOnInit() {
-        this.initializeGameBoard();
     }
 }
