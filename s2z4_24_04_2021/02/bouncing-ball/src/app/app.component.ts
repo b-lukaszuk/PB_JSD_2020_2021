@@ -8,6 +8,7 @@ import isBetween from './utils/betweenTwoNums';
 import Point from "./point/point";
 import Ball from "./point/ball";
 import Brick from "./point/brick";
+import MagicBrick from './point/magicBrick';
 
 @Component({
     selector: 'app-root',
@@ -24,7 +25,9 @@ export class AppComponent {
     public shouldBallBeStopped: boolean = false;
 
     public getClassForField(pos: number[]): string {
-        if (this.gameBoard.getContent(pos) instanceof Brick) {
+        if (this.gameBoard.getContent(pos) instanceof MagicBrick) {
+            return "magicBrick";
+        } else if (this.gameBoard.getContent(pos) instanceof Brick) {
             return "boarder";
         } else if (this.gameBoard.getContent(pos) instanceof Ball) {
             return "ball";

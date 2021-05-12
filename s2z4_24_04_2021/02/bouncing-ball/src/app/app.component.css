@@ -19,6 +19,14 @@
   border: 0.2em white solid;
 }
 
+.magicBrick {
+  width: 3.6em;
+  height: 3.6em;
+  float: left;
+  background-color: lightblue;
+  border: 0.2em white solid;
+}
+
 .ball {
   width: 3.6em;
   height: 3.6em;

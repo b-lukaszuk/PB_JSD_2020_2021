@@ -2,6 +2,7 @@ import board from "./examInput";
 import Point from "../point/point";
 import Ball from "../point/ball";
 import Brick from "../point/brick";
+import MagicBrick from '../point/magicBrick';
 
 class GameBoard {
     // internal representation of the chessBoard
@@ -25,6 +26,8 @@ class GameBoard {
                 } else if (board[r][c] === "1") {
                     this._ball = new Ball(r, c);
                     row.push(this._ball);
+                } else if (board[r][c] === "Y") {
+                    row.push(new MagicBrick(r, c));
                 } else {
                     row.push(new Point(r, c));
                 }
