@@ -47,9 +47,11 @@ export class AppComponent {
         let curBall: Ball = this.gameBoard.getBall();
         let [bRow, bCol] = curBall.getPos();
         // where the ball will be after the shift
-        let newBall: Ball = curBall.add(this.shift);
-
-        this.changeShiftIfCollision(newBall);
+        let newBall: Ball;
+        do {
+            newBall = curBall.add(this.shift);
+            this.changeShiftIfCollision(newBall);
+        } while (this.gameBoard.getContent(newBall.getPos()) instanceof Brick)
 
         // re-create newBall in case the shift has changed after collision
         newBall = curBall.add(this.shift);

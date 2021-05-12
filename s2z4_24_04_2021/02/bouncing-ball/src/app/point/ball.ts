@@ -10,6 +10,10 @@ class Ball extends Point {
         let newY: number = this.getY() + other.getY();
         return new Ball(newX, newY);
     }
+
+    public getPos(): number[] {
+        return [this.getX(), this.getY()];
+    }
 }
 
 export default Ball;
