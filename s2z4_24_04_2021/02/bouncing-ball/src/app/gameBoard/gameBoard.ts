@@ -3,6 +3,7 @@ import Point from "../point/point";
 import Ball from "../point/ball";
 import Brick from "../point/brick";
 import MagicBrick from '../point/magicBrick';
+import isBetween from "../utils/betweenTwoNums";
 
 class GameBoard {
     // internal representation of the chessBoard
@@ -18,16 +19,19 @@ class GameBoard {
         // may be invoked when the board is non empty
         this._gameBoard = [];
 
-        for (let r = 0; r < board.length; r++) {
+        let xLim: number = board.length;
+        let yLim: number = board[0].length;
+
+        for (let r = 0; r < xLim; r++) {
             let row: Point[] = [];
-            for (let c = 0; c < board[r].length; c++) {
+            for (let c = 0; c < yLim; c++) {
                 if (board[r][c] === "X") {
-                    row.push(new Brick(r, c));
+                    row.push(new Brick(r, c,
+                        !isBetween(r, 1, xLim - 2),
+                        !isBetween(c, 1, yLim - 2)));
                 } else if (board[r][c] === "1") {
                     this._ball = new Ball(r, c);
                     row.push(this._ball);
-                } else if (board[r][c] === "Y") {
-                    row.push(new MagicBrick(r, c));
                 } else {
                     row.push(new Point(r, c));
                 }

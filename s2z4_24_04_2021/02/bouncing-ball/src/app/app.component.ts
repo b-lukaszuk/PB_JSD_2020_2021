@@ -5,18 +5,17 @@ import { Component } from '@angular/core';
 import { singelton, GameBoard } from './gameBoard/gameBoard';
 import areArraysEqual from './utils/arraysComparator';
 import isBetween from './utils/betweenTwoNums';
-import Point from "./point/point";
-import Ball from "./point/ball";
-import Brick from "./point/brick";
+import Point from './point/point';
+import Ball from './point/ball';
+import Brick from './point/brick';
 import MagicBrick from './point/magicBrick';
 
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css']
+    styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-
     public title: string = 'bouncing-ball';
     public gameBoard: GameBoard = singelton.getGameBoardInstance();
     public shift: Point = new Point(1, 1);
@@ -26,27 +25,21 @@ export class AppComponent {
 
     public getClassForField(pos: number[]): string {
         if (this.gameBoard.getContent(pos) instanceof MagicBrick) {
-            return "magicBrick";
+            return 'magicBrick';
         } else if (this.gameBoard.getContent(pos) instanceof Brick) {
-            return "boarder";
+            return 'boarder';
         } else if (this.gameBoard.getContent(pos) instanceof Ball) {
-            return "ball";
+            return 'ball';
         } else {
-            return "empty";
+            return 'empty';
         }
     }
 
-    /**
-     * detects collisions of someBall position with the walls of gameBoard
-     * changes this.shift X and/or Y coordinate (negates it)
-     */
-    public collisionDetection(someBall: Ball): void {
-        // if ball is off the board, change the shift
-        if (!someBall.isXBetween(1, this.gameBoard.getNRows() - 2)) {
-            this.shift.setX(this.shift.getX() * -1);
-        }
-        if (!someBall.isYBetween(1, this.gameBoard.getNCols() - 2)) {
-            this.shift.setY(this.shift.getY() * -1);
+    private changeShiftIfCollision(newBall: Ball) {
+        let gotoField: Point = this.gameBoard.getContent(
+            [newBall.getX(), newBall.getY()]);
+        if (gotoField instanceof Brick) {
+            this.shift = gotoField.add(this.shift);
         }
     }
 
@@ -56,7 +49,7 @@ export class AppComponent {
         // where the ball will be after the shift
         let newBall: Ball = curBall.add(this.shift);
 
-        this.collisionDetection(newBall);
+        this.changeShiftIfCollision(newBall);
 
         // re-create newBall in case the shift has changed after collision
         newBall = curBall.add(this.shift);
@@ -95,6 +88,4 @@ export class AppComponent {
     ngOnInit() {
         this.initializeGameBoard();
     }
-
-
 }
