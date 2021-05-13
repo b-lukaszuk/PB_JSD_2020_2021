@@ -27,7 +27,9 @@ export class AppComponent {
     }
 
     ngOnInit() {
-
+        setInterval(() => {
+            this.moveToNextState();
+        }, 500);
     };
 }
 

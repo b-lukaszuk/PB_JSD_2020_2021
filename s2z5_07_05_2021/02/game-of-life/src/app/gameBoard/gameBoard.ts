@@ -7,7 +7,7 @@ class GameBoard {
     // probability of a cell being alive (true)
     // in statistics probability is 0-1, here give it with 0.1 accuracy
     public constructor(nRows: number = 25, nCols: number = 25,
-        probFrom0To1ByOneTenth: number = 0.2) {
+        probFrom0To1ByOneTenth: number = 0.3) {
         this._gameBoard = this.initializeBoard(nRows, nCols,
             probFrom0To1ByOneTenth);
     }
