@@ -11,5 +11,23 @@ import { singelton, GameBoard } from "./gameBoard/gameBoard";
 export class AppComponent {
     public title = 'game-of-life';
     public gameBoard: GameBoard = singelton.getGameBoardInstance();
+    public gameBoardNextState: boolean[][] = [];
 
+    // public displayNeighPos(pos: number[]) {
+    //     let positions: number[][] = [];
+    //     positions = this.gameBoard.getPositionsOfNeighbours(pos);
+    //     console.log(positions);
+    // }
+
+    public moveToNextState() {
+        // console.log("next generation of life");
+        this.gameBoardNextState = this.gameBoard.getNextState();
+        this.gameBoard.setGameBoard(this.gameBoardNextState);
+        this.gameBoardNextState = [];
+    }
+
+    ngOnInit() {
+
+    };
 }
+
