@@ -13,51 +13,65 @@ let commands: string[] = [
 let graph = {};
 
 function execCommand(command: string): void {
-    let commandArr: string[] = command.split(" ");
+    let sepRegex = /\s+/;
+    let commandArr: string[] = command.split(sepRegex);
     if (commandArr[0].toLocaleLowerCase() === "b") {
-        addOneWayConToGraph(commandArr[1], commandArr[2]);
+        addTwoWayConToGraph(commandArr[1], commandArr[2]);
     } else if (commandArr[0].toLocaleLowerCase() === "t") {
         searchForConBetw(commandArr[1], commandArr[2]);
     } else {
-        console.log("incorrect input");
+        console.log("incorrect command");
     }
 }
 
-function addOneWayConToGraph(nodeA: string, nodeB: string) {
-    console.log("creating direct one-way connection between", nodeA, nodeB);
+function addOneWayConToGraph(nodeA: string, nodeB: string): void {
     if (graph.hasOwnProperty(nodeA)) {
         graph[nodeA].push(nodeB)
     } else {
         graph[nodeA] = [nodeB];
     }
-    if (!graph.hasOwnProperty(nodeB)) {
-        graph[nodeB] = [];
-    }
 }
 
-// one way search for connection
+function addTwoWayConToGraph(nodeA: string, nodeB: string): void {
+    console.log("creating direct connection between", nodeA, nodeB);
+    addOneWayConToGraph(nodeA, nodeB);
+    addOneWayConToGraph(nodeB, nodeA);
+}
+
+function getArr1EltIfNotInArr2(arr1: string[], arr2: string[]): string[] {
+    let result: string[] = [];
+    for (let i = 0; i < arr1.length; i++) {
+        if (arr2.indexOf(arr1[i]) === -1) {
+            result.push(arr1[i]);
+        }
+    }
+    return result;
+}
+
+
+// two way search for connection
 function searchForConBetw(start: string, end: string): boolean {
+    console.log(`testing for connection between ${start} and ${end}:`);
     if (graph.hasOwnProperty(start)) {
-        let search_queue: string[] = graph[start];
+        let searchQueue: string[] = [...graph[start]];
         let curExamPerson: string = "";
-        let testedPeople: string[] = [];
-        while (search_queue.length !== 0) {
+        let testedPeople: string[] = [start];
+        while (searchQueue.length !== 0) {
             // Array.shift() removes firts element of an array
-            curExamPerson = search_queue.shift();
-            if (!testedPeople.includes(curExamPerson)) {
-                if (curExamPerson === end) {
-                    console.log("connection between", start, "and", end, "was found");
-                    return true;
-                } else {
-                    search_queue = search_queue.concat(graph[curExamPerson]);
-                    testedPeople.push(curExamPerson);
-                }
+            curExamPerson = searchQueue.shift();
+            if (curExamPerson === end) {
+                console.log("connection found");
+                return true;
+            } else {
+                searchQueue = searchQueue.concat([...graph[curExamPerson]]);
+                testedPeople.push(curExamPerson);
+                searchQueue = getArr1EltIfNotInArr2(searchQueue, testedPeople);
             }
         }
-        console.log("no connection between", start, "and", end, "was found");
+        console.log("no connection found");
         return false;
     } else {
-        console.log("no connection between", start, "and", end, "was found");
+        console.log("no connection found");
         return false;
     }
 }
