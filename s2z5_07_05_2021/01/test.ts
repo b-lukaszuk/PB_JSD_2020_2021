@@ -46,15 +46,19 @@ addOneWayConToGraph("claire", "jonny");
 // one way search for connection
 function searchForConBetw(start: string, end: string): boolean {
     let search_queue: string[] = graph[start];
-    let testedPerson: string = "";
+    let curExamPerson: string = "";
+    let testedPeople: string[] = [];
     while (search_queue.length !== 0) {
         // Array.shift() removes firts element of an array
-        testedPerson = search_queue.shift();
-        if (testedPerson === end) {
-            console.log("connection between", start, "and", end, "was found");
-            return true;
-        } else {
-            search_queue = search_queue.concat(graph[testedPerson]);
+        curExamPerson = search_queue.shift();
+        if (!testedPeople.includes(curExamPerson)) {
+            if (curExamPerson === end) {
+                console.log("connection between", start, "and", end, "was found");
+                return true;
+            } else {
+                search_queue = search_queue.concat(graph[curExamPerson]);
+                testedPeople.push(curExamPerson);
+            }
         }
     }
     console.log("no connection between", start, "and", end, "was found");
