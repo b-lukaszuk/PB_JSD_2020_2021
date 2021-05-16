@@ -70,6 +70,12 @@ class Graph {
         }
     }
 
+    private clearAllPahtsToThisNode(): void {
+        for (let node of this._nodes) {
+            node.clearPathToThisNode();
+        }
+    }
+
     private declareNonExistingNodes(theNodesIds: string[],
         theNodesExistence: boolean[]): void {
         for (let i = 0; i < theNodesExistence.length; i++) {
@@ -83,6 +89,7 @@ class Graph {
         this._curExamNode = null;
         this._searchQueue = [];
         this.uncheckAllNodes();
+        this.clearAllPahtsToThisNode();
     }
 
     private initializeCurExamNode(startNodeId: string): void {
@@ -96,9 +103,17 @@ class Graph {
         this._curExamNode.checkNode();
     }
 
+    private setPathToNodes(prevNode: Node, neighbours: Node[]) {
+        for (let node of neighbours) {
+            node.unshiftPathToThisNode(prevNode);
+        }
+    }
+
     private updateSearchQueue(): void {
-        this._searchQueue = this._searchQueue.concat(
-            this.getNodesByIds(this._curExamNode.getNeighboursIds()));
+        let nextNodes: Node[] = this.getNodesByIds(
+            this._curExamNode.getNeighboursIds());
+        this.setPathToNodes(this._curExamNode, nextNodes)
+        this._searchQueue = this._searchQueue.concat(nextNodes);
         this._searchQueue = this.removeCheckedNodes(this._searchQueue);
     }
 
@@ -119,10 +134,11 @@ class Graph {
             return false;
         } else {
             this.initializeSearchingForConnection(nodeAId);
-
             while (this._searchQueue.length !== 0) {
                 this.updateCurExamNode();
                 if (this._curExamNode.getId() === nodeBId) {
+                    this._curExamNode.addOwnIdToPathToThisNode();
+                    console.log(this._curExamNode.getPathToThisNode());
                     console.log("Connection found");
                     return true;
                 } else {

@@ -33,12 +33,21 @@ class Node {
         this._neighboursIds.push(newNeighbourId);
     }
 
-    public getPathToNode(): string[] {
+    public getPathToThisNode(): string[] {
         return this._pathToThisNode;
     }
 
-    public setPathToNode(path: string[]): void {
-        this._pathToThisNode = path;
+    public clearPathToThisNode(): void {
+        this._pathToThisNode = [];
+    }
+
+    public unshiftPathToThisNode(prevNode: Node): void {
+        this._pathToThisNode.unshift(
+            ...prevNode.getPathToThisNode(), prevNode.getId());
+    }
+
+    public addOwnIdToPathToThisNode(): void {
+        this._pathToThisNode.push(this.getId());
     }
 
     public resetPathToNode(): void {
