@@ -80,3 +80,6 @@ s2z3_10_04_2021/03/browser_version/bouncing-ball/src/*
 
 # pozwol na pliki *js w folderze z testami canvasa
 !/s2z3_10_04_2021/03/canvasTesty/*js
+
+# ignoruj pliki *.js w folderze s2z5_07_05_2021/
+s2z5_07_05_2021/01/terminal_version/*js
