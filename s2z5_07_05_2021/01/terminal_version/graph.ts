@@ -123,30 +123,29 @@ class Graph {
         this.updateSearchQueue();
     }
 
-    public connectionExists(nodeAId: string, nodeBId: string): boolean {
+    public getConnection(nodeAId: string, nodeBId: string): string[] {
 
-        console.log(`Testing connection between ${nodeAId} and ${nodeBId}:`);
+        console.log(`\nTesting connection between ${nodeAId} and ${nodeBId}:`);
 
         let nodesExistence: boolean[] = this.nodesExist([nodeAId, nodeBId]);
 
         if (nodesExistence.some((existence) => { return !existence })) {
             this.declareNonExistingNodes([nodeAId, nodeBId], nodesExistence);
-            return false;
+            return [];
         } else {
             this.initializeSearchingForConnection(nodeAId);
             while (this._searchQueue.length !== 0) {
                 this.updateCurExamNode();
                 if (this._curExamNode.getId() === nodeBId) {
                     this._curExamNode.addOwnIdToPathToThisNode();
-                    console.log(this._curExamNode.getPathToThisNode());
                     console.log("Connection found");
-                    return true;
+                    return this._curExamNode.getPathToThisNode();
                 } else {
                     this.updateSearchQueue();
                 }
             }
             console.log("Connection not found");
-            return false;
+            return [];
         }
     }
 

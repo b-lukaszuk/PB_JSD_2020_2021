@@ -19,6 +19,21 @@ function getCommandAndArgs(command: string) {
     return commandArr;
 }
 
+function displayConnection(path: string[]): void {
+    if (path.length === 0) {
+        console.log("no path to display");
+    } else {
+        let result: string = "";
+        for (let i = 0; i < path.length; i++) {
+            result += path[i];
+            if (i !== (path.length - 1)) {
+                result += " --> ";
+            }
+        }
+        console.log(result);
+    }
+}
+
 function execCommandOnGraph(command: string): void {
 
     let theCommand: string, nodeAId: string, nodeBId: string;
@@ -27,7 +42,9 @@ function execCommandOnGraph(command: string): void {
     if (theCommand.toLocaleLowerCase() === "b") {
         graph.createConnection(nodeAId, nodeBId);
     } else if (theCommand.toLocaleLowerCase() === "t") {
-        graph.connectionExists(nodeAId, nodeBId);
+        displayConnection(
+            graph.getConnection(nodeAId, nodeBId)
+        );
     } else {
         console.log("incorrect command");
     }
