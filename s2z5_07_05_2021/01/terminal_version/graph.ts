@@ -10,10 +10,6 @@ class Graph {
         // nothing to do here
     }
 
-    // public getAllNodes(): Node[] {
-    //     return this._nodes;
-    // }
-
     private getNodeById(nodeId: string): Node | null {
         if (this._nodes.length !== 0) {
             for (let node of this._nodes) {
@@ -36,7 +32,7 @@ class Graph {
         return this.getNodeById(nodeId) !== null;
     }
 
-    private nodesExist(nodesIds: string[]): boolean[] {
+    private allNodesExist(nodesIds: string[]): boolean[] {
         let result: boolean[] = [];
         for (let i = 0; i < nodesIds.length; i++) {
             result.push(this.nodeExists(nodesIds[i]));
@@ -50,11 +46,14 @@ class Graph {
             this._nodes.push(new Node(nodeId));
         }
         theNode = this.getNodeById(nodeId);
-        theNode.pushNeighbourId(neighbourId);
+        if (theNode.getNeighboursIds().indexOf(neighbourId) === -1) {
+            theNode.pushNeighbourId(neighbourId);
+        }
     }
 
     public createConnection(nodeAId: string, nodeBId: string): void {
         console.log(`\nCreating direct connection: ${nodeAId} --- ${nodeBId}`);
+        console.log(`(only if it doesn't already exist)`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
     }
@@ -141,7 +140,7 @@ class Graph {
 
         console.log(`\nTesting connection between ${nodeAId} and ${nodeBId}:`);
 
-        let nodesExistence: boolean[] = this.nodesExist([nodeAId, nodeBId]);
+        let nodesExistence: boolean[] = this.allNodesExist([nodeAId, nodeBId]);
 
         if (nodesExistence.some((existence) => { return !existence })) {
             this.declareNonExistingNodes([nodeAId, nodeBId], nodesExistence);
