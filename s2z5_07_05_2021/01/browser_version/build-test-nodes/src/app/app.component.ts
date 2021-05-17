@@ -57,6 +57,11 @@ export class AppComponent implements OnInit {
         return indexes;
     }
 
+    public drawEdgesAndNodes(): void {
+        this.drawEdges();
+        this.drawNodes();
+    }
+
     public drawEdges(): void {
         this.clearCanvas();
         for (let i = 0; i < this.allNodes.length; i++) {
@@ -81,6 +86,12 @@ export class AppComponent implements OnInit {
         }
     }
 
+    private resetGraph(): void {
+        alert("Too many nodes. Resetting graph");
+        this.graph.resetGraph();
+        this.allNodes = this.graph.getAllNodes();
+        this.userCommand = "";
+    }
 
     public displayConnectionTestResult(): void {
         if (this.connectedNodes.length === 0) {
@@ -97,24 +108,33 @@ export class AppComponent implements OnInit {
         }
     }
 
-    public processCommand() {
+    private processBuildingNodes(nodeAId: string, nodeBId: string): void {
+        this.graph.createConnection(nodeAId, nodeBId);
+        this.allNodes = this.graph.getAllNodes();
+        if (this.allNodes.length > 8) {
+            this.resetGraph();
+        }
+        this.connectedNodes = [];
+        this.drawEdgesAndNodes();
+        this.displayConnectionTestResult();
+    }
+
+    private processTestingConnection(nodeAId: string, nodeBId: string): void {
+        this.connectedNodes = this.graph.getConnection(nodeAId, nodeBId);
+        this.drawEdgesAndNodes();
+        this.displayConnectionTestResult();
+    }
+
+    public processUserCommand() {
 
         console.log("processing user command");
         let command: string, nodeAId: string, nodeBId: string;
         [command, nodeAId, nodeBId] = this.getCommandAndArgs(this.userCommand);
 
         if (command.toLocaleLowerCase() === "b") {
-            this.graph.createConnection(nodeAId, nodeBId);
-            this.allNodes = this.graph.getAllNodes();
-            this.connectedNodes = [];
-            this.drawEdges();
-            this.drawNodes();
-            this.displayConnectionTestResult();
+            this.processBuildingNodes(nodeAId, nodeBId);
         } else if (command.toLocaleLowerCase() === "t") {
-            this.connectedNodes = this.graph.getConnection(nodeAId, nodeBId);
-            this.drawEdges();
-            this.drawNodes();
-            this.displayConnectionTestResult();
+            this.processTestingConnection(nodeAId, nodeBId);
         } else {
             alert("incorrect command");
             this.userCommand = "";

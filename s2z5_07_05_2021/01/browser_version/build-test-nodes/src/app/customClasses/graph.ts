@@ -10,6 +10,12 @@ class Graph {
         // nothing to do here
     }
 
+    public resetGraph() {
+        this._nodes = [];
+        this._curExamNode = null;
+        this._searchQueue = [];
+    }
+
     public getAllNodes(): Node[] {
         return this._nodes;
     }
