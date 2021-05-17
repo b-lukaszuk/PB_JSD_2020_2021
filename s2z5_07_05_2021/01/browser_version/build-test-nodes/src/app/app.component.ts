@@ -106,6 +106,7 @@ export class AppComponent implements OnInit {
         if (command.toLocaleLowerCase() === "b") {
             this.graph.createConnection(nodeAId, nodeBId);
             this.allNodes = this.graph.getAllNodes();
+            this.connectedNodes = [];
             this.drawEdges();
             this.drawNodes();
             this.displayConnectionTestResult();

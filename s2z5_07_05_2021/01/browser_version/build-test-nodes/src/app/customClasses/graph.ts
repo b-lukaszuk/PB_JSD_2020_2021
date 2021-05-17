@@ -71,7 +71,7 @@ class Graph {
         console.log(`Creating connection: ${nodeAId} --- ${nodeBId}`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
-        this.sortNodes();
+        // this.sortNodes();
     }
 
     private removeCheckedNodes(arr: Node[]): Node[] {
