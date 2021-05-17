@@ -53,22 +53,8 @@ class Graph {
         theNode.pushNeighbourId(neighbourId);
     }
 
-    private sortNodes(descending: boolean = true) {
-        if (descending) {
-            this._nodes = this._nodes.sort((nodeA, nodeB) => {
-                return nodeB.getNeighboursIds().length -
-                    nodeA.getNeighboursIds().length;
-            })
-        } else {
-            this._nodes = this._nodes.sort((nodeA, nodeB) => {
-                return nodeA.getNeighboursIds().length -
-                    nodeB.getNeighboursIds().length;
-            })
-        }
-    }
-
     public createConnection(nodeAId: string, nodeBId: string): void {
-        console.log(`Creating connection: ${nodeAId} --- ${nodeBId}`);
+        console.log(`\nCreating direct connection: ${nodeAId} --- ${nodeBId}`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
         // this.sortNodes();
@@ -78,6 +64,18 @@ class Graph {
         return arr.filter((node) => {
             return !node.getChecked()
         })
+    }
+
+    private getArr1EltsNotinArr2(arr1: Node[], arr2: Node[]): Node[] {
+        let result: Node[] = [];
+        let prevIds: string[] = arr2.map((node) => { return node.getId() });
+        for (let i = 0; i < arr1.length; i++) {
+            if (prevIds.indexOf(arr1[i].getId()) === -1) {
+                result.push(arr1[i]);
+                prevIds.push(arr1[i].getId());
+            }
+        }
+        return result;
     }
 
     private uncheckAllNodes(): void {
@@ -128,6 +126,7 @@ class Graph {
     private updateSearchQueue(): void {
         let nextNodes: Node[] = this.getNodesByIds(
             this._curExamNode.getNeighboursIds());
+        nextNodes = this.getArr1EltsNotinArr2(nextNodes, this._searchQueue);
         this.setPathToNodes(this._curExamNode, nextNodes)
         this._searchQueue = this._searchQueue.concat(nextNodes);
         this._searchQueue = this.removeCheckedNodes(this._searchQueue);
@@ -164,8 +163,6 @@ class Graph {
             return [];
         }
     }
-
-
 }
 
 export default Graph;
