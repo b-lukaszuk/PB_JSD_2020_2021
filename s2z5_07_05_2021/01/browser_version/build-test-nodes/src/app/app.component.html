@@ -8,16 +8,24 @@
       <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
         <h2>Enter Your command below</h2>
-        <p>
-          Two types of allowed commands: for building and testing connections
-          (respectively) between 1 and 2
-        </p>
-        <p>B 1 2</p>
-        <p>T 1 2</p>
-        <input name="" type="text" value="" maxlength="5" />
+        <h3>B 1 2</h3> 
+	<p>Builds a connection (draws it with black)</p>
+        <h3>T 1 2</h3>
+	<p>Tests if a connection exists (if so draws it with green)</p>
+	<h2>More than 9 nodes will make the program crash</h2>
+        <input
+          name="userCommand"
+          type="text"
+          [(ngModel)]="userCommand"
+          maxlength="5"
+        />
         <br />
         <br />
-        <button type="button">Evaluate command</button>
+        <button type="button" (click)="processCommand()">
+          Evaluate command
+        </button>
+	<h2>Result of connection test:</h2>
+	<h3>{{connectionTestResult}}</h3>
       </td>
     </tr>
   </table>

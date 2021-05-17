@@ -10,9 +10,9 @@ class Graph {
         // nothing to do here
     }
 
-    // public getAllNodes(): Node[] {
-    //     return this._nodes;
-    // }
+    public getAllNodes(): Node[] {
+        return this._nodes;
+    }
 
     private getNodeById(nodeId: string): Node | null {
         if (this._nodes.length !== 0) {
@@ -53,9 +53,25 @@ class Graph {
         theNode.pushNeighbourId(neighbourId);
     }
 
+    private sortNodes(descending: boolean = true) {
+        if (descending) {
+            this._nodes = this._nodes.sort((nodeA, nodeB) => {
+                return nodeB.getNeighboursIds().length -
+                    nodeA.getNeighboursIds().length;
+            })
+        } else {
+            this._nodes = this._nodes.sort((nodeA, nodeB) => {
+                return nodeA.getNeighboursIds().length -
+                    nodeB.getNeighboursIds().length;
+            })
+        }
+    }
+
     public createConnection(nodeAId: string, nodeBId: string): void {
+        console.log(`Creating connection: ${nodeAId} --- ${nodeBId}`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
+        this.sortNodes();
     }
 
     private removeCheckedNodes(arr: Node[]): Node[] {

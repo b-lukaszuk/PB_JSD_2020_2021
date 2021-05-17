@@ -1,5 +1,8 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 
+import Graph from "./customClasses/graph";
+import Node from "./customClasses/node";
+
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -18,7 +21,104 @@ export class AppComponent implements OnInit {
     public font: string = '1.2em Arial';
     public circleBoarderColor: string = 'white';
     public regularCircleFillColor: string = '#000000';
-    public pathCircleFillColor: string = '#31ce31';
+    public pathCircleFillColor: string = '#008900';
+    public userCommand: string = "";
+    public graph = new Graph();
+    public positions: number[][] = [
+        [300, 270],
+        [40, 40],
+        [470, 520],
+        [500, 100],
+        [90, 550],
+        [80, 300],
+        [300, 60],
+        [500, 330],
+        [360, 550]
+    ];
+    public allNodes: Node[] = [];
+    public connectedNodes: string[] = [];
+    public connectionTestResult: string = "";
+
+    public getCommandAndArgs(command: string) {
+        let sepRegex = /\s+/;
+        let commandArr: string[] = command.split(sepRegex);
+        return commandArr;
+    }
+
+    private getNeighboursIndexes(node: Node): number[] {
+        let indexes: number[] = [];
+        for (let neighbour of node.getNeighboursIds()) {
+            for (let i = 0; i < this.allNodes.length; i++) {
+                if (this.allNodes[i].getId() === neighbour) {
+                    indexes.push(i);
+                }
+            }
+        }
+        return indexes;
+    }
+
+    public drawEdges(): void {
+        this.clearCanvas();
+        for (let i = 0; i < this.allNodes.length; i++) {
+            let x: number, y: number;
+            [x, y] = this.positions[i];
+            let neighboursIndexes = this.getNeighboursIndexes(this.allNodes[i]);
+            for (let j = 0; j < neighboursIndexes.length; j++) {
+                let [neighbX, neighbY] = this.positions[neighboursIndexes[j]];
+                this.drawLine(x, y, neighbX, neighbY);
+            }
+        }
+    }
+
+    public drawNodes(): void {
+        for (let i = 0; i < this.allNodes.length; i++) {
+            let x: number, y: number;
+            [x, y] = this.positions[i];
+            let regularNode: boolean = !this.connectedNodes.includes(
+                this.allNodes[i].getId())
+            this.drawCircleWithTextInside(x, y, this.allNodes[i].getId(),
+                regularNode);
+        }
+    }
+
+
+    public displayConnectionTestResult(): void {
+        if (this.connectedNodes.length === 0) {
+            this.connectionTestResult = "connection not found";
+        } else {
+            let result: string = "";
+            for (let i = 0; i < this.connectedNodes.length; i++) {
+                result += this.connectedNodes[i];
+                if (i !== (this.connectedNodes.length - 1)) {
+                    result += " --> ";
+                }
+            }
+            this.connectionTestResult = result;
+        }
+    }
+
+    public processCommand() {
+
+        console.log("processing user command");
+        let command: string, nodeAId: string, nodeBId: string;
+        [command, nodeAId, nodeBId] = this.getCommandAndArgs(this.userCommand);
+
+        if (command.toLocaleLowerCase() === "b") {
+            this.graph.createConnection(nodeAId, nodeBId);
+            this.allNodes = this.graph.getAllNodes();
+            this.drawEdges();
+            this.drawNodes();
+            this.displayConnectionTestResult();
+        } else if (command.toLocaleLowerCase() === "t") {
+            this.connectedNodes = this.graph.getConnection(nodeAId, nodeBId);
+            this.drawEdges();
+            this.drawNodes();
+            this.displayConnectionTestResult();
+        } else {
+            alert("incorrect command");
+            this.userCommand = "";
+        }
+    }
 
     public clearCanvas(): void {
         this.ctx.clearRect(0, 0, this.canvWidth, this.canvHeight);
@@ -64,8 +164,5 @@ export class AppComponent implements OnInit {
         this.canvWidth = this.canvasRef.nativeElement.width;
         this.canvHeight = this.canvasRef.nativeElement.height;
         this.clearCanvas();
-        this.drawLine(100, 100, 300, 200)
-        this.drawCircleWithTextInside(100, 100, "a");
-        this.drawCircleWithTextInside(300, 200, "b");
     }
 }
