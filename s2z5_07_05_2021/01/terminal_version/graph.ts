@@ -54,6 +54,7 @@ class Graph {
     }
 
     public createConnection(nodeAId: string, nodeBId: string): void {
+        console.log(`Creating direct connection: ${nodeAId} --- ${nodeBId}`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
     }
