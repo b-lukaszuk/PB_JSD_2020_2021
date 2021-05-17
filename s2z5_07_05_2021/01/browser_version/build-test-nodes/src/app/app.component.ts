@@ -125,19 +125,45 @@ export class AppComponent implements OnInit {
         this.displayConnectionTestResult();
     }
 
+    private isCommandBorT(command: string) {
+        if (command.toLocaleLowerCase() === "b" ||
+            command.toLocaleLowerCase() === "t") {
+            return true;
+        }
+        return false;
+    }
+
+    private isAnyArgUndefined(arg1: string, arg2: string) {
+        if (arg1 === undefined || arg2 === undefined) {
+            return true;
+        }
+        return false;
+    }
+
+    private isCommandAndArgsCorrect(command: string, arg1: string,
+        arg2: string): boolean {
+        if (this.isCommandBorT(command) && !this.isAnyArgUndefined(arg1, arg2)) {
+            return true;
+        }
+        return false;
+    }
+
     public processUserCommand() {
 
         console.log("processing user command");
         let command: string, nodeAId: string, nodeBId: string;
-        [command, nodeAId, nodeBId] = this.getCommandAndArgs(this.userCommand);
+        [command, nodeAId, nodeBId] = this.getCommandAndArgs(
+            this.userCommand.trim());
 
-        if (command.toLocaleLowerCase() === "b") {
-            this.processBuildingNodes(nodeAId, nodeBId);
-        } else if (command.toLocaleLowerCase() === "t") {
-            this.processTestingConnection(nodeAId, nodeBId);
-        } else {
+        if (!this.isCommandAndArgsCorrect(command, nodeAId, nodeBId)) {
             alert("incorrect command");
             this.userCommand = "";
+        } else {
+            if (command.toLocaleLowerCase() === "b") {
+                this.processBuildingNodes(nodeAId, nodeBId);
+            } else if (command.toLocaleLowerCase() === "t") {
+                this.processTestingConnection(nodeAId, nodeBId);
+            }
         }
     }
 

@@ -56,11 +56,14 @@ class Graph {
             this._nodes.push(new Node(nodeId));
         }
         theNode = this.getNodeById(nodeId);
-        theNode.pushNeighbourId(neighbourId);
+        if (!theNode.getNeighboursIds().includes(neighbourId)) {
+            theNode.pushNeighbourId(neighbourId);
+        }
     }
 
     public createConnection(nodeAId: string, nodeBId: string): void {
         console.log(`\nCreating direct connection: ${nodeAId} --- ${nodeBId}`);
+        console.log(`(only if it doesn't already exist)`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
         // this.sortNodes();
