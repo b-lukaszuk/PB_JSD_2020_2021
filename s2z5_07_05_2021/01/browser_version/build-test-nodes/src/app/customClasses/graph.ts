@@ -56,7 +56,8 @@ class Graph {
             this._nodes.push(new Node(nodeId));
         }
         theNode = this.getNodeById(nodeId);
-        if (!theNode.getNeighboursIds().includes(neighbourId)) {
+        if (!theNode.getNeighboursIds().includes(neighbourId) &&
+            nodeId !== neighbourId) {
             theNode.pushNeighbourId(neighbourId);
         }
     }
@@ -153,6 +154,11 @@ class Graph {
 
         let nodesExistence: boolean[] = this.allNodesExist([nodeAId, nodeBId]);
 
+        if (nodeAId === nodeBId) {
+            console.log("Node A id and node B id are equal");
+            console.log("No need to create path to itself");
+            return [];
+        }
         if (nodesExistence.some((existence) => { return !existence })) {
             this.declareNonExistingNodes([nodeAId, nodeBId], nodesExistence);
             return [];
