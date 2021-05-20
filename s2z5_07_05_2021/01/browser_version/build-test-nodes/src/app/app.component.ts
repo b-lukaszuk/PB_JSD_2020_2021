@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     public canvHeight: number;
     public canvColor: string = '#484848';
     public fontColor: string = 'white';
-    public font: string = '1.2em Arial';
+    public font: string = '1.5em Arial';
     public circleBoarderColor: string = 'white';
     public regularCircleFillColor: string = '#000000';
     public pathCircleFillColor: string = '#008900';
@@ -115,8 +115,8 @@ export class AppComponent implements OnInit {
             this.resetGraph();
         }
         this.connectedNodes = [];
+        this.connectionTestResult = "connection created";
         this.drawEdgesAndNodes();
-        this.displayConnectionTestResult();
     }
 
     private processTestingConnection(nodeAId: string, nodeBId: string): void {
