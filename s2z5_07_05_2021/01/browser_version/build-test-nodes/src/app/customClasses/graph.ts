@@ -67,7 +67,6 @@ class Graph {
         console.log(`(only if it doesn't already exist)`);
         this.addNodeNeighbour(nodeAId, nodeBId);
         this.addNodeNeighbour(nodeBId, nodeAId);
-        // this.sortNodes();
     }
 
     private removeCheckedNodes(arr: Node[]): Node[] {
@@ -148,6 +147,12 @@ class Graph {
         this.updateSearchQueue();
     }
 
+    private handleNodeAandBEqual(): string[] {
+        console.log("Node A id and node B id are equal");
+        console.log("No need to create path to itself");
+        return [];
+    }
+
     public getConnection(nodeAId: string, nodeBId: string): string[] {
 
         console.log(`\nTesting connection between ${nodeAId} and ${nodeBId}:`);
@@ -155,9 +160,7 @@ class Graph {
         let nodesExistence: boolean[] = this.allNodesExist([nodeAId, nodeBId]);
 
         if (nodeAId === nodeBId) {
-            console.log("Node A id and node B id are equal");
-            console.log("No need to create path to itself");
-            return [];
+            this.handleNodeAandBEqual();
         }
         if (nodesExistence.some((existence) => { return !existence })) {
             this.declareNonExistingNodes([nodeAId, nodeBId], nodesExistence);

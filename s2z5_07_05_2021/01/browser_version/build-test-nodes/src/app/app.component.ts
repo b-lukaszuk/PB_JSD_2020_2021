@@ -57,35 +57,6 @@ export class AppComponent implements OnInit {
         return indexes;
     }
 
-    public drawEdgesAndNodes(): void {
-        this.drawEdges();
-        this.drawNodes();
-    }
-
-    public drawEdges(): void {
-        this.clearCanvas();
-        for (let i = 0; i < this.allNodes.length; i++) {
-            let x: number, y: number;
-            [x, y] = this.positions[i];
-            let neighboursIndexes = this.getNeighboursIndexes(this.allNodes[i]);
-            for (let j = 0; j < neighboursIndexes.length; j++) {
-                let [neighbX, neighbY] = this.positions[neighboursIndexes[j]];
-                this.drawLine(x, y, neighbX, neighbY);
-            }
-        }
-    }
-
-    public drawNodes(): void {
-        for (let i = 0; i < this.allNodes.length; i++) {
-            let x: number, y: number;
-            [x, y] = this.positions[i];
-            let regularNode: boolean = !this.connectedNodes.includes(
-                this.allNodes[i].getId())
-            this.drawCircleWithTextInside(x, y, this.allNodes[i].getId(),
-                regularNode);
-        }
-    }
-
     private resetGraph(): void {
         alert("Too many nodes. Resetting graph");
         this.graph.resetGraph();
@@ -150,7 +121,7 @@ export class AppComponent implements OnInit {
 
     public processUserCommand() {
 
-        console.log("processing user command");
+        console.log("\n---processing user command:---");
         let command: string, nodeAId: string, nodeBId: string;
         [command, nodeAId, nodeBId] = this.getCommandAndArgs(
             this.userCommand.trim());
@@ -164,6 +135,35 @@ export class AppComponent implements OnInit {
             } else if (command.toLocaleLowerCase() === "t") {
                 this.processTestingConnection(nodeAId, nodeBId);
             }
+        }
+    }
+
+    public drawEdgesAndNodes(): void {
+        this.drawEdges();
+        this.drawNodes();
+    }
+
+    public drawEdges(): void {
+        this.clearCanvas();
+        for (let i = 0; i < this.allNodes.length; i++) {
+            let x: number, y: number;
+            [x, y] = this.positions[i];
+            let neighboursIndexes = this.getNeighboursIndexes(this.allNodes[i]);
+            for (let j = 0; j < neighboursIndexes.length; j++) {
+                let [neighbX, neighbY] = this.positions[neighboursIndexes[j]];
+                this.drawLine(x, y, neighbX, neighbY);
+            }
+        }
+    }
+
+    public drawNodes(): void {
+        for (let i = 0; i < this.allNodes.length; i++) {
+            let x: number, y: number;
+            [x, y] = this.positions[i];
+            let regularNode: boolean = !this.connectedNodes.includes(
+                this.allNodes[i].getId())
+            this.drawCircleWithTextInside(x, y, this.allNodes[i].getId(),
+                regularNode);
         }
     }
 
