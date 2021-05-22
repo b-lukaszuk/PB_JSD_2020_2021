@@ -121,7 +121,7 @@ export class AppComponent implements OnInit {
 
     public processUserCommand() {
 
-        console.log("\n---processing user command:---");
+        console.log("\n---processing user command---");
         let command: string, nodeAId: string, nodeBId: string;
         [command, nodeAId, nodeBId] = this.getCommandAndArgs(
             this.userCommand.trim());

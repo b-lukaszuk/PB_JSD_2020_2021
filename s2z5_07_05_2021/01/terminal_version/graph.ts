@@ -32,7 +32,7 @@ class Graph {
         return this.getNodeById(nodeId) !== null;
     }
 
-    private allNodesExist(nodesIds: string[]): boolean[] {
+    private nodesExist(nodesIds: string[]): boolean[] {
         let result: boolean[] = [];
         for (let i = 0; i < nodesIds.length; i++) {
             result.push(this.nodeExists(nodesIds[i]));
@@ -137,20 +137,32 @@ class Graph {
         this.updateSearchQueue();
     }
 
+    private handleNodeAandBEqual(): string[] {
+        console.log("Node A id and node B id are equal");
+        console.log("No need to create path to itself");
+        return [];
+    }
+
+    private handleNonExistingNodes(nodesIds: string[],
+        nodesExistence: boolean[]): string[] {
+        this.declareNonExistingNodes(nodesIds, nodesExistence);
+        return [];
+    }
+
+    private allTrue(arr: boolean[]): boolean {
+        return arr.every((trueOrFalse) => { return trueOrFalse })
+    }
+
     public getConnection(nodeAId: string, nodeBId: string): string[] {
 
         console.log(`\nTesting connection between ${nodeAId} and ${nodeBId}:`);
 
-        let nodesExistence: boolean[] = this.allNodesExist([nodeAId, nodeBId]);
+        let nodesExistence: boolean[] = this.nodesExist([nodeAId, nodeBId]);
 
-        if (nodeAId === nodeBId) {
-            console.log("Node A id and node B id are equal");
-            console.log("No need to create path to itself");
-            return [];
-        }
-        if (nodesExistence.some((existence) => { return !existence })) {
-            this.declareNonExistingNodes([nodeAId, nodeBId], nodesExistence);
-            return [];
+        if (nodeAId === nodeBId) { return this.handleNodeAandBEqual(); }
+        if (!this.allTrue(nodesExistence)) {
+            return this.handleNonExistingNodes([nodeAId, nodeBId],
+                nodesExistence);
         } else {
             this.initializeSearchingForConnection(nodeAId);
             while (this._searchQueue.length !== 0) {
