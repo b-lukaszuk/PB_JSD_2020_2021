@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     public connectedNodes: string[] = [];
     public connectionTestResult: string = "";
 
-    public getCommandAndArgs(command: string) {
+    public getCommandAndArgs(command: string): string[] {
         let sepRegex = /\s+/;
         let commandArr: string[] = command.split(sepRegex);
         return commandArr;
