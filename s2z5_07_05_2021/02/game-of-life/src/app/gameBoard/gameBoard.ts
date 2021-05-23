@@ -1,30 +1,39 @@
-import randInt from "../utils/randInt";
 import isBetween from "../utils/isNumBetween";
 
 class GameBoard {
     private _gameBoard: boolean[][] = [];
 
-    // probability of a cell being alive (true)
-    // in statistics probability is 0-1, here give it with 0.1 accuracy
-    public constructor(nRows: number = 25, nCols: number = 25,
-        probFrom0To1ByOneTenth: number = 0.3) {
-        this._gameBoard = this.initializeBoard(nRows, nCols,
-            probFrom0To1ByOneTenth);
+    /**
+     * @param {number} probFrom0To1 probability of a cell being alive
+     */
+    public constructor(nRows: number = 25, nCols: number = 25) {
+        this._gameBoard = this.initializeBoard(nRows, nCols, 0);
     }
 
     public setGameBoard(newGameBoard: boolean[][]): void {
         this._gameBoard = newGameBoard;
     }
 
-    // probability of a cell being alive (true)
-    // in statistics probability is 0-1, here give it with 0.1 accuracy
+    /**
+     * @param {number} probFrom0To1 probability of a cell being alive
+     */
+    public initalizeGenerationOne(probOfCellBeingAliveFrom0To1: number): void {
+
+        this._gameBoard = this.initializeBoard(this.getNrows(), this.getNcols(),
+            probOfCellBeingAliveFrom0To1);
+    }
+
+    /**
+     * @param {number} probFrom0To1 probability of a cell being alive
+     */
     private initializeBoard(nRows: number, nCols: number,
-        probFrom0To1ByOneTenth: number): boolean[][] {
+        probFrom0To1: number): boolean[][] {
         let result: boolean[][] = [];
         for (let r = 0; r < nRows; r++) {
             let row: boolean[] = [];
             for (let c = 0; c < nCols; c++) {
-                row.push(this.randIsCellAlive(probFrom0To1ByOneTenth));
+                // alive/dead - true/false
+                row.push(this.isCellAlive(probFrom0To1));
             }
             result.push(row);
         }
@@ -39,10 +48,11 @@ class GameBoard {
         return this._gameBoard[0].length;
     }
 
-    // in statistics probability is 0-1, here give it with 0.1 accuracy
-    private randIsCellAlive(probFrom0To1ByOneTenth: number): boolean {
-        let cutoff: number = 10 * probFrom0To1ByOneTenth;
-        return randInt(10) < cutoff;
+    /**
+     * @param {number} probFrom0To1 probability of a cell being alive
+     */
+    private isCellAlive(probFrom0To1: number): boolean {
+        return Math.random() < probFrom0To1;
     }
 
     public getGameBoard(): boolean[][] {
@@ -55,13 +65,13 @@ class GameBoard {
         return this._gameBoard[row][col];
     }
 
-    public getPositionsOfNeighbours(cellPositionRowCol: number[]): number[][] {
+    private getPositionsOfCellNeighbours(cellPositionRowCol: number[]): number[][] {
         let result: number[][] = [];
         let cellRow: number, cellCol: number;
         [cellRow, cellCol] = cellPositionRowCol;
         for (let row of this.getAllNeighboursRows(cellRow)) {
             for (let col of this.getAllNeighboursCols(cellCol)) {
-                if (this.isNewPosUneqlOldPos(cellPositionRowCol, [row, col]) &&
+                if (!this.isNewPosEqlOldPos(cellPositionRowCol, [row, col]) &&
                     this.isPosOnGameBoard([row, col])) {
                     result.push([row, col]);
                 }
@@ -70,16 +80,13 @@ class GameBoard {
         return result;
     }
 
-    private isNewPosUneqlOldPos(oldPos: number[],
-        newPos: number[]): boolean {
-        return (oldPos[0] !== newPos[0]) || (oldPos[1] !== newPos[1]);
+    private isNewPosEqlOldPos(oldPos: number[], newPos: number[]): boolean {
+        return (oldPos[0] === newPos[0]) && (oldPos[1] === newPos[1]);
     }
 
     private isPosOnGameBoard(pos: number[]): boolean {
-        let gbNofRows: number = this._gameBoard.length;
-        let gbNofCols: number = this._gameBoard[0].length;
-        let isRowInRange: boolean = isBetween(pos[0], 0, gbNofRows - 1);
-        let isColInRange: boolean = isBetween(pos[1], 0, gbNofCols - 1);
+        let isRowInRange: boolean = isBetween(pos[0], 0, this.getNrows() - 1);
+        let isColInRange: boolean = isBetween(pos[1], 0, this.getNcols() - 1);
         return isRowInRange && isColInRange;
     }
 
@@ -94,7 +101,7 @@ class GameBoard {
     private getNumOfLiveNeighbours(cellPos: number[]): number {
         let sum: number = 0;
         let curRow: number, curCol: number;
-        for (let pos of this.getPositionsOfNeighbours(cellPos)) {
+        for (let pos of this.getPositionsOfCellNeighbours(cellPos)) {
             [curRow, curCol] = pos;
             if (this._gameBoard[curRow][curCol]) {
                 sum += 1;
@@ -103,19 +110,7 @@ class GameBoard {
         return sum;
     }
 
-    // private getNumOfDeadNeighbours(cellPos: number[]): number {
-    //     let sum: number = 0;
-    //     let curRow: number, curCol: number;
-    //     for (let pos of this.getPositionsOfNeighbours(cellPos)) {
-    //         [curRow, curCol] = pos;
-    //         if (!this._gameBoard[curRow][curCol]) {
-    //             sum += 1;
-    //         }
-    //     }
-    //     return sum;
-    // }
-
-    private cellNextGenAliveOrDead(pos: number[]): boolean {
+    private isCellNextGenAlive(pos: number[]): boolean {
         let numNeighAlive: number = this.getNumOfLiveNeighbours(pos);
 
         if (this._gameBoard[pos[0]][pos[1]]) { // previously alive
@@ -130,12 +125,12 @@ class GameBoard {
         return false;
     }
 
-    public getNextState(): boolean[][] {
+    public getBoardNextState(): boolean[][] {
         let nextBoardState: boolean[][] = [];
         for (let r = 0; r < this.getNrows(); r++) {
             let newRow: boolean[] = [];
             for (let c = 0; c < this.getNcols(); c++) {
-                newRow.push(this.cellNextGenAliveOrDead([r, c]));
+                newRow.push(this.isCellNextGenAlive([r, c]));
             }
             nextBoardState.push(newRow);
         }

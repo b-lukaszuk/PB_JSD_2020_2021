@@ -19,9 +19,47 @@
           </div>
         </div>
       </td>
+      <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
-        <button type="button" (click)="moveToNextState()">
-          Go to next state
+        <h1>Choose initial probability of a cell being alive</h1>
+        <label for="initialProbabilities"> initial probability: </label>
+        <select
+          name="initialProbabilities"
+          id="initialProbabilities"
+          [(ngModel)]="initialProbability"
+        >
+          <option
+            *ngFor="let probability of initialProbabilities"
+            [value]="probability"
+          >
+            {{ probability }}
+          </option>
+        </select>
+        <br />
+        <br />
+        <h1>Choose transition time between generations</h1>
+        <label for="frameSpeedsFPS"> initial transition time [FPS]: </label>
+        <select
+          name="frameSpeedsFPS"
+          id="frameSpeedsFPS"
+          [(ngModel)]="frameSpeedFPS"
+        >
+          <option
+            *ngFor="let speed of frameSpeedsFPS"
+            [value]="speed"
+          >
+            {{ speed }}
+          </option>
+        </select>
+        <br />
+        <br />
+        <button type="button" (click)="startTheGame()" [disabled]="gameSarted">
+          (Re)Start the game
+        </button>
+        <br />
+        <br />
+        <button type="button" (click)="stopTheGame()" [disabled]="!gameSarted">
+          Stop the game
         </button>
       </td>
     </tr>

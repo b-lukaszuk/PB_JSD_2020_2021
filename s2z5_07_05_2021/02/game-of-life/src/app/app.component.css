@@ -27,7 +27,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1em;
+    font-size: 1.3em;
     font-weight: bold;
 }
 
@@ -39,4 +39,18 @@ button:hover {
 button:disabled {
     cursor: auto;
     background-color: lightgray;
+}
+
+select {
+    width: 5em;
+    height: 2em;
+    background-color: #008cba;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+label {
+    font-size: 1.4em;
 }
