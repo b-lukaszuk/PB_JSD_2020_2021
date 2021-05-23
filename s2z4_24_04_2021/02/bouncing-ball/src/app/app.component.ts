@@ -1,16 +1,12 @@
 import { Component } from '@angular/core';
 
-// GameBoard imported only for better autocompletion
-// consider removing it after everything is done;
+// GameBoard imported for autocompletion and typechecking
 import { singelton, GameBoard } from './gameBoard/gameBoard';
-import areArraysEqual from './utils/arraysComparator';
-import isBetween from './utils/betweenTwoNums';
 import Point from './point/point';
 import Ball from './point/ball';
 import Brick from './point/brick';
 import MagicBrick from './point/magicBrick';
 import randInt from "./utils/randInt"
-import board from './gameBoard/examInput';
 
 @Component({
     selector: 'app-root',
@@ -24,6 +20,7 @@ export class AppComponent {
     public initialBall: Ball = this.gameBoard.getBall();
     public intervalId: any;
     public shouldBallBeStopped: boolean = false;
+    public gameStarted: boolean = false;
 
     public getClassForField(pos: number[]): string {
         if (this.gameBoard.getContent(pos) instanceof MagicBrick) {
@@ -37,9 +34,26 @@ export class AppComponent {
         }
     }
 
+    public changeShift(option: number): void {
+        switch (option) {
+            case 1:
+                this.shift = new Point(-1, -1);
+                break;
+            case 2:
+                this.shift = new Point(-1, 1);
+                break;
+            case 3:
+                this.shift = new Point(1, -1);
+                break;
+            default:
+                this.shift = new Point(1, 1);
+                break;
+        }
+    }
+
     private changeShiftIfCollision(newBall: Ball) {
         let gotoField: Point = this.gameBoard.getContent(
-            [newBall.getX(), newBall.getY()]);
+            newBall.getPos());
         if (gotoField instanceof Brick) {
             this.shift = gotoField.add(this.shift);
         }
@@ -48,20 +62,17 @@ export class AppComponent {
     public moveBallByOneField(): void {
         let curBall: Ball = this.gameBoard.getBall();
         let [bRow, bCol] = curBall.getPos();
-        // where the ball will be after the shift
-        let newBall: Ball;
+        let newBall: Ball; // where ball will be in the next move
+
         do {
             newBall = curBall.add(this.shift);
             this.changeShiftIfCollision(newBall);
         } while (this.gameBoard.getContent(newBall.getPos()) instanceof Brick)
 
-        // re-create newBall in case the shift has changed after collision
-        newBall = curBall.add(this.shift);
+        this.gameBoard.setObjAtBoard(new Point(bRow, bCol));
+        this.gameBoard.setObjAtBoard(newBall);
 
-        this.gameBoard.setObjAtPos(new Point(bRow, bCol), [bRow, bCol]);
-        this.gameBoard.setObjAtPos(newBall, newBall.getPos());
-
-        this.shouldBallBeStopped = newBall.equal(this.initialBall);
+        this.shouldBallBeStopped = newBall.equalPosition(this.initialBall);
     }
 
     // public indexOfVector(vector: number[], arrOfVects: number[][]): number {
@@ -70,19 +81,21 @@ export class AppComponent {
         this.gameBoard.initializeBoard();
     }
 
-    public setRandomBallPosition() {
+
+    private getBallAtWithItsXYRandom(): Ball {
+        let newX: number = randInt(1, this.gameBoard.getNRows() - 1);
+        let newY: number = randInt(1, this.gameBoard.getNCols() - 1);
+        return new Ball(newX, newY);
+    }
+
+    public setStartingBallAtRandomPosition() {
         let curBall: Ball = this.gameBoard.getBall();
-        let newX: number, newY: number;
-        let curX: number, curY: number;
         let newBall: Ball;
-        [curX, curY] = curBall.getPos();
         do {
-            newX = randInt(this.gameBoard.getNRows());
-            newY = randInt(this.gameBoard.getNCols())
-        } while (this.gameBoard.getContent([newX, newY]) instanceof Brick)
-        newBall = new Ball(newX, newY);
-        this.gameBoard.setObjAtPos(new Point(curX, curY), [curX, curY]);
-        this.gameBoard.setObjAtPos(newBall, [newX, newY]);
+            newBall = this.getBallAtWithItsXYRandom();
+        } while (this.gameBoard.getContent(newBall.getPos()) instanceof Brick)
+        this.gameBoard.setObjAtBoard(new Point(curBall.getX(), curBall.getY()));
+        this.gameBoard.setObjAtBoard(newBall);
         this.initialBall = newBall;
     }
 
@@ -93,6 +106,7 @@ export class AppComponent {
      */
     public setBallIntoMotion() {
         let intervalId = setInterval(() => {
+            this.gameStarted = true;
             this.moveBallByOneField();
             if (this.shouldBallBeStopped) {
                 this.stopTheBall();

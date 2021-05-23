@@ -1,38 +1,34 @@
-import board from "./examInput";
-import Point from "../point/point";
-import Ball from "../point/ball";
-import Brick from "../point/brick";
+import board from './examInput';
+import Point from '../point/point';
+import Ball from '../point/ball';
+import Brick from '../point/brick';
 import MagicBrick from '../point/magicBrick';
-import isBetween from "../utils/betweenTwoNums";
+import isBetween from '../utils/betweenTwoNums';
 
 class GameBoard {
-    // internal representation of the chessBoard
     private _gameBoard: Point[][] = [];
     private _ball: Ball = new Ball(0, 0);
 
-    // empty board initialization
     constructor() {
         this.initializeBoard();
     }
 
+    // initialize board with required in task pattern
     public initializeBoard(): void {
-        // may be invoked when the board is non empty
         this._gameBoard = [];
 
-        let xLim: number = board.length;
-        let yLim: number = board[0].length;
-
-        for (let r = 0; r < xLim; r++) {
+        for (let r = 0; r < board.length; r++) {
             let row: Point[] = [];
-            for (let c = 0; c < yLim; c++) {
-                if (board[r][c] === "X") {
-                    row.push(new Brick(r, c,
-                        this.shouldLimitX(r, c),
-                        this.shouldLimitY(r, c)));
-                } else if (board[r][c] === "1") {
+            for (let c = 0; c < board[r].length; c++) {
+                if (board[r][c] === 'X') {
+                    row.push(
+                        new Brick(r, c, this.shouldLimitX([r, c]),
+                            this.shouldLimitY([r, c]))
+                    );
+                } else if (board[r][c] === '1') {
                     this._ball = new Ball(r, c);
                     row.push(this._ball);
-                } else if (board[r][c] === "Y") {
+                } else if (board[r][c] === 'Y') {
                     row.push(new MagicBrick(r, c));
                 } else {
                     row.push(new Point(r, c));
@@ -42,17 +38,25 @@ class GameBoard {
         }
     }
 
-    private shouldLimitX(curBrickX: number, curBrickY: number): boolean {
-        let laysOnXEdge: boolean = false;
-        let laysOnYEdge: boolean = false;
-        let neighboursWithBrick: boolean = false
-        laysOnXEdge = !isBetween(curBrickX, 1, board.length - 2);
-        laysOnYEdge = !isBetween(curBrickY, 1, board[0].length - 2);
+    /**
+     * @param {number} axis0or1 - like in Python, 0 - x, 1 - y
+     */
+    private laysOnEdge(pos: number[], axis0or1: number): boolean {
+        let upTo: number;
+        upTo = axis0or1 === 0 ? (board.length - 2) : (board[0].length - 2);
+        let result: boolean = !isBetween(pos[axis0or1], 1, upTo);
+        return result;
+    }
+
+    private shouldLimitX(curBrickPos: number[]): boolean {
+        let laysOnXEdge: boolean = false, laysOnYEdge: boolean = false;
+        let neighboursWithBrick: boolean = false;
+        laysOnXEdge = this.laysOnEdge(curBrickPos, 0)
+        laysOnYEdge = this.laysOnEdge(curBrickPos, 1);
         if (laysOnXEdge) {
             return true;
         } else if (!laysOnYEdge) {
-            neighboursWithBrick = this.isBrickOneShiftOnXaxis(
-                curBrickX, curBrickY);
+            neighboursWithBrick = this.isBrickOneShiftOnXaxis(curBrickPos);
             if (neighboursWithBrick) {
                 return true;
             }
@@ -60,17 +64,15 @@ class GameBoard {
         return false;
     }
 
-    private shouldLimitY(curBrickX: number, curBrickY: number): boolean {
-        let laysOnXEdge: boolean = false;
-        let laysOnYEdge: boolean = false;
-        let neighboursWithBrick: boolean = false
-        laysOnXEdge = !isBetween(curBrickX, 1, board.length - 2);
-        laysOnYEdge = !isBetween(curBrickY, 1, board[0].length - 2);
+    private shouldLimitY(curBrickPos: number[]): boolean {
+        let laysOnXEdge: boolean = false, laysOnYEdge: boolean = false;
+        let neighboursWithBrick: boolean = false;
+        laysOnXEdge = this.laysOnEdge(curBrickPos, 0);
+        laysOnYEdge = this.laysOnEdge(curBrickPos, 1);
         if (laysOnYEdge) {
             return true;
         } else if (!laysOnXEdge) {
-            neighboursWithBrick = this.isBrickOneShiftOnYaxis(
-                curBrickX, curBrickY);
+            neighboursWithBrick = this.isBrickOneShiftOnYaxis(curBrickPos);
             if (neighboursWithBrick) {
                 return true;
             }
@@ -78,31 +80,23 @@ class GameBoard {
         return false;
     }
 
-    private isBrickOneShiftOnXaxis(curBrickX: number,
-        curBrickY: number): boolean {
-        let gotBrickOnLeft: boolean = false;
-        let gotBrickOnRight: boolean = false;
-        if (isBetween(curBrickX, 1, board.length)) {
-            gotBrickOnLeft = board[curBrickX - 1][curBrickY] === "X";
-            gotBrickOnRight = board[curBrickX + 1][curBrickY] === "X";
+    private isBrickOneShiftOnXaxis(curBrickPos: number[]): boolean {
+        let gotBrickOnLeft: boolean = false, gotBrickOnRight: boolean = false;
+        let [cX, cY] = curBrickPos;
+        if (isBetween(cX, 1, board.length)) {
+            gotBrickOnLeft = board[cX - 1][cY] === 'X';
+            gotBrickOnRight = board[cX + 1][cY] === 'X';
         }
-        // if (gotBrickOnLeft || gotBrickOnRight) {
-        //     console.log("[", curBrickX, ",", curBrickY, "]", "brick on x axis");
-        // }
         return gotBrickOnLeft || gotBrickOnRight;
     }
 
-    private isBrickOneShiftOnYaxis(curBrickX: number,
-        curBrickY: number): boolean {
-        let gotBrick1Up: boolean = false;
-        let gotBrick1Down: boolean = false;
-        if (isBetween(curBrickY, 1, board[0].length - 2)) {
-            gotBrick1Up = board[curBrickX][curBrickY - 1] === "X";
-            gotBrick1Down = board[curBrickX][curBrickY + 1] === "X";
+    private isBrickOneShiftOnYaxis(curBrickPos: number[]): boolean {
+        let gotBrick1Up: boolean = false, gotBrick1Down: boolean = false;
+        let [cX, cY] = curBrickPos;;
+        if (isBetween(cY, 1, board[0].length - 2)) {
+            gotBrick1Up = board[cX][cY - 1] === 'X';
+            gotBrick1Down = board[cX][cY + 1] === 'X';
         }
-        // if (gotBrick1Down || gotBrick1Up) {
-        //     console.log("[", curBrickX, ",", curBrickY, "]", "brick on y axis");
-        // }
         return gotBrick1Up || gotBrick1Down;
     }
 
@@ -115,11 +109,10 @@ class GameBoard {
     }
 
     /**
-     * sets Point or its subclasses Ball and Brick at a given position
-     * updates this._gameBoard
+     * gets obj (Point) coordinates and sets it there at this._gameBoard
      */
-    public setObjAtPos(obj: Point, pos: number[]): void {
-        let [row, col] = pos;
+    public setObjAtBoard(obj: Point): void {
+        let [row, col] = obj.getPos();
         if (obj instanceof Ball) {
             this._ball = obj;
         }
@@ -141,9 +134,8 @@ class GameBoard {
     }
 }
 
-// singelton required by the task
 const singelton = (function() {
-    let instance: GameBoard; 	// no initialization so undefined
+    let instance: GameBoard; // no initialization so undefined
 
     function init() {
         return new GameBoard();
@@ -157,8 +149,8 @@ const singelton = (function() {
     }
 
     return {
-        getGameBoardInstance: getInstance
-    }
+        getGameBoardInstance: getInstance,
+    };
 })();
 
 export { GameBoard, singelton };

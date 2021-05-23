@@ -11,6 +11,7 @@ class GameBoard {
         this.initializeBoard();
     }
 
+    // initialize board with required in task pattern
     public initializeBoard(): void {
         this._gameBoard = [];
 

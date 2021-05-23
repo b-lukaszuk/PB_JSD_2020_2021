@@ -45,7 +45,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1em;
+    font-size: 1.2em;
     font-weight: bold;
 }
 
@@ -57,4 +57,8 @@ button:hover {
 button:disabled {
     cursor: auto;
     background-color: lightgray;
+}
+
+p {
+    font-size: 1.3em;
 }

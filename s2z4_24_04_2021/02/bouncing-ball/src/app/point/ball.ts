@@ -1,6 +1,7 @@
 import Point from "./point";
 
 class Ball extends Point {
+
     public constructor(x: number, y: number) {
         super(x, y);
     }
@@ -9,10 +10,6 @@ class Ball extends Point {
         let newX: number = this.getX() + other.getX();
         let newY: number = this.getY() + other.getY();
         return new Ball(newX, newY);
-    }
-
-    public getPos(): number[] {
-        return [this.getX(), this.getY()];
     }
 }
 

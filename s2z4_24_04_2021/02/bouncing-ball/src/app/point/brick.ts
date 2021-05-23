@@ -1,8 +1,10 @@
 import Point from "./point";
 
 class Brick extends Point {
+
     _limitX: boolean;
     _limitY: boolean;
+
     public constructor(x: number, y: number,
         limitX: boolean, limitY: boolean) {
         super(x, y);
@@ -10,7 +12,6 @@ class Brick extends Point {
         this._limitY = limitY;
     }
 
-    // other is shift
     public add(shift: Point): Point {
         let newX: number, newY: number;
         newX = this._limitX ? (shift.getX() * -1) : shift.getX();
