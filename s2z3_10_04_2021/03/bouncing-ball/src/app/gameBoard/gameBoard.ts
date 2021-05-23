@@ -4,17 +4,14 @@ import Ball from "../point/ball";
 import Brick from "../point/brick";
 
 class GameBoard {
-    // internal representation of the chessBoard
     private _gameBoard: Point[][] = [];
-    private _ball: Ball = new Ball(0, 0);
+    private _ball: Ball = new Ball(1, 1);
 
-    // empty board initialization
-    constructor() {
+    public constructor() {
         this.initializeBoard();
     }
 
     public initializeBoard(): void {
-        // may be invoked when the board is non empty
         this._gameBoard = [];
 
         for (let r = 0; r < board.length; r++) {
@@ -41,12 +38,8 @@ class GameBoard {
         return this._ball;
     }
 
-    /**
-     * sets Point or its subclasses Ball and Brick at a given position
-     * updates this._gameBoard
-     */
-    public setObjAtPos(obj: Point, pos: number[]): void {
-        let [row, col] = pos;
+    public setObjAtBoard(obj: Point): void {
+        let [row, col] = obj.getPos();
         if (obj instanceof Ball) {
             this._ball = obj;
         }
@@ -68,9 +61,8 @@ class GameBoard {
     }
 }
 
-// singelton required by the task
 const singelton = (function() {
-    let instance: GameBoard; 	// no initialization so undefined
+    let instance: GameBoard; 	// no initialization, so undefined
 
     function init() {
         return new GameBoard();
