@@ -1,12 +1,40 @@
-<div class="gameboard">
-  <div *ngFor="let row of gameBoard.getGameBoard(); index as rId">
-    <div
-      *ngFor="let col of row; index as cId"
-      [ngClass]="getValAtPos(rId, cId) === 0 ? 'empty ' : 'ball'"
-    >
-      <span> </span>
-    </div>
-  </div>
+<div>
+  <table>
+    <tr>
+      <td>
+        <div class="gameboard">
+          <div *ngFor="let row of gameBoard.getGameBoard(); index as rId">
+            <div
+              *ngFor="let col of row; index as cId"
+              [ngClass]="getClassForField([rId, cId])"
+            >
+              <span> </span>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td>
+        <p>Set ball into motion by pressing the start button</p>
+        <p>
+          The ball will stop automatically once it reaches its starting position
+        </p>
+        <button
+          type="button"
+          (click)="setRandomBallPosition()"
+        >
+          Set random ball position
+        </button>
+	<br/> <br/>
+        <button
+          type="button"
+          (click)="setBallIntoMotion(); setIntoMotionBtn.disabled = true"
+          #setIntoMotionBtn
+        >
+          Set ball into motion
+        </button>
+      </td>
+    </tr>
+  </table>
 </div>
 
 <router-outlet></router-outlet>
