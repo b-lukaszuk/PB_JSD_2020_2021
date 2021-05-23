@@ -1,0 +1,42 @@
+a {
+    font-size: 2em;
+}
+
+.dead {
+  width: 1.5em;
+  height: 1.5em;
+  float: left;
+  background-color: lightblue;
+  border: 0.2em white solid;
+}
+
+.alive {
+  width: 1.5em;
+  height: 1.5em;
+  float: left;
+  background-color: #FBB917;
+  border: 0.2em white solid;
+}
+
+button {
+    background-color: #008CBA; /* blue */
+    border: none;
+    border-radius: 0.4em;
+    color: white;
+    padding: 0.4em 0.8em;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+button:hover {
+    cursor: pointer;
+    background-color: #3566e4; /* blue */
+}
+
+button:disabled {
+    cursor: auto;
+    background-color: lightgray;
+}
