@@ -2,11 +2,13 @@ import isBetween from "../utils/isNumBetween";
 
 class GameBoard {
     private _gameBoard: boolean[][] = [];
+    private _nRows: number = 10;
+    private _nCols: number = 10;
 
-    /**
-     * @param {number} probFrom0To1 probability of a cell being alive
-     */
     public constructor(nRows: number = 30, nCols: number = 30) {
+        this._nRows = nRows;
+        this._nCols = nCols;
+        // create empty board
         this._gameBoard = this.initializeBoard(nRows, nCols, 0);
     }
 
@@ -19,7 +21,7 @@ class GameBoard {
      */
     public initalizeGenerationOne(probOfCellBeingAliveFrom0To1: number): void {
 
-        this._gameBoard = this.initializeBoard(this.getNrows(), this.getNcols(),
+        this._gameBoard = this.initializeBoard(this._nRows, this._nCols,
             probOfCellBeingAliveFrom0To1);
     }
 
@@ -38,14 +40,6 @@ class GameBoard {
             result.push(row);
         }
         return result;
-    }
-
-    private getNrows(): number {
-        return this._gameBoard.length;
-    }
-
-    private getNcols(): number {
-        return this._gameBoard[0].length;
     }
 
     /**
@@ -85,8 +79,8 @@ class GameBoard {
     }
 
     private isPosOnGameBoard(pos: number[]): boolean {
-        let isRowInRange: boolean = isBetween(pos[0], 0, this.getNrows() - 1);
-        let isColInRange: boolean = isBetween(pos[1], 0, this.getNcols() - 1);
+        let isRowInRange: boolean = isBetween(pos[0], 0, this._nRows - 1);
+        let isColInRange: boolean = isBetween(pos[1], 0, this._nCols - 1);
         return isRowInRange && isColInRange;
     }
 
@@ -127,9 +121,9 @@ class GameBoard {
 
     public getBoardNextState(): boolean[][] {
         let nextBoardState: boolean[][] = [];
-        for (let r = 0; r < this.getNrows(); r++) {
+        for (let r = 0; r < this._nRows; r++) {
             let newRow: boolean[] = [];
-            for (let c = 0; c < this.getNcols(); c++) {
+            for (let c = 0; c < this._nCols; c++) {
                 newRow.push(this.isCellNextGenAlive([r, c]));
             }
             nextBoardState.push(newRow);
