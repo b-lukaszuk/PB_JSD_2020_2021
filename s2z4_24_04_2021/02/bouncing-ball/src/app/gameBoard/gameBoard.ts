@@ -48,10 +48,6 @@ class GameBoard {
         }
     }
 
-    /**
-     * returns true if board's field is on edge (last field) of the board
-     * @param {boolean} xAxis true - left/right edge, false top/bottom edge
-     */
     private laysOnEdge(pos: number[], xAxis: boolean): boolean {
         let upperEdge: number;
         upperEdge = xAxis ? (this.getNRows() - 1) : (this.getNCols() - 1);
@@ -60,12 +56,13 @@ class GameBoard {
     }
 
     private shouldLimitOnAxis(curBrickPos: number[], xAxis: boolean): boolean {
-        let neighboursWithBrick: boolean = false;
+        let neighboursWithBrickOnAxis: boolean = false;
         if (this.laysOnEdge(curBrickPos, xAxis)) {
             return true;
         } else if (!this.laysOnEdge(curBrickPos, !xAxis)) {
-            neighboursWithBrick = this.isBrickOneStepOnAxis(curBrickPos, xAxis);
-            if (neighboursWithBrick) {
+            neighboursWithBrickOnAxis = this.isBrickOneStepOnAxis(
+                curBrickPos, xAxis);
+            if (neighboursWithBrickOnAxis) {
                 return true;
             }
         }
@@ -83,7 +80,7 @@ class GameBoard {
             plusOneField = board[cX + 1][cY];
         } else {
             minusOneField = board[cX][cY - 1];
-            plusOneField = board[cX][cY - 1];
+            plusOneField = board[cX][cY + 1];
         }
 
         return [minusOneField, plusOneField];
@@ -100,7 +97,7 @@ class GameBoard {
             isBetween(
                 curBrickPos[xAxis ? 0 : 1],
                 1,
-                xAxis ? this.getNRows() : this.getNCols()
+                xAxis ? (this.getNRows() - 2) : (this.getNCols() - 2)
             )
         ) {
             gotBrickOnMinusOne = (neighbours[0] === 'X');
