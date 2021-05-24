@@ -6,6 +6,7 @@ import MagicBrick from '../point/magicBrick';
 import isBetween from '../utils/betweenTwoNums';
 
 class GameBoard {
+
     private _gameBoard: Point[][] = [];
     private _ball: Ball = new Ball(0, 0);
 
@@ -13,50 +14,57 @@ class GameBoard {
         this.initializeBoard();
     }
 
-    // initialize board with required in task pattern
+    private boardTranslateSymbolToObject(row: number, col: number): Point {
+        if (board[row][col] === 'X') {
+            return new Brick(
+                row,
+                col,
+                this.shouldLimitOnAxis([row, col], true),
+                this.shouldLimitOnAxis([row, col], false)
+            );
+        } else if (board[row][col] === '1') {
+            return new Ball(row, col);
+        } else if (board[row][col] === 'Y') {
+            return new MagicBrick(row, col);
+        } else {
+            return new Point(row, col);
+        }
+    }
+
+    // initialize board with the required in the task pattern
     public initializeBoard(): void {
         this._gameBoard = [];
 
-        for (let r = 0; r < board.length; r++) {
+        for (let r = 0; r < this.getNRows(); r++) {
             let row: Point[] = [];
-            for (let c = 0; c < board[r].length; c++) {
-                if (board[r][c] === 'X') {
-                    row.push(
-                        new Brick(r, c, this.shouldLimitX([r, c]),
-                            this.shouldLimitY([r, c]))
-                    );
-                } else if (board[r][c] === '1') {
-                    this._ball = new Ball(r, c);
-                    row.push(this._ball);
-                } else if (board[r][c] === 'Y') {
-                    row.push(new MagicBrick(r, c));
-                } else {
-                    row.push(new Point(r, c));
+            for (let c = 0; c < this.getNCols(); c++) {
+                let theObject: Point = this.boardTranslateSymbolToObject(r, c);
+                if (theObject instanceof Ball) {
+                    this._ball = theObject;
                 }
+                row.push(theObject);
             }
             this._gameBoard.push(row);
         }
     }
 
     /**
-     * @param {number} axis0or1 - like in Python, 0 - x, 1 - y
+     * returns true if board's field is on edge (last field) of the board
+     * @param {boolean} xAxis true - left/right edge, false top/bottom edge
      */
-    private laysOnEdge(pos: number[], axis0or1: number): boolean {
-        let upTo: number;
-        upTo = axis0or1 === 0 ? (board.length - 2) : (board[0].length - 2);
-        let result: boolean = !isBetween(pos[axis0or1], 1, upTo);
-        return result;
+    private laysOnEdge(pos: number[], xAxis: boolean): boolean {
+        let upperEdge: number;
+        upperEdge = xAxis ? (this.getNRows() - 1) : (this.getNCols() - 1);
+        let toCompare: number = pos[xAxis ? 0 : 1];
+        return toCompare === 0 || toCompare === upperEdge;
     }
 
-    private shouldLimitX(curBrickPos: number[]): boolean {
-        let laysOnXEdge: boolean = false, laysOnYEdge: boolean = false;
+    private shouldLimitOnAxis(curBrickPos: number[], xAxis: boolean): boolean {
         let neighboursWithBrick: boolean = false;
-        laysOnXEdge = this.laysOnEdge(curBrickPos, 0)
-        laysOnYEdge = this.laysOnEdge(curBrickPos, 1);
-        if (laysOnXEdge) {
+        if (this.laysOnEdge(curBrickPos, xAxis)) {
             return true;
-        } else if (!laysOnYEdge) {
-            neighboursWithBrick = this.isBrickOneShiftOnXaxis(curBrickPos);
+        } else if (!this.laysOnEdge(curBrickPos, !xAxis)) {
+            neighboursWithBrick = this.isBrickOneStepOnAxis(curBrickPos, xAxis);
             if (neighboursWithBrick) {
                 return true;
             }
@@ -64,40 +72,42 @@ class GameBoard {
         return false;
     }
 
-    private shouldLimitY(curBrickPos: number[]): boolean {
-        let laysOnXEdge: boolean = false, laysOnYEdge: boolean = false;
-        let neighboursWithBrick: boolean = false;
-        laysOnXEdge = this.laysOnEdge(curBrickPos, 0);
-        laysOnYEdge = this.laysOnEdge(curBrickPos, 1);
-        if (laysOnYEdge) {
-            return true;
-        } else if (!laysOnXEdge) {
-            neighboursWithBrick = this.isBrickOneShiftOnYaxis(curBrickPos);
-            if (neighboursWithBrick) {
-                return true;
-            }
-        }
-        return false;
-    }
+    private getNeighboursOnAxis(
+        curBrickPos: number[], xAxis: boolean): string[] {
 
-    private isBrickOneShiftOnXaxis(curBrickPos: number[]): boolean {
-        let gotBrickOnLeft: boolean = false, gotBrickOnRight: boolean = false;
         let [cX, cY] = curBrickPos;
-        if (isBetween(cX, 1, board.length)) {
-            gotBrickOnLeft = board[cX - 1][cY] === 'X';
-            gotBrickOnRight = board[cX + 1][cY] === 'X';
+        let minusOneField: string, plusOneField: string;
+
+        if (xAxis) {
+            minusOneField = board[cX - 1][cY];
+            plusOneField = board[cX + 1][cY];
+        } else {
+            minusOneField = board[cX][cY - 1];
+            plusOneField = board[cX][cY - 1];
         }
-        return gotBrickOnLeft || gotBrickOnRight;
+
+        return [minusOneField, plusOneField];
     }
 
-    private isBrickOneShiftOnYaxis(curBrickPos: number[]): boolean {
-        let gotBrick1Up: boolean = false, gotBrick1Down: boolean = false;
-        let [cX, cY] = curBrickPos;;
-        if (isBetween(cY, 1, board[0].length - 2)) {
-            gotBrick1Up = board[cX][cY - 1] === 'X';
-            gotBrick1Down = board[cX][cY + 1] === 'X';
+    private isBrickOneStepOnAxis(
+        curBrickPos: number[], xAxis: boolean): boolean {
+
+        let neighbours: string[] = this.getNeighboursOnAxis(curBrickPos, xAxis);
+        let gotBrickOnMinusOne: boolean = false;
+        let gotBrickOnPlusOne: boolean = false;
+
+        if (
+            isBetween(
+                curBrickPos[xAxis ? 0 : 1],
+                1,
+                xAxis ? this.getNRows() : this.getNCols()
+            )
+        ) {
+            gotBrickOnMinusOne = (neighbours[0] === 'X');
+            gotBrickOnPlusOne = (neighbours[1] === 'X');
         }
-        return gotBrick1Up || gotBrick1Down;
+
+        return gotBrickOnMinusOne || gotBrickOnPlusOne;
     }
 
     public getGameBoard(): Point[][] {
@@ -126,11 +136,11 @@ class GameBoard {
 
     public getNCols(): number {
         // all rows are of equal length
-        return this._gameBoard[0].length;
+        return board[0].length;
     }
 
     public getNRows(): number {
-        return this._gameBoard.length;
+        return board.length;
     }
 }
 
