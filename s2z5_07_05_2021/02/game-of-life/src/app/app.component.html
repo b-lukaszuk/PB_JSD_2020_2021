@@ -44,10 +44,7 @@
           id="frameSpeedsFPS"
           [(ngModel)]="frameSpeedFPS"
         >
-          <option
-            *ngFor="let speed of frameSpeedsFPS"
-            [value]="speed"
-          >
+          <option *ngFor="let speed of frameSpeedsFPS" [value]="speed">
             {{ speed }}
           </option>
         </select>
