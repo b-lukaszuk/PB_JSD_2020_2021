@@ -3,37 +3,37 @@
 }
 
 .empty {
-  width: 3.6em;
-  height: 3.6em;
+  width: 2.6em;
+  height: 2.6em;
   float: left;
   background-color: white;
   /* background-color: #98AFC7; */
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 .boarder {
-  width: 3.6em;
-  height: 3.6em;
+  width: 2.6em;
+  height: 2.6em;
   float: left;
   background-color: darkgray;
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 .magicBrick {
-  width: 3.6em;
-  height: 3.6em;
+  width: 2.6em;
+  height: 2.6em;
   float: left;
   background-color: lightblue;
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 .ball {
-  width: 3.6em;
-  height: 3.6em;
+  width: 2.6em;
+  height: 2.6em;
   float: left;
   background-color: #FBB917;
   border-radius: 50%;
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 button {
@@ -60,5 +60,5 @@ button:disabled {
 }
 
 p {
-    font-size: 1.3em;
+    font-size: 1.2.6em;
 }
