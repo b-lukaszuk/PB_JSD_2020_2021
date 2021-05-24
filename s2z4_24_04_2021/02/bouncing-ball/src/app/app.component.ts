@@ -68,7 +68,6 @@ export class AppComponent {
             newBall = curBall.add(this.shift);
             this.changeShiftIfCollision(newBall);
         } while (this.gameBoard.getContent(newBall.getPos()) instanceof Brick)
-        console.log(newBall);
 
         this.gameBoard.setObjAtBoard(new Point(bRow, bCol));
         this.gameBoard.setObjAtBoard(newBall);
@@ -112,8 +111,6 @@ export class AppComponent {
             if (this.shouldBallBeStopped) {
                 this.stopTheBall();
             }
-            console.log(this.initialBall.getPos());
-            console.log();
         }, 200);
         this.intervalId = intervalId;
     }
@@ -123,6 +120,5 @@ export class AppComponent {
     }
 
     ngOnInit() {
-        console.log(this.gameBoard);
     }
 }
