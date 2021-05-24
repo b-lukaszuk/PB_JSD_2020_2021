@@ -15,7 +15,7 @@ export class AppComponent {
     public gameSarted: boolean = false;
     public initialProbabilities: number[] = [0.1, 0.2, 0.3, 0.4, 0.5,
         0.6, 0.7, 0.8, 0.9, 1];
-    public initialProbability: number = 0.3;
+    public initialProbability: number = 0.2;
     public frameSpeedsFPS: number[] = [0.5, 1, 2];
     public frameSpeedFPS: number = 2;
     public timerId: any = null;

@@ -3,19 +3,19 @@ a {
 }
 
 .dead {
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.8em;
+  height: 0.8em;
   float: left;
   background-color: lightblue;
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 .alive {
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.8em;
+  height: 0.8em;
   float: left;
   background-color: #FBB917;
-  border: 0.2em white solid;
+  border: 0.1em white solid;
 }
 
 button {

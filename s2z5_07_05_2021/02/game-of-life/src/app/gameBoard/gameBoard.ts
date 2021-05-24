@@ -6,7 +6,7 @@ class GameBoard {
     /**
      * @param {number} probFrom0To1 probability of a cell being alive
      */
-    public constructor(nRows: number = 25, nCols: number = 25) {
+    public constructor(nRows: number = 30, nCols: number = 30) {
         this._gameBoard = this.initializeBoard(nRows, nCols, 0);
     }
 
