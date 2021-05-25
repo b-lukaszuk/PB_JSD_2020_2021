@@ -21,22 +21,34 @@
       </td>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
-        <h1>Choose initial probability of a cell being alive</h1>
-        <label for="initialProbabilities"> initial probability: </label>
-        <select
-          name="initialProbabilities"
-          id="initialProbabilities"
-          [(ngModel)]="initialProbability"
-        >
-          <option
-            *ngFor="let probability of initialProbabilities"
-            [value]="probability"
+        <h1>Choose game board type</h1>
+        <div *ngFor="let boardType of boardTypes">
+          <input
+            name="boardType"
+            type="radio"
+            value="{{ boardType }}"
+            (change)="radioChangeHandler($event)"
+            [checked]="boardType === choosenBoardType"
+          />
+          <b> {{ boardType }} </b>
+        </div>
+        <div *ngIf="choosenBoardType === 'random'">
+          <h1>Choose initial probability of a cell being alive</h1>
+          <label for="initialProbabilities"> initial probability: </label>
+          <select
+            name="initialProbabilities"
+            id="initialProbabilities"
+            [(ngModel)]="initialProbability"
           >
-            {{ probability }}
-          </option>
-        </select>
-        <br />
-        <br />
+            <option
+              *ngFor="let probability of initialProbabilities"
+              [value]="probability"
+            >
+              {{ probability }}
+            </option>
+          </select>
+          <br />
+        </div>
         <h1>Choose transition time between generations</h1>
         <label for="frameSpeedsFPS"> initial transition time [FPS]: </label>
         <select

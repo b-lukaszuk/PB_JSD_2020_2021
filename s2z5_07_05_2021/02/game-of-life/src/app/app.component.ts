@@ -18,7 +18,13 @@ export class AppComponent {
     public initialProbability: number = 0.2;
     public frameSpeedsFPS: number[] = [0.5, 1, 2];
     public frameSpeedFPS: number = 2;
+    public boardTypes: string[] = ["random", "oscillators", "spaceships"];
+    public choosenBoardType: string = "random";
     public timerId: any = null;
+
+    public radioChangeHandler(event: any) {
+        this.choosenBoardType = event.target.value;
+    }
 
     private moveToNextState() {
         this.gameBoardNextState = this.gameBoard.getBoardNextState();
@@ -26,8 +32,18 @@ export class AppComponent {
         this.gameBoardNextState = [];
     }
 
+    private setBoardInitialState(): void {
+        if (this.choosenBoardType === "random") {
+            this.gameBoard.initalizeRandomBoard(this.initialProbability);
+        } else if (this.choosenBoardType === "oscillators") {
+            this.gameBoard.initializeBoardWithOscillators();
+        } else {
+            this.gameBoard.initializeBoardWithSpaceships();
+        }
+    }
+
     public startTheGame(): void {
-        this.gameBoard.initalizeGenerationOne(this.initialProbability);
+        this.setBoardInitialState();
         this.gameSarted = true;
         this.timerId = setInterval(() => {
             this.moveToNextState();
