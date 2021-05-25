@@ -72,7 +72,7 @@ export class AppComponent implements OnInit {
             for (let i = 0; i < this.connectedNodes.length; i++) {
                 result += this.connectedNodes[i];
                 if (i !== (this.connectedNodes.length - 1)) {
-                    result += " --> ";
+                    result += " \u27f6 ";
                 }
             }
             this.connectionTestResult = result;

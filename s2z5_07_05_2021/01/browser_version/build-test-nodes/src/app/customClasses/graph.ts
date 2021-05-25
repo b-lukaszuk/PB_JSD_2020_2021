@@ -65,8 +65,8 @@ class Graph {
     public createConnection(nodeAId: string, nodeBId: string): void {
         console.log(`\nCreating direct connection: ${nodeAId} --- ${nodeBId}`);
         console.log(`(only if it doesn't already exist)`);
-        this.addNodeNeighbour(nodeAId, nodeBId);
-        this.addNodeNeighbour(nodeBId, nodeAId);
+        this.addNodeNeighbour(nodeAId, nodeBId); // a --> b (one-way connection)
+        this.addNodeNeighbour(nodeBId, nodeAId); // b --> a (one-way connection)
     }
 
     private removeCheckedNodes(arr: Node[]): Node[] {

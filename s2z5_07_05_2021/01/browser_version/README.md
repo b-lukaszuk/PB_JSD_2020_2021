@@ -16,6 +16,15 @@ You have been giving a task of building and testing a network. You are receiving
 ]
 </pre>
 
+# Uwagi
+
+Dziala poprawnie, dobrze wyglada.
+
+Mozna troche zoptymalizowac (jesli bedzie czas i checi), np.
+
+- funkcje/metody rysujace przeniesc do odrebnego pliku w katalogu (do utworzenia) graphUtils
+- uzycie hash-tables (w JS-ie sa obiekty, czy to robi roznice?) zamiast tablic i forow
+
 # Dodatkowe info od Karola
 
 ## Do Task 1
