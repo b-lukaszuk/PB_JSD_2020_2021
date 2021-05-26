@@ -18,9 +18,19 @@ export class AppComponent {
     public initialProbability: number = 0.2;
     public frameSpeedsFPS: number[] = [0.5, 1, 2];
     public frameSpeedFPS: number = 2;
-    public boardTypes: string[] = ["random", "oscillators", "spaceships"];
+    public boardTypes: string[] = ["random", "click on pixels",
+        "oscillators", "spaceships"];
     public choosenBoardType: string = "random";
     public timerId: any = null;
+
+    public togglePixel(pos: number[]) {
+        if (this.choosenBoardType !== "click on pixels") {
+            alert("toggling pixels on click available " +
+                "only with 'click on pixels' board type");
+        } else {
+            this.gameBoard.toggleCell(pos);
+        }
+    }
 
     public radioChangeHandler(event: any) {
         this.choosenBoardType = event.target.value;
@@ -37,7 +47,7 @@ export class AppComponent {
             this.gameBoard.initalizeRandomBoard(this.initialProbability);
         } else if (this.choosenBoardType === "oscillators") {
             this.gameBoard.initializeBoardWithOscillators();
-        } else {
+        } else if (this.choosenBoardType === "spaceships") {
             this.gameBoard.initializeBoardWithSpaceships();
         }
     }

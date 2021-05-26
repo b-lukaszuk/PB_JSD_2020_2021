@@ -141,6 +141,10 @@ class GameBoard {
         return false;
     }
 
+    public toggleCell(pos: number[]) {
+        this._gameBoard[pos[0]][pos[1]] = !this._gameBoard[pos[0]][pos[1]];
+    }
+
     public getBoardNextState(): boolean[][] {
         let nextBoardState: boolean[][] = [];
         for (let r = 0; r < this._nRows; r++) {

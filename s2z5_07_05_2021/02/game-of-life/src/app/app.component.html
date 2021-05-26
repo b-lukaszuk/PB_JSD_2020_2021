@@ -13,6 +13,7 @@
               [ngClass]="
                 gameBoard.getCellContent([rId, cId]) ? 'alive' : 'dead'
               "
+              (click)="togglePixel([rId, cId])"
             >
               <span> </span>
             </div>
@@ -21,7 +22,7 @@
       </td>
       <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
       <td>
-        <h1>Choose game board type</h1>
+        <h1>Choose gameboard type</h1>
         <div *ngFor="let boardType of boardTypes">
           <input
             name="boardType"
