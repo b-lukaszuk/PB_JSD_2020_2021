@@ -27,7 +27,7 @@ button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.2em;
     font-weight: bold;
 }
 
@@ -48,9 +48,9 @@ select {
     border: none;
     color: white;
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1.1em;
 }
 
 label {
-    font-size: 1.4em;
+    font-size: 1.2em;
 }
