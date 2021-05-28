@@ -3,6 +3,7 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 let balls;
+let colors = ["red", "green", "blue", "gray"];
 
 class Ball {
     constructor(x, y, r, col) {
@@ -64,6 +65,10 @@ class Ball {
 
             other.xShift = sFinal2x;
             other.yShift = sFinal2y;
+
+            // change color (or not, since it may draw the same)
+            this.color = colors[randInt(0, colors.length)];
+            other.color = colors[randInt(0, colors.length)];
         }
     }
 
@@ -114,7 +119,6 @@ function clearBoard() {
 }
 
 function getBall() {
-    let colors = ["red", "green", "blue", "gray"];
     let randomBall = new Ball(randInt(0, 500), randInt(0, 500),
         randInt(10, 30), colors[randInt(0, colors.length)]);
     return randomBall;
