@@ -120,7 +120,7 @@ function clearBoard() {
 
 function getBall() {
     let randomBall = new Ball(randInt(0, 500), randInt(0, 500),
-        randInt(10, 30), colors[randInt(0, colors.length)]);
+        randInt(15, 30), colors[randInt(0, colors.length)]);
     return randomBall;
 }
 
