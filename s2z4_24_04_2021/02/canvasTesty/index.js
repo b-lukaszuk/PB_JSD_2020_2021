@@ -3,7 +3,7 @@
 let canvas = document.getElementById("myCanvas");
 let ctx = canvas.getContext("2d");
 let balls;
-let colors = ["red", "green", "blue", "gray"];
+let colors = ["red", "green", "blue", "lightblue", "orange"];
 
 class Ball {
     constructor(x, y, r, col) {
