@@ -11,13 +11,12 @@ class Ball {
         this.y = y;
         this.r = r;
         this.color = col;
-        this.xShift = randInt(-3, 3);
-        this.yShift = randInt(-3, 3);
+        this.xShift = randInt(-1, 2);
+        this.yShift = randInt(-1, 2);
         if (this.xShift === 0 && this.yShift === 0) {
-            this.xShift = 3;
+            this.xShift = 1;
         }
         this.mass = 1;
-        // this.mass = parseFloat(Math.sqrt(r));
         this.withinCanvas();
     }
 
@@ -59,6 +58,31 @@ class Ball {
             const [sFinal1x, sFinal1y] = this.rotate(s1x, s1y, -angle);
             const [sFinal2x, sFinal2y] = this.rotate(s2x, s2y, -angle);
 
+            // move balls slightly away from each other
+            if (this.xShift > 0) {
+                this.x -= 2;
+            } else {
+                this.x += 2;
+            }
+
+            if (this.yShift > 0) {
+                this.y -= 2;
+            } else {
+                this.y += 2;
+            }
+
+            if (other.xShift > 0) {
+                other.x -= 2;
+            } else {
+                other.x += 2;
+            }
+
+            if (other.yShift > 0) {
+                other.y -= 2;
+            } else {
+                other.y += 2;
+            }
+
             // Swap particle velocities for realistic bounce effect
             this.xShift = sFinal1x;
             this.yShift = sFinal1y;
@@ -91,10 +115,10 @@ class Ball {
     }
 
     move() {
-        if (this.x - this.r < 0 || this.x + this.r > canvas.width) {
+        if (this.x - this.r < 1 || this.x + this.r > canvas.width + 1) {
             this.xShift = this.xShift * -1;
         }
-        if (this.y - this.r < 0 || this.y + this.r > canvas.height) {
+        if (this.y - this.r < 1 || this.y + this.r > canvas.height + 1) {
             this.yShift = this.yShift * -1;
         }
         this.x += this.xShift;
@@ -120,7 +144,7 @@ function clearBoard() {
 
 function getBall() {
     let randomBall = new Ball(randInt(0, 500), randInt(0, 500),
-        randInt(15, 30), colors[randInt(0, colors.length)]);
+        randInt(20, 30), colors[randInt(0, colors.length)]);
     return randomBall;
 }
 
@@ -167,9 +191,9 @@ function moveBalls(balls) {
 }
 
 
-balls = getBalls(10);
+balls = getBalls(7);
 
 setInterval(() => {
     drawBalls(balls);
     moveBalls(balls);
-}, 40);
+}, 20);
