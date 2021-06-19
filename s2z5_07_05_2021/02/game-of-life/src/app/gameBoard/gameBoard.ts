@@ -4,8 +4,8 @@ import spaceships from "./spaceships";
 
 class GameBoard {
     private _gameBoard: boolean[][] = [];
-    private _nRows: number = 10;
-    private _nCols: number = 10;
+    private _nRows: number = 30;
+    private _nCols: number = 30;
 
     public constructor(nRows: number = 30, nCols: number = 30) {
         this._nRows = nRows;
