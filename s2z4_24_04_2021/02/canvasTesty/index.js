@@ -59,29 +59,29 @@ class Ball {
             const [sFinal2x, sFinal2y] = this.rotate(s2x, s2y, -angle);
 
             // move balls slightly away from each other
-            if (this.xShift > 0) {
-                this.x -= 2;
-            } else {
-                this.x += 2;
-            }
+            // if (this.xShift > 0) {
+            //     this.x -= 2;
+            // } else {
+            //     this.x += 2;
+            // }
 
-            if (this.yShift > 0) {
-                this.y -= 2;
-            } else {
-                this.y += 2;
-            }
+            // if (this.yShift > 0) {
+            //     this.y -= 2;
+            // } else {
+            //     this.y += 2;
+            // }
 
-            if (other.xShift > 0) {
-                other.x -= 2;
-            } else {
-                other.x += 2;
-            }
+            // if (other.xShift > 0) {
+            //     other.x -= 2;
+            // } else {
+            //     other.x += 2;
+            // }
 
-            if (other.yShift > 0) {
-                other.y -= 2;
-            } else {
-                other.y += 2;
-            }
+            // if (other.yShift > 0) {
+            //     other.y -= 2;
+            // } else {
+            //     other.y += 2;
+            // }
 
             // Swap particle velocities for realistic bounce effect
             this.xShift = sFinal1x;
@@ -104,8 +104,7 @@ class Ball {
         let dx = this.x - other.x;
         let dy = this.y - other.y;
         let c = Math.sqrt((dx * dx) + (dy * dy));
-        let distance = Math.abs(c);
-        return distance <= (this.r + other.r);
+        return c <= (this.r + other.r + 2);
     }
 
     withinCanvas() {
@@ -191,7 +190,7 @@ function moveBalls(balls) {
 }
 
 
-balls = getBalls(7);
+balls = getBalls(10);
 
 setInterval(() => {
     drawBalls(balls);
