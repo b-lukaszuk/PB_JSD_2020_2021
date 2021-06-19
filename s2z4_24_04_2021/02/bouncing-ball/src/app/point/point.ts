@@ -1,3 +1,4 @@
+// zmienic nazwe tej klasy na position czy cos lepszego
 class Point {
     private _x: number;
     private _y: number;
@@ -25,6 +26,7 @@ class Point {
 
     public getPos(): number[] {
         return [this._x, this._y];
+        // tu dac getX, getY
     }
 
     public equalPosition(other: Point): boolean {
