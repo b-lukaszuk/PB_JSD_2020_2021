@@ -10,7 +10,7 @@ Write a program that automatically converts English text to Morse code and vice 
 
 ## Task 2
 
-Write a program that finds the longest palindromic substring of a given string. ‘**karak**is’, ‘ba**err**en’, ‘**kajak**’, ‘**inni**’,’**sedes**’.
+Write a program that finds the longest palindromic substring of a given string. ‘**karak**is’, ‘ba**erre**n’, ‘**kajak**’, ‘**inni**’,’**sedes**’.
 
 ## Task 3
 
