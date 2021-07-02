@@ -43,35 +43,6 @@ s2z1_06_03_2021/z2/two_classes_guesser_and_hinter/*.js
 /s2z2_20_03_2021/z4/classes/*.js
 /s2z2_20_03_2021/z4/utilities/*.js
 
-### dla s2z3_10_04_2021
-# ignoruj pliki *.js
-s2z3_10_04_2021/01/*.js
-
-## ignoruj wszystkie pliki *.js w tym folderze i jego podfolderach
-s2z3_10_04_2021/**/*.js
-
-## ignoruj wszystkie pliki w folderze simplified-chess
-s2z3_10_04_2021/02/browser_version/simplified-chess/*
-## oprocz plikow: package.json, package-lock.json i folderu src
-!s2z3_10_04_2021/02/browser_version/simplified-chess/package.json
-!s2z3_10_04_2021/02/browser_version/simplified-chess/package-lock.json
-!s2z3_10_04_2021/02/browser_version/simplified-chess/src
-## ignoruj wszystkie pliki w folderze src
-s2z3_10_04_2021/02/browser_version/simplified-chess/src/*
-## oprocz folderu app
-!s2z3_10_04_2021/02/browser_version/simplified-chess/src/app/
-
-## ignoruj wszystkie pliki w folderze bouncing-ball
-s2z3_10_04_2021/03/browser_version/bouncing-ball/*
-## oprocz plikow: package.json, package-lock.json i folderu src
-!s2z3_10_04_2021/03/browser_version/bouncing-ball/package.json
-!s2z3_10_04_2021/03/browser_version/bouncing-ball/package-lock.json
-!s2z3_10_04_2021/03/browser_version/bouncing-ball/src
-## ignoruj wszystkie pliki w folderze src
-s2z3_10_04_2021/03/browser_version/bouncing-ball/src/*
-## oprocz folderu app
-!s2z3_10_04_2021/03/browser_version/bouncing-ball/src/app/
-
 # ignoruj node_modules gdziekolwiek w s2z3 to jest
 /s2z3_10_04_2021/*/node_modules
 
