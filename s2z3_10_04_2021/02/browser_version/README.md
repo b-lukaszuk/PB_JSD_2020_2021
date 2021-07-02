@@ -1,6 +1,6 @@
 # Task 2
 
-Chess board.
+Chess board. **Deployed version ->** [Here](https://b-lukaszuk.github.io/simplifiedChess/)
 
 Program is to choose at random one of the chess piece (except the pawn) and place it at the random spot on the board.
 
