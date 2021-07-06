@@ -9,6 +9,15 @@ Create memory game. Where computer plays with itself. The number of players rand
 
 Zamienilem `_` na `~` bo sie bardziej rozni od `-` z listy
 
+# Moj algorytm zgadujacy karty
+
+Jesli jest para kart w pamieci to gracz wybiera te karty.
+
+Jesli nie to wybiera 1 karte losowo.
+
+Po odslonieciu 1 karty dostaje informacje zwrotna, jesli jest para z kompletu w pamieci wtedy jest ona wybierana, jesli nie to typowana kolejna losowa karta.
+
+
 # Uruchamianie aplikacji
 
 ```bash
